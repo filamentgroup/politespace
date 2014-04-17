@@ -9,6 +9,8 @@ To customize the number of spaces, use the `data-grouplength` attribute. It can 
  * single number (to uniformly repeat, like a credit card)
  * a comma delimited list (for non-uniform strings, like "2,4" for MM YYYY). This also works with open ended commas, like "2," for MM YYYY or "3,3," for a US phone number.
 
+### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
+
 ## Using the repo
 
 Run these commands:
