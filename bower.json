@@ -1,7 +1,7 @@
 {
-	"name": "GRUNTLERPLATE",
+	"name": "politespace",
 	"version": "0.0.0",
-	"main": ["dist/GRUNTLERPLATE.js", "dist/GRUNTLERPLATE.css"],
+	"main": ["dist/politespace.js", "dist/politespace.css"],
 	"ignore": [
 		"**/.*"
 	],

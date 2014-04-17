@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>politespace Test Suite</title>
+	<style>
+	label {
+		display: block;
+	}
+	input,
+	textarea {
+		width: 12em;
+	}
+	</style>
+	<!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
+	<script src="../bower_components/jquery/dist/jquery.js"></script>
+	<script>jQuery.noConflict()</script>
+	<!-- Load local lib and tests. -->
+	<script src="../dist/politespace.js"></script>
+	<script>
+	jQuery( function(){
+		jQuery( document ).trigger( "enhance" );
+	});
+	</script>
+</head>
+<body>
+	<form>
+		<label>
+			Default input[type=text]:
+			<input type="text" data-politespace>
+		</label>
+		<label>
+			Default input[type=password]:
+			<input type="password" data-politespace>
+		</label>
+		<label>
+			Default textarea:
+			<textarea data-politespace></textarea>
+		</label>
+		<label>
+			input[type=text] with [data-grouplength=2]:
+			<input type="text" data-politespace data-grouplength="2" value="1234567890">
+		</label>
+		<label>
+			input[type=text] with [data-grouplength=1,2,3,]:
+			<input type="text" data-politespace data-grouplength="1,2,3," value="1234567890">
+		</label>
+		<label>
+			input[type=text] (US Phone Number) with [data-grouplength=3,3,]:
+			<input type="text" data-politespace data-grouplength="3,3," value="1234567890">
+		</label>
+		<label>
+			input[type=text] (Credit Card) with [data-grouplength=4]:
+			<input type="text" data-politespace data-grouplength="4" value="4444444444444444">
+		</label>
+		<label>
+			input[type=text] (US Zip Code) with [data-grouplength=5,]:
+			<input type="text" data-politespace data-grouplength="5," value="100011234">
+		</label>
+	</form>
+</body>
+</html>

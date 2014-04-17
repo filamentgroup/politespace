@@ -1,11 +1,13 @@
 module.exports = {
 	js: {
-		src: []
-	},
-	css: {
-		src: []
+		src: [
+			"src/politespace.js",
+			"src/politespace-init.js"
+		]
 	},
 	jstest: {
-		src: []
+		src: [
+			"src/politespace-test.js"
+		]
 	}
 };

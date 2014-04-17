@@ -1,61 +1,61 @@
 {
-  "name": "GRUNTLERPLATE",
-  "version": "0.0.0",
-  "description": "A default Grunt config",
-  "keywords": [
-    "grunt"
-  ],
-  "homepage": "https://github.com/zachleat/GRUNTLERPLATE",
-  "bugs": "https://github.com/zachleat/GRUNTLERPLATE/issues",
-  "author": {
-    "name": "Zach Leatherman",
-    "email": "zachleatherman@gmail.com",
-    "twitter": "zachleat",
-    "github": "zachleat",
-    "url": "http://zachleat.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/zachleat/GRUNTLERPLATE.git"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "grunt": "~0.4.4",
-    "grunt-contrib-jshint": "~0.10.0",
-    "glob": "~3.2.9",
-    "load-grunt-tasks": "~0.4.0",
-    "matchdep": "~0.3.0",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-qunit": "~0.4.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-gh-pages": "~0.9.1",
-    "grunt-contrib-concat": "~0.4.0",
-    "bytesize": "~0.2.0",
-    "grunt-bytesize": "~0.1.1",
-    "grunt-contrib-csslint": "~0.2.0",
-    "grunt-banner": "~0.2.2",
-    "grunt-replace": "~0.7.6",
-    "grunt-lintspaces": "~0.5.0"
-  },
-  "peerDependencies": {},
-  "engines": {
-    "node": ">=0.8.0",
-    "npm": ">=1.2.10"
-  },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
-  "config": {
-    "grunt": "grunt",
-    "src": "src",
-    "dist": "dist",
-    "test": "test",
-    "demo": "demo",
-    "bower": "bower_components"
-  }
+	"name": "politespace",
+	"version": "0.0.1",
+	"description": "Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).",
+	"keywords": [
+		"grunt"
+	],
+	"homepage": "https://github.com/filamentgroup/politespace",
+	"bugs": "https://github.com/filamentgroup/politespace/issues",
+	"author": {
+		"name": "Filament Group",
+		"email": "hello@filamentgroup.com",
+		"twitter": "filamentgroup",
+		"github": "filamentgroup",
+		"url": "http://filamentgroup.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/filamentgroup/politespace.git"
+	},
+	"scripts": {
+		"test": "grunt test"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"grunt": "~0.4.4",
+		"grunt-contrib-jshint": "~0.10.0",
+		"glob": "~3.2.9",
+		"load-grunt-tasks": "~0.4.0",
+		"matchdep": "~0.3.0",
+		"grunt-contrib-clean": "~0.5.0",
+		"grunt-contrib-qunit": "~0.4.0",
+		"grunt-contrib-watch": "~0.6.1",
+		"grunt-gh-pages": "~0.9.1",
+		"grunt-contrib-concat": "~0.4.0",
+		"bytesize": "~0.2.0",
+		"grunt-bytesize": "~0.1.1",
+		"grunt-contrib-csslint": "~0.2.0",
+		"grunt-banner": "~0.2.2",
+		"grunt-replace": "~0.7.6",
+		"grunt-lintspaces": "~0.5.0"
+	},
+	"peerDependencies": {},
+	"engines": {
+		"node": ">=0.8.0",
+		"npm": ">=1.2.10"
+	},
+	"licenses": [
+		{
+			"type": "MIT"
+		}
+	],
+	"config": {
+		"grunt": "grunt",
+		"src": "src",
+		"dist": "dist",
+		"test": "test",
+		"demo": "demo",
+		"bower": "bower_components"
+	}
 }

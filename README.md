@@ -1,4 +1,13 @@
-# GRUNTLERPLATE
+# Politespace
+
+## Using Politespace
+
+Add `data-politespace` to your form’s `input[type=text]` (et al) or `textarea` and we’ll add spaces to the value when the user blurs off of it. We’ll also remove those spaces on focus.
+
+To customize the number of spaces, use the `data-grouplength` attribute. It can be:
+
+ * single number (to uniformly repeat, like a credit card)
+ * a comma delimited list (for non-uniform strings, like "2,4" for MM YYYY). This also works with open ended commas, like "2," for MM YYYY or "3,3," for a US phone number.
 
 ## Using the repo
 
@@ -16,3 +25,7 @@ For concatenation in the previous Gruntfile setup, you’d add another key to th
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
+## TODO
+
+ * Tests
