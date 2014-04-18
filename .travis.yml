@@ -6,5 +6,5 @@ before_script:
   - npm install
   - npm install bower
   - bower install
-script: grunt test -v
+script: grunt -v
 
