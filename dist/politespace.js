@@ -1,4 +1,4 @@
-/*! politespace - v0.0.1 - 2014-04-17
+/*! politespace - v0.0.1 - 2014-04-18
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2014 Filament Group (@filamentgroup)
@@ -12,10 +12,12 @@ Politely add spaces to input values to increase readability (credit card numbers
 			throw new Error( "Politespace requires an element argument." );
 		}
 
+		var groupRegMatch;
+
 		this.$element = $( element );
 
-		var grouplength = this.$element.attr( "data-grouplength" ) || 3,
-			groupRegMatch = this._buildRegexArr( grouplength );
+		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+		groupRegMatch = this._buildRegexArr( this.groupLength );
 
 		this.groupRegNonUniform = groupRegMatch.length > 1;
 		this.groupReg = new RegExp( groupRegMatch.join( '' ), !this.groupRegNonUniform ? 'g' : '' );
@@ -24,26 +26,38 @@ Politely add spaces to input values to increase readability (credit card numbers
 	Politespace.prototype._buildRegexArr = function( groupLengths ) {
 		var split = ( '' + groupLengths ).split( ',' ),
 			str = [];
+
 		for( var j = 0, k = split.length; j<k; j++ ) {
-			str.push( '([\\S]{' + ( split[ j ] === '' ? '1,' : split[j] ) + '})' );
+			str.push( '([\\S]{' + ( split[ j ] === '' ? '1,' : split[j] ) + '})' + ( j > 0 ? "?" : "" ) );
 		}
+
 		return str;
 	};
 
 	Politespace.prototype.format = function( value ) {
 		var val = value.replace( /\D/g, '' ),
-
 			match;
 
 		if( this.groupRegNonUniform ) {
 			match = val.match( this.groupReg );
 			if( match ) {
 				match.shift();
+
+				for( var j = 0; j < match.length; j++ ) {
+					if( !match[ j ] ) {
+						match.splice( j, 1 );
+						j--;
+					}
+				}
 			}
 
 			val = ( match || [ val ] ).join( ' ' );
 		} else {
 			val = val.replace( this.groupReg, "$1 " );
+
+			if( val.substr( val.length - 1 ) === " " ) {
+				val = val.substr( 0, val.length - 1 );
+			}
 		}
 
 		return val;
