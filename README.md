@@ -1,5 +1,7 @@
 # Politespace
 
+[![Build Status](https://travis-ci.org/filamentgroup/politespace.png?branch=master)](https://travis-ci.org/filamentgroup/politespace)
+
 ## Using Politespace
 
 Add `data-politespace` to your form’s `input[type=text]` (et al) or `textarea` and we’ll add spaces to the value when the user blurs off of it. We’ll also remove those spaces on focus.
@@ -10,10 +12,6 @@ To customize the number of spaces, use the `data-grouplength` attribute. It can 
  * a comma delimited list (for non-uniform strings, like "2,4" for MM YYYY). This also works with open ended commas, like "2," for MM YYYY or "3,3," for a US phone number.
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
-
-<!--
-[![Build Status](https://travis-ci.org/zachleat/GRUNTLERPLATE.png?branch=master)](https://travis-ci.org/zachleat/GRUNTLERPLATE)
--->
 
 ## Using the repo
 
