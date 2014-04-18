@@ -13,6 +13,18 @@ To customize the number of spaces, use the `data-grouplength` attribute. It can 
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
+### Beware input masks.
+
+This plugin was created as a less intrusive alternative to the common input mask, which have serious accessibility implications:
+
+> A quick [screen/audio recording of tabbing around a form using JS input masks](https://docs.google.com/file/d/0B9rGmqNcHo-mRGpMS0xQbzVzeGM/edit) with VoiceOver enabled.
+
+—[@scottjehl](https://twitter.com/scottjehl/status/317313054503211010)
+
+> Just a friendly monthly reminder that input mask plugins make your forms sound like a jackhammer to people who use a screen reader. Cheers!
+
+—[@scottjehl](https://twitter.com/scottjehl/statuses/317291417326206976)
+
 ## Using the repo
 
 Run these commands:
@@ -20,7 +32,7 @@ Run these commands:
  * `npm install`
  * `bower install`
 
-## Configuring Grunt
+### Configuring Grunt
 
 Rather than one giant `Gruntfile.js`, this project is using a modular Grunt setup. Each individual grunt configuration option key has its own file located in `grunt/config-lib/` (readonly upstream configs, do not modify these directly) or `grunt/config/` (project specific configs). You may use the same key in both directories, the objects are smartly combined using [Lo-Dash merge](http://lodash.com/docs#merge).
 
