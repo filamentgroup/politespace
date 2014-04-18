@@ -1,11 +1,22 @@
 # GRUNTLERPLATE
 
+<!--
+[![Build Status](https://travis-ci.org/zachleat/GRUNTLERPLATE.png?branch=master)](https://travis-ci.org/zachleat/GRUNTLERPLATE)
+-->
+
 ## Using the repo
 
 Run these commands:
 
  * `npm install`
  * `bower install`
+ * `grunt init`
+
+Replace instances of GRUNTLERPLATE with your project name.
+
+You’ll probably want to start by creating a few JS (and/or CSS) source files to `src/` and adding them to grunt via `grunt/config/concat.js`.
+
+Run `grunt` as normal.
 
 ## Configuring Grunt
 
@@ -16,3 +27,7 @@ For concatenation in the previous Gruntfile setup, you’d add another key to th
 ## License
 
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
+## TODO
+
+ * Make a yeoman generator to replace GRUNTLERPLATE with the project name.
