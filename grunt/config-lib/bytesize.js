@@ -1,7 +1,8 @@
 module.exports = {
 	dist: {
 		src: [
-			"<%= concat.js.dest %>"
+			"<%= pkg.config.dist %>/*.js",
+			"<%= pkg.config.dist %>/*.css"
 		]
 	}
 };

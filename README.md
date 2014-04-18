@@ -11,6 +11,10 @@ To customize the number of spaces, use the `data-grouplength` attribute. It can 
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
+<!--
+[![Build Status](https://travis-ci.org/zachleat/GRUNTLERPLATE.png?branch=master)](https://travis-ci.org/zachleat/GRUNTLERPLATE)
+-->
+
 ## Using the repo
 
 Run these commands:
