@@ -6,10 +6,16 @@
 
 Add `data-politespace` to your form’s `input[type=text]` (et al) or `textarea` and we’ll add spaces to the value when the user blurs off of it. We’ll also remove those spaces on focus.
 
-To customize the number of spaces, use the `data-grouplength` attribute. It can be:
+To customize the number of spaces, use the `data-grouplength` attribute (it defaults to 3). It can be:
 
  * single number (to uniformly repeat, like a credit card)
  * a comma delimited list (for non-uniform strings, like "2,4" for MM YYYY). This also works with open ended commas, like "2," for MM YYYY or "3,3," for a US phone number.
+
+`politespace` works great with input type="tel" with pattern="[0-9]*" for the numeric keyboard on iOS.
+
+`politespace` will not work with `<input type="number">`. Both Chrome 34 and Safari 6 set an empty form value when attempting to set the value (`myElement.value="123 456";`) to include whitespace.
+
+Make sure your `maxlength` value is large enough to allow for the addition of the whitespace.
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 

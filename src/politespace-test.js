@@ -17,6 +17,11 @@
 		}
 	});
 
+	test( "Blur", function() {
+		this.pspace.$element.val( "12345678" ).trigger( "blur" );
+		equal( this.pspace.$element.val(), "123 456 78" );
+	});
+
 	test( "Formats", function() {
 		equal( this.pspace.format( "12" ), "12" );
 		equal( this.pspace.format( "123" ), "123" );
@@ -74,5 +79,20 @@
 		equal( this.pspace.format( "1234" ), "1 23" );
 		equal( this.pspace.format( "1234567890" ), "1 23 456" );
 	});
+
+	// module( "Number type", {
+	// 	setup: function() {
+	// 		insertHtml( '<input type="number" data-politespace>' );
+	// 		this.pspace = $( "[data-politespace]" ).data( "politespace" );
+	// 	},
+	// 	teardown: function() {
+	// 		this.pspace = null;
+	// 	}
+	// });
+
+	// test( "Blur", function() {
+	// 	this.pspace.$element.val( "12345678" ).trigger( "blur" );
+	// 	equal( this.pspace.$element.val(), "123 456 78" );
+	// });
 
 }( this, jQuery ));
