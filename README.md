@@ -13,6 +13,8 @@ To customize the number of spaces, use the `data-grouplength` attribute. It can 
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
+### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
+
 ### Beware input masks.
 
 This plugin was created as a less intrusive alternative to the common input mask, which have serious accessibility implications:
