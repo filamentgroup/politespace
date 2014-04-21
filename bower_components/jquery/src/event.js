@@ -13,7 +13,7 @@ define([
 
 var rformElems = /^(?:input|select|textarea)$/i,
 	rkeyEvent = /^key/,
-	rmouseEvent = /^(?:mouse|pointer|contextmenu)|click/,
+	rmouseEvent = /^(?:mouse|contextmenu)|click/,
 	rfocusMorph = /^(?:focusinfocus|focusoutblur)$/,
 	rtypenamespace = /^([^.]*)(?:\.(.+)|)$/;
 
@@ -616,9 +616,8 @@ jQuery.event = {
 		beforeunload: {
 			postDispatch: function( event ) {
 
-				// Support: Firefox 20+
-				// Firefox doesn't alert if the returnValue field is not set.
-				if ( event.result !== undefined && event.originalEvent ) {
+				// Even when returnValue equals to undefined Firefox will still show alert
+				if ( event.result !== undefined ) {
 					event.originalEvent.returnValue = event.result;
 				}
 			}
@@ -684,9 +683,11 @@ jQuery.Event = function( src, props ) {
 		// Events bubbling up the document may have been marked as prevented
 		// by a handler lower down the tree; reflect the correct value.
 		this.isDefaultPrevented = src.defaultPrevented ||
-				src.defaultPrevented === undefined &&
-				// Support: IE < 9, Android < 4.0
-				src.returnValue === false ?
+				src.defaultPrevented === undefined && (
+				// Support: IE < 9
+				src.returnValue === false ||
+				// Support: Android < 4.0
+				src.getPreventDefault && src.getPreventDefault() ) ?
 			returnTrue :
 			returnFalse;
 
@@ -749,14 +750,7 @@ jQuery.Event.prototype = {
 		e.cancelBubble = true;
 	},
 	stopImmediatePropagation: function() {
-		var e = this.originalEvent;
-
 		this.isImmediatePropagationStopped = returnTrue;
-
-		if ( e && e.stopImmediatePropagation ) {
-			e.stopImmediatePropagation();
-		}
-
 		this.stopPropagation();
 	}
 };
@@ -764,9 +758,7 @@ jQuery.Event.prototype = {
 // Create mouseenter/leave events using mouseover/out and event-time checks
 jQuery.each({
 	mouseenter: "mouseover",
-	mouseleave: "mouseout",
-	pointerenter: "pointerover",
-	pointerleave: "pointerout"
+	mouseleave: "mouseout"
 }, function( orig, fix ) {
 	jQuery.event.special[ orig ] = {
 		delegateType: fix,

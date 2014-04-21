@@ -2,14 +2,50 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>politespace Test Suite</title>
 	<style>
+	/* Logo */
+	.header {
+		background: #247201 url(http://filamentgroup.com/images/headerbg-new.jpg) no-repeat bottom left;
+	}
+	#fg-logo {
+		text-indent: -9999px;
+		margin: 0 auto;
+		width: 287px;
+		height: 52px;
+		background-image: url(http://filamentgroup.com/images/fg-logo-icon.png);
+	}
+	@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5){
+		#fg-logo {
+			background-size: 287px 52px;
+			background-image: url(http://filamentgroup.com/images/fg-logo-icon-lrg.png);
+		}
+	}
+	/* Demo styles */
+	body {
+		font-family: sans-serif;
+		font-size: 100%;
+	}
+	form {
+		margin: 1em auto;
+		max-width: 25em;
+	}
 	label {
 		display: block;
+		margin: 1em 0;
 	}
 	input,
 	textarea {
-		width: 12em;
+		display: block;
+		width: 100%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+
+		margin-top: .4em;
+		padding: .6em;
+		font-size: 100%;
 	}
 	</style>
 	<!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
@@ -24,37 +60,53 @@
 	</script>
 </head>
 <body>
+	<div class="header">
+		<h1 id="fg-logo">Filament Group</h1>
+	</div>
 	<form>
+		<a href="https://github.com/filamentgroup/politespace">← Back to politespace on GitHub</a>
 		<label>
-			Default input[type=text]:
-			<input type="text" data-politespace>
+			Default input[type=text] with pattern="[0-9]*" for numeric keyboard on mobile
+			<input type="text" data-politespace pattern="[0-9]*">
 		</label>
 		<label>
-			Default input[type=password]:
+			input[type=number] doesn’t allow whitespace characters as of Chrome 34 and Safari 6. <strong>Do not use.</strong>
+			<input type="number" data-politespace pattern="[0-9]*">
+		</label>
+		<label>
+			input[type=tel]
+			<input type="tel" data-politespace pattern="[0-9]*">
+		</label>
+		<label>
+			Default input[type=text][maxlength="7"] <em>You must account for whitespace.</em>
+			<input type="text" data-politespace maxlength="7" value="123456">
+		</label>
+		<label>
+			<strong>Don’t use this on password fields.</strong> Default input[type=password]
 			<input type="password" data-politespace>
 		</label>
 		<label>
-			Default textarea:
+			Default textarea
 			<textarea data-politespace></textarea>
 		</label>
 		<label>
-			input[type=text] with [data-grouplength=2]:
+			input[type=text] with [data-grouplength=2]
 			<input type="text" data-politespace data-grouplength="2" value="1234567890">
 		</label>
 		<label>
-			input[type=text] with [data-grouplength=1,2,3,]:
+			input[type=text] with [data-grouplength=1,2,3,]
 			<input type="text" data-politespace data-grouplength="1,2,3," value="1234567890">
 		</label>
 		<label>
-			input[type=text] (US Phone Number) with [data-grouplength=3,3,]:
+			input[type=text] (US Phone Number) with [data-grouplength=3,3,]
 			<input type="text" data-politespace data-grouplength="3,3," value="1234567890">
 		</label>
 		<label>
-			input[type=text] (Credit Card) with [data-grouplength=4]:
+			input[type=text] (Credit Card) with [data-grouplength=4]
 			<input type="text" data-politespace data-grouplength="4" value="4444444444444444">
 		</label>
 		<label>
-			input[type=text] (US Zip Code) with [data-grouplength=5,]:
+			input[type=text] (US Zip Code) with [data-grouplength=5,]
 			<input type="text" data-politespace data-grouplength="5," value="100011234">
 		</label>
 	</form>

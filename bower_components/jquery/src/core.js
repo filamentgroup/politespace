@@ -7,8 +7,9 @@ define([
 	"./var/class2type",
 	"./var/toString",
 	"./var/hasOwn",
+	"./var/trim",
 	"./var/support"
-], function( deletedIds, slice, concat, push, indexOf, class2type, toString, hasOwn, support ) {
+], function( deletedIds, slice, concat, push, indexOf, class2type, toString, hasOwn, trim, support ) {
 
 var
 	version = "@VERSION",
@@ -20,8 +21,7 @@ var
 		return new jQuery.fn.init( selector, context );
 	},
 
-	// Support: Android<4.1, IE<9
-	// Make sure we trim BOM and NBSP
+	// Make sure we trim BOM and NBSP (here's looking at you, Safari 5.0 and IE)
 	rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,
 
 	// Matches dashed string for camelizing
@@ -54,10 +54,10 @@ jQuery.fn = jQuery.prototype = {
 	get: function( num ) {
 		return num != null ?
 
-			// Return just the one element from the set
+			// Return a 'clean' array
 			( num < 0 ? this[ num + this.length ] : this[ num ] ) :
 
-			// Return all the elements in a clean array
+			// Return just the object
 			slice.call( this );
 	},
 
@@ -216,7 +216,7 @@ jQuery.extend({
 		// parseFloat NaNs numeric-cast false positives (null|true|false|"")
 		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
 		// subtraction forces infinities to NaN
-		return !jQuery.isArray( obj ) && obj - parseFloat( obj ) >= 0;
+		return obj - parseFloat( obj ) >= 0;
 	},
 
 	isEmptyObject: function( obj ) {
@@ -347,12 +347,20 @@ jQuery.extend({
 		return obj;
 	},
 
-	// Support: Android<4.1, IE<9
-	trim: function( text ) {
-		return text == null ?
-			"" :
-			( text + "" ).replace( rtrim, "" );
-	},
+	// Use native String.trim function wherever possible
+	trim: trim && !trim.call("\uFEFF\xA0") ?
+		function( text ) {
+			return text == null ?
+				"" :
+				trim.call( text );
+		} :
+
+		// Otherwise use our own trimming functionality
+		function( text ) {
+			return text == null ?
+				"" :
+				( text + "" ).replace( rtrim, "" );
+		},
 
 	// results is for internal usage only
 	makeArray: function( arr, results ) {

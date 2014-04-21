@@ -3,13 +3,13 @@ define([
 ], function( support ) {
 
 (function() {
-	// Minified: var a,b,c
-	var input = document.createElement( "input" ),
-		div = document.createElement( "div" ),
-		fragment = document.createDocumentFragment();
+	var fragment = document.createDocumentFragment(),
+		div = document.createElement("div"),
+		input = document.createElement("input");
 
 	// Setup
-	div.innerHTML = "  <link/><table></table><a href='/a'>a</a><input type='checkbox'/>";
+	div.setAttribute( "className", "t" );
+	div.innerHTML = "  <link/><table></table><a href='/a'>a</a>";
 
 	// IE strips leading whitespace when .innerHTML is used
 	support.leadingWhitespace = div.firstChild.nodeType === 3;
@@ -69,6 +69,9 @@ define([
 			support.deleteExpando = false;
 		}
 	}
+
+	// Null elements to avoid leaks in IE.
+	fragment = div = input = null;
 })();
 
 return support;

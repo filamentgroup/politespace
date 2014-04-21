@@ -1,12 +1,12 @@
 /*!
- * Sizzle CSS Selector Engine v1.10.18
+ * Sizzle CSS Selector Engine v1.10.16
  * http://sizzlejs.com/
  *
  * Copyright 2013 jQuery Foundation, Inc. and other contributors
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2014-02-05
+ * Date: 2014-01-13
  */
 (function( window ) {
 
@@ -16,7 +16,6 @@ var i,
 	getText,
 	isXML,
 	compile,
-	select,
 	outermostContext,
 	sortInput,
 	hasDuplicate,
@@ -138,7 +137,7 @@ var i,
 	funescape = function( _, escaped, escapedWhitespace ) {
 		var high = "0x" + escaped - 0x10000;
 		// NaN means non-codepoint
-		// Support: Firefox<24
+		// Support: Firefox
 		// Workaround erroneous numeric interpretation of +"0x"
 		return high !== high || escapedWhitespace ?
 			escaped :
@@ -1571,15 +1570,6 @@ function elementMatcher( matchers ) {
 		matchers[0];
 }
 
-function multipleContexts( selector, contexts, results ) {
-	var i = 0,
-		len = contexts.length;
-	for ( ; i < len; i++ ) {
-		Sizzle( selector, contexts[i], results );
-	}
-	return results;
-}
-
 function condense( unmatched, map, filter, context, xml ) {
 	var elem,
 		newUnmatched = [],
@@ -1848,7 +1838,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 		superMatcher;
 }
 
-compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
+compile = Sizzle.compile = function( selector, group /* Internal Use Only */ ) {
 	var i,
 		setMatchers = [],
 		elementMatchers = [],
@@ -1856,12 +1846,12 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 
 	if ( !cached ) {
 		// Generate a function of recursive functions that can be used to check each element
-		if ( !match ) {
-			match = tokenize( selector );
+		if ( !group ) {
+			group = tokenize( selector );
 		}
-		i = match.length;
+		i = group.length;
 		while ( i-- ) {
-			cached = matcherFromTokens( match[i] );
+			cached = matcherFromTokens( group[i] );
 			if ( cached[ expando ] ) {
 				setMatchers.push( cached );
 			} else {
@@ -1871,83 +1861,74 @@ compile = Sizzle.compile = function( selector, match /* Internal Use Only */ ) {
 
 		// Cache the compiled function
 		cached = compilerCache( selector, matcherFromGroupMatchers( elementMatchers, setMatchers ) );
-
-		// Save selector and tokenization
-		cached.selector = selector;
 	}
 	return cached;
 };
 
-/**
- * A low-level selection function that works with Sizzle's compiled
- *  selector functions
- * @param {String|Function} selector A selector or a pre-compiled
- *  selector function built with Sizzle.compile
- * @param {Element} context
- * @param {Array} [results]
- * @param {Array} [seed] A set of elements to match against
- */
-select = Sizzle.select = function( selector, context, results, seed ) {
+function multipleContexts( selector, contexts, results ) {
+	var i = 0,
+		len = contexts.length;
+	for ( ; i < len; i++ ) {
+		Sizzle( selector, contexts[i], results );
+	}
+	return results;
+}
+
+function select( selector, context, results, seed ) {
 	var i, tokens, token, type, find,
-		compiled = typeof selector === "function" && selector,
-		match = !seed && tokenize( (selector = compiled.selector || selector) );
+		match = tokenize( selector );
 
-	results = results || [];
+	if ( !seed ) {
+		// Try to minimize operations if there is only one group
+		if ( match.length === 1 ) {
 
-	// Try to minimize operations if there is no seed and only one group
-	if ( match.length === 1 ) {
+			// Take a shortcut and set the context if the root selector is an ID
+			tokens = match[0] = match[0].slice( 0 );
+			if ( tokens.length > 2 && (token = tokens[0]).type === "ID" &&
+					support.getById && context.nodeType === 9 && documentIsHTML &&
+					Expr.relative[ tokens[1].type ] ) {
 
-		// Take a shortcut and set the context if the root selector is an ID
-		tokens = match[0] = match[0].slice( 0 );
-		if ( tokens.length > 2 && (token = tokens[0]).type === "ID" &&
-				support.getById && context.nodeType === 9 && documentIsHTML &&
-				Expr.relative[ tokens[1].type ] ) {
-
-			context = ( Expr.find["ID"]( token.matches[0].replace(runescape, funescape), context ) || [] )[0];
-			if ( !context ) {
-				return results;
-
-			// Precompiled matchers will still verify ancestry, so step up a level
-			} else if ( compiled ) {
-				context = context.parentNode;
+				context = ( Expr.find["ID"]( token.matches[0].replace(runescape, funescape), context ) || [] )[0];
+				if ( !context ) {
+					return results;
+				}
+				selector = selector.slice( tokens.shift().value.length );
 			}
 
-			selector = selector.slice( tokens.shift().value.length );
-		}
+			// Fetch a seed set for right-to-left matching
+			i = matchExpr["needsContext"].test( selector ) ? 0 : tokens.length;
+			while ( i-- ) {
+				token = tokens[i];
 
-		// Fetch a seed set for right-to-left matching
-		i = matchExpr["needsContext"].test( selector ) ? 0 : tokens.length;
-		while ( i-- ) {
-			token = tokens[i];
-
-			// Abort if we hit a combinator
-			if ( Expr.relative[ (type = token.type) ] ) {
-				break;
-			}
-			if ( (find = Expr.find[ type ]) ) {
-				// Search, expanding context for leading sibling combinators
-				if ( (seed = find(
-					token.matches[0].replace( runescape, funescape ),
-					rsibling.test( tokens[0].type ) && testContext( context.parentNode ) || context
-				)) ) {
-
-					// If seed is empty or no tokens remain, we can return early
-					tokens.splice( i, 1 );
-					selector = seed.length && toSelector( tokens );
-					if ( !selector ) {
-						push.apply( results, seed );
-						return results;
-					}
-
+				// Abort if we hit a combinator
+				if ( Expr.relative[ (type = token.type) ] ) {
 					break;
+				}
+				if ( (find = Expr.find[ type ]) ) {
+					// Search, expanding context for leading sibling combinators
+					if ( (seed = find(
+						token.matches[0].replace( runescape, funescape ),
+						rsibling.test( tokens[0].type ) && testContext( context.parentNode ) || context
+					)) ) {
+
+						// If seed is empty or no tokens remain, we can return early
+						tokens.splice( i, 1 );
+						selector = seed.length && toSelector( tokens );
+						if ( !selector ) {
+							push.apply( results, seed );
+							return results;
+						}
+
+						break;
+					}
 				}
 			}
 		}
 	}
 
-	// Compile and execute a filtering function if one is not provided
+	// Compile and execute a filtering function
 	// Provide `match` to avoid retokenization if we modified the selector above
-	( compiled || compile( selector, match ) )(
+	compile( selector, match )(
 		seed,
 		context,
 		!documentIsHTML,
@@ -1955,7 +1936,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 		rsibling.test( selector ) && testContext( context.parentNode ) || context
 	);
 	return results;
-};
+}
 
 // One-time assignments
 
