@@ -11,9 +11,9 @@ To customize the number of spaces, use the `data-grouplength` attribute (it defa
  * single number (to uniformly repeat, like a credit card)
  * a comma delimited list (for non-uniform strings, like "2,4" for MM YYYY). This also works with open ended commas, like "2," for MM YYYY or "3,3," for a US phone number.
 
-`politespace` works great with input type="tel" with pattern="[0-9]*" for the numeric keyboard on iOS.
+Use `pattern="[0-9]*"` for numeric keyboards on iOS.
 
-`politespace` will not work with `<input type="number">`. Both Chrome 34 and Safari 6 set an empty form value when attempting to set the value (`myElement.value="123 456";`) to include whitespace.
+This script does not work reliably cross-browser with `<input type="number">`: independent of `politespace`, WebKit removes the value on blur when the user types a non-numeric character in the field (also fails on when setting `myElement.value`).
 
 Make sure your `maxlength` value is large enough to allow for the addition of the whitespace.
 
