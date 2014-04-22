@@ -2,6 +2,8 @@
 (function( $ ) {
 	"use strict";
 
+	// jQuery Plugin
+
 	var componentName = "politespace",
 		enhancedAttr = "data-enhanced",
 		initSelector = "[data-" + componentName + "]:not([" + enhancedAttr + "])";

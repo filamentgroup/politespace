@@ -1,4 +1,4 @@
-(function( $, w ){
+(function( w ){
 	"use strict";
 
 	var Politespace = function( element ) {
@@ -6,11 +6,16 @@
 			throw new Error( "Politespace requires an element argument." );
 		}
 
+		if( !element.getAttribute ) {
+			// Cut the mustard
+			return;
+		}
+
 		var groupRegMatch;
 
-		this.$element = $( element );
+		this.element = element;
 
-		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
 		groupRegMatch = this._buildRegexArr( this.groupLength );
 
 		this.groupRegNonUniform = groupRegMatch.length > 1;
@@ -58,14 +63,14 @@
 	};
 
 	Politespace.prototype.update = function() {
-		var maxlength = this.$element.attr( "maxlength" ),
-			val = this.format( this.$element.val() );
+		var maxlength = this.element.getAttribute( "maxlength" ),
+			val = this.format( this.element.value );
 
 		if( maxlength ) {
 			val = val.substr( 0, maxlength );
 		}
 
-		this.$element.val( val );
+		this.element.value = val;
 	};
 
 	Politespace.prototype.unformat = function( value ) {
@@ -73,9 +78,9 @@
 	};
 
 	Politespace.prototype.reset = function() {
-		this.$element.val( this.unformat( this.$element.val() ) );
+		this.element.value = this.unformat( this.element.vaule );
 	};
 
 	w.Politespace = Politespace;
 
-}( jQuery, this ));
+}( this ));
