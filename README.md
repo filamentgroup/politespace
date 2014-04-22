@@ -21,6 +21,10 @@ Make sure your `maxlength` value is large enough to allow for the addition of th
 
 ### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
 
+## [Download politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js)
+
+or use [Bower](http://bower.io/): `bower install politespace`
+
 ### Beware input masks.
 
 This plugin was created as a less intrusive alternative to the common input mask, which have serious accessibility implications:
