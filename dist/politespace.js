@@ -1,10 +1,10 @@
-/*! politespace - v0.0.1 - 2014-04-22
+/*! politespace - v0.1.0 - 2014-04-22
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2014 Filament Group (@filamentgroup)
  * MIT License */
 
-(function( $, w ){
+(function( w ){
 	"use strict";
 
 	var Politespace = function( element ) {
@@ -12,11 +12,16 @@ Politely add spaces to input values to increase readability (credit card numbers
 			throw new Error( "Politespace requires an element argument." );
 		}
 
+		if( !element.getAttribute ) {
+			// Cut the mustard
+			return;
+		}
+
 		var groupRegMatch;
 
-		this.$element = $( element );
+		this.element = element;
 
-		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
 		groupRegMatch = this._buildRegexArr( this.groupLength );
 
 		this.groupRegNonUniform = groupRegMatch.length > 1;
@@ -64,14 +69,14 @@ Politely add spaces to input values to increase readability (credit card numbers
 	};
 
 	Politespace.prototype.update = function() {
-		var maxlength = this.$element.attr( "maxlength" ),
-			val = this.format( this.$element.val() );
+		var maxlength = this.element.getAttribute( "maxlength" ),
+			val = this.format( this.element.value );
 
 		if( maxlength ) {
 			val = val.substr( 0, maxlength );
 		}
 
-		this.$element.val( val );
+		this.element.value = val;
 	};
 
 	Politespace.prototype.unformat = function( value ) {
@@ -79,15 +84,17 @@ Politely add spaces to input values to increase readability (credit card numbers
 	};
 
 	Politespace.prototype.reset = function() {
-		this.$element.val( this.unformat( this.$element.val() ) );
+		this.element.value = this.unformat( this.element.vaule );
 	};
 
 	w.Politespace = Politespace;
 
-}( jQuery, this ));
+}( this ));
 
 (function( $ ) {
 	"use strict";
+
+	// jQuery Plugin
 
 	var componentName = "politespace",
 		enhancedAttr = "data-enhanced",

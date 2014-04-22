@@ -18,8 +18,8 @@
 	});
 
 	test( "Blur", function() {
-		this.pspace.$element.val( "12345678" ).trigger( "blur" );
-		equal( this.pspace.$element.val(), "123 456 78" );
+		$( this.pspace.element ).val( "12345678" ).trigger( "blur" );
+		equal( $( this.pspace.element ).val(), "123 456 78" );
 	});
 
 	test( "Formats", function() {
@@ -91,8 +91,8 @@
 	// });
 
 	// test( "Blur", function() {
-	// 	this.pspace.$element.val( "12345678" ).trigger( "blur" );
-	// 	equal( this.pspace.$element.val(), "123 456 78" );
+	// 	$( this.pspace.element ).val( "12345678" ).trigger( "blur" );
+	// 	equal( $( this.pspace.element ).val(), "123 456 78" );
 	// });
 
 }( this, jQuery ));
