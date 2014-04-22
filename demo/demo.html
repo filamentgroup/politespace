@@ -61,52 +61,44 @@
 </head>
 <body>
 	<div class="header">
-		<h1 id="fg-logo">Filament Group</h1>
+		<a href="http://filamentgroup.com/"><h1 id="fg-logo">Filament Group</h1></a>
 	</div>
 	<form>
 		<a href="https://github.com/filamentgroup/politespace">← Back to politespace on GitHub</a>
 		<label>
-			Default input[type=text] with pattern="[0-9]*" for numeric keyboard on mobile
+			Default <code>input[type=text]</code> with <code>pattern="[0-9]*"</code> for numeric keyboard on mobile.
 			<input type="text" data-politespace pattern="[0-9]*">
 		</label>
 		<label>
-			input[type=number] doesn’t allow whitespace characters as of Chrome 34 and Safari 6. <strong>Do not use.</strong>
+			<code>input[type=number]</code> doesn’t allow whitespace characters as of Chrome 34, Safari 6, iOS 7. <strong>Do not use <code>[type=number]</code> with politespace.</strong>
 			<input type="number" data-politespace pattern="[0-9]*">
 		</label>
 		<label>
-			input[type=tel]
-			<input type="tel" data-politespace pattern="[0-9]*">
-		</label>
-		<label>
-			Default input[type=text][maxlength="7"] <em>You must account for whitespace.</em>
+			Default <code>input[type=text]</code> with <code>maxlength="7"</code>. <em>You must account for whitespace in the maxlength.</em>
 			<input type="text" data-politespace maxlength="7" value="123456">
-		</label>
-		<label>
-			<strong>Don’t use this on password fields.</strong> Default input[type=password]
-			<input type="password" data-politespace>
 		</label>
 		<label>
 			Default textarea
 			<textarea data-politespace></textarea>
 		</label>
 		<label>
-			input[type=text] with [data-grouplength=2]
+			<code>input[type=text]</code> with <code>data-grouplength="2"</code>
 			<input type="text" data-politespace data-grouplength="2" value="1234567890">
 		</label>
 		<label>
-			input[type=text] with [data-grouplength=1,2,3,]
+			<code>input[type=text]</code> with <code>data-grouplength="1,2,3,"</code>
 			<input type="text" data-politespace data-grouplength="1,2,3," value="1234567890">
 		</label>
 		<label>
-			input[type=text] (US Phone Number) with [data-grouplength=3,3,]
-			<input type="text" data-politespace data-grouplength="3,3," value="1234567890">
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3,"</code>
+			<input type="tel" data-politespace data-grouplength="3,3," value="1234567890">
 		</label>
 		<label>
-			input[type=text] (Credit Card) with [data-grouplength=4]
-			<input type="text" data-politespace data-grouplength="4" value="4444444444444444">
+			<code>input[type=text]</code> (Credit Card) with <code>data-grouplength="4"</code> and <code>pattern="[0-9]*"</code>
+			<input type="text" pattern="[0-9]*" data-politespace data-grouplength="4" value="4444444444444444">
 		</label>
 		<label>
-			input[type=text] (US Zip Code) with [data-grouplength=5,]
+			<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
 			<input type="text" data-politespace data-grouplength="5," value="100011234">
 		</label>
 	</form>
