@@ -19,11 +19,11 @@ Make sure your `maxlength` value is large enough to allow for the addition of th
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
-### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
-
-## [Download politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js)
+### [Download politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js)
 
 or use [Bower](http://bower.io/): `bower install politespace`
+
+### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
 
 ### Beware input masks.
 
