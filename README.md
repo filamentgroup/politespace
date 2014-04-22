@@ -25,6 +25,8 @@ or use [Bower](http://bower.io/): `bower install politespace`
 
 ### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
 
+![](assets/politespace.gif)
+
 ### Beware input masks.
 
 This plugin was created as a less intrusive alternative to the common input mask, which have serious accessibility implications:
