@@ -13,7 +13,7 @@ To customize the number of spaces, use the `data-grouplength` attribute (it defa
 
 Use `pattern="[0-9]*"` for numeric keyboards on iOS.
 
-This script does not work reliably cross-browser with `<input type="number">`: independent of `politespace`, WebKit removes the value on blur when the user types a non-numeric character in the field (also fails on when setting `myElement.value`).
+This script does not work reliably cross-browser with `<input type="number">`: independent of `politespace`, WebKit removes the value on blur when a script attempts to add a non-numeric character in the field, for example: `myElement.value = "1,000"`.
 
 Make sure your `maxlength` value is large enough to allow for the addition of the whitespace.
 
@@ -39,6 +39,7 @@ Run these commands:
 
  * `npm install`
  * `bower install`
+ * `grunt` as normal
 
 ### Configuring Grunt
 
