@@ -78,7 +78,7 @@
 	};
 
 	Politespace.prototype.reset = function() {
-		this.element.value = this.unformat( this.element.vaule );
+		this.element.value = this.unformat( this.element.value );
 	};
 
 	w.Politespace = Politespace;
