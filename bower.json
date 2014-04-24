@@ -1,0 +1,12 @@
+{
+	"name": "politespace",
+	"version": "0.1.1",
+	"main": ["dist/politespace.js"],
+	"ignore": [
+		"**/.*"
+	],
+	"dependencies": {
+		"jquery": ">=1.9.1 <2.0.0",
+		"qunit": ">=1.12.0"
+	}
+}
