@@ -7,4 +7,7 @@ before_script:
   - npm install bower
   - bower install
 script: grunt -v
+branches:
+  except:
+    - gh-pages
 
