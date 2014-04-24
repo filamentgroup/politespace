@@ -9,6 +9,6 @@ module.exports = function(grunt) {
 	grunt.registerTask( "src", [ "lint", "concat", "usebanner" ] );
 	grunt.registerTask( "test", [ "qunit" ] );
 
-	grunt.registerTask( "deploy", [ "default", "gh-pages" ] );
+	grunt.registerTask( "deploy", [ "default", "shell:gh-pages-pre", "gh-pages", "shell:gh-pages-post" ] );
 
 };
