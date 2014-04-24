@@ -38,8 +38,7 @@
 		"grunt-contrib-csslint": "~0.2.0",
 		"grunt-banner": "~0.2.2",
 		"grunt-replace": "~0.7.6",
-		"grunt-lintspaces": "~0.5.0",
-		"grunt-shell": "~0.6.4"
+		"grunt-lintspaces": "~0.5.0"
 	},
 	"peerDependencies": {},
 	"engines": {
