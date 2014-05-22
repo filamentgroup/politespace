@@ -4,6 +4,8 @@
 [![Dependency Status](https://david-dm.org/filamentgroup/politespace.svg?theme=shields.io)](https://david-dm.org/filamentgroup/politespace)
 [![devDependency Status](https://david-dm.org/filamentgroup/politespace/dev-status.svg?theme=shields.io)](https://david-dm.org/filamentgroup/politespace#info=devDependencies)
 
+[![Filament Group](http://filamentgroup.com/images/fg-logo-positive-sm-crop.png) ](http://www.filamentgroup.com/)
+
 ## Using Politespace
 
 Add `data-politespace` to your form’s `input[type=text]` (et al) or `textarea` and we’ll add spaces to the value when the user blurs off of it. We’ll also remove those spaces on focus.
