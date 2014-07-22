@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>politespace Test Suite</title>
+	<link rel="stylesheet" href="/demo-head/demohead.css">
 	<style>
 	/* Logo */
 	.header {
@@ -58,10 +59,23 @@
 		jQuery( document ).trigger( "enhance" );
 	});
 	</script>
+	<script src="/demo-head/loadfont.js"></script>
 </head>
 <body>
-	<div class="header">
-		<a href="http://filamentgroup.com/"><h1 id="fg-logo">Filament Group</h1></a>
+	<div class="demo-header">
+		<div class="company">
+			<img src="http://filamentgroup.com/images/fg-logo-positive-sm-crop.png">
+		</div>
+		<div class="details">
+			<p class="description-container">Demo of <span class="repo-name">PoliteSpace</span>
+				<span class="description">Politely add spaces to numeric form values to increase readability (credit card numbers, phone numbers, etc)</span>
+			</p>
+			<ul class="outbound-links">
+				<li><a href="https://github.com/filamentgroup/politespace">Code</a></li>
+				<li><a href="http://filamentgroup.com/lab/politespace.html">Article</a></li>
+				<li><a href="https://github.com/filamentgroup/politespace/issues">Issues</a></li>
+			</ul>
+		</div>
 	</div>
 	<form>
 		<p>This is a demo of the <a href="https://github.com/filamentgroup/politespace">Politespace</a> plugin, an accessible alternative to input mask plugins that adds whitespace formatting when you blur away from an input and removes the spaces on focus so as to not interfere with editing. <a href="https://github.com/filamentgroup/politespace">Learn more about politespace on GitHub.</a></p>
