@@ -77,50 +77,52 @@
 			</ul>
 		</div>
 	</div>
-	<form>
-		<p>This is a demo of the <a href="https://github.com/filamentgroup/politespace">Politespace</a> plugin, an accessible alternative to input mask plugins that adds whitespace formatting when you blur away from an input and removes the spaces on focus so as to not interfere with editing. <a href="https://github.com/filamentgroup/politespace">Learn more about politespace on GitHub.</a></p>
-		<label>
-			Default <code>input[type=text]</code> with <code>pattern="[0-9]*"</code> for numeric keyboard on mobile.
-			<input type="text" data-politespace pattern="[0-9]*">
-		</label>
-		<label>
-			Default <code>input[type=text]</code> with <code>maxlength="7"</code>. <em>You must account for whitespace in the maxlength.</em>
-			<input type="text" data-politespace maxlength="7" value="123456">
-		</label>
-		<label>
-			Default textarea
-			<textarea data-politespace></textarea>
-		</label>
-		<label>
-			<code>input[type=text]</code> with <code>data-grouplength="2"</code>
-			<input type="text" data-politespace data-grouplength="2" value="1234567890">
-		</label>
-		<label>
-			<code>input[type=text]</code> with <code>data-grouplength="1,2,3,"</code>
-			<input type="text" data-politespace data-grouplength="1,2,3," value="1234567890">
-		</label>
-		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3,"</code>
-			<input type="tel" data-politespace data-grouplength="3,3," value="1234567890">
-		</label>
-		<label>
-			<code>input[type=text]</code> (Credit Card) with <code>data-grouplength="4"</code> and <code>pattern="[0-9]*"</code>
-			<input type="text" pattern="[0-9]*" data-politespace data-grouplength="4" value="4444444444444444">
-		</label>
-		<label>
-			<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
-			<input type="text" data-politespace data-grouplength="5," value="100011234">
-		</label>
-		<p><code>input[type=number]</code> has a bug when setting a value containing whitespace characters as of Chrome 34, Safari 6, iOS 7. <strong>Do not use <code>[type=number]</code> with politespace.</strong></p>
-		<label>
-			Without politespace:
-			<input type="number">
-		</label>
-		<label>
-			With politespace:
-			<input type="number" data-politespace pattern="[0-9]*">
-		</label>
+	<div class="demo-main">
+		<form>
+			<p>This is a demo of the <a href="https://github.com/filamentgroup/politespace">Politespace</a> plugin, an accessible alternative to input mask plugins that adds whitespace formatting when you blur away from an input and removes the spaces on focus so as to not interfere with editing. <a href="https://github.com/filamentgroup/politespace">Learn more about politespace on GitHub.</a></p>
+			<label>
+				Default <code>input[type=text]</code> with <code>pattern="[0-9]*"</code> for numeric keyboard on mobile.
+				<input type="text" data-politespace pattern="[0-9]*">
+			</label>
+			<label>
+				Default <code>input[type=text]</code> with <code>maxlength="7"</code>. <em>You must account for whitespace in the maxlength.</em>
+				<input type="text" data-politespace maxlength="7" value="123456">
+			</label>
+			<label>
+				Default textarea
+				<textarea data-politespace></textarea>
+			</label>
+			<label>
+				<code>input[type=text]</code> with <code>data-grouplength="2"</code>
+				<input type="text" data-politespace data-grouplength="2" value="1234567890">
+			</label>
+			<label>
+				<code>input[type=text]</code> with <code>data-grouplength="1,2,3,"</code>
+				<input type="text" data-politespace data-grouplength="1,2,3," value="1234567890">
+			</label>
+			<label>
+				<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3,"</code>
+				<input type="tel" data-politespace data-grouplength="3,3," value="1234567890">
+			</label>
+			<label>
+				<code>input[type=text]</code> (Credit Card) with <code>data-grouplength="4"</code> and <code>pattern="[0-9]*"</code>
+				<input type="text" pattern="[0-9]*" data-politespace data-grouplength="4" value="4444444444444444">
+			</label>
+			<label>
+				<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
+				<input type="text" data-politespace data-grouplength="5," value="100011234">
+			</label>
+			<p><code>input[type=number]</code> has a bug when setting a value containing whitespace characters as of Chrome 34, Safari 6, iOS 7. <strong>Do not use <code>[type=number]</code> with politespace.</strong></p>
+			<label>
+				Without politespace:
+				<input type="number">
+			</label>
+			<label>
+				With politespace:
+				<input type="number" data-politespace pattern="[0-9]*">
+			</label>
 
-	</form>
+		</form>
+	</div>
 </body>
 </html>
