@@ -54,7 +54,7 @@
 
 			val = ( match || [ val ] ).join( this.delimiter );
 		} else {
-			val = val.replace( this.groupReg, "$1 " );
+			val = val.replace( this.groupReg, "$1" + this.delimiter );
 
 			if( val.substr( val.length - 1 ) === this.delimiter ) {
 				val = val.substr( 0, val.length - 1 );
