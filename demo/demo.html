@@ -48,6 +48,7 @@
 		font-size: 100%;
 	}
 	</style>
+	<link rel="stylesheet" href="../dist/politespace.css">
 	<!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
 	<script src="../bower_components/jquery/dist/jquery.js"></script>
 	<script>jQuery.noConflict()</script>
@@ -97,16 +98,20 @@
 			<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
 			<input type="text" data-politespace data-grouplength="5," value="100011234">
 		</label>
-		<p><code>input[type=number]</code> has a bug when setting a value containing whitespace characters as of Chrome 34, Safari 6, iOS 7. <strong>Do not use <code>[type=number]</code> with politespace.</strong></p>
 		<label>
-			Without politespace:
-			<input type="number">
+			<code>input[type=text]</code> (Canadian Postal Code) <code>data-grouplength="3,"</code>
+			<input type="text" data-politespace data-grouplength="3," value="A1A 1A1" pattern="[0-9A-Z]*">
+		</label>
+		<p><code>input[type=number]</code> is now supported in spite of the bugs when setting a value containing whitespace characters in Chrome, Safari, Mobile Safari (last tested in 34, 6, and iOS 7 respectively).</p>
+		<p><code>input[type=number]</code> is important because it triggers the numeric keyboard on the Android browser and mobile Firefox.</p>
+		<label>
+			<code>input[type=number]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
+			<input type="number" pattern="[0-9]*" data-politespace data-grouplength="5," value="011111234">
 		</label>
 		<label>
-			With politespace:
-			<input type="number" data-politespace>
+			Control element, not using politespace:
+			<input type="number" pattern="[0-9]*">
 		</label>
-
 	</form>
 </body>
 </html>

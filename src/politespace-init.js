@@ -11,11 +11,20 @@
 	$.fn[ componentName ] = function(){
 		return this.each( function(){
 			var polite = new Politespace( this );
+			if( polite.type === "number" ) {
+				polite.createProxy();
+			}
 
-			$( this ).bind( "blur", function() {
+			$( this )
+				.bind( "input keydown", function() {
+					polite.updateProxy();
+				})
+				.bind( "blur", function() {
+					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 					polite.update();
 				})
 				.bind( "focus", function() {
+					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
 					polite.reset();
 				})
 				.data( componentName, polite );

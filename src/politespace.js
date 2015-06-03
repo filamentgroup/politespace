@@ -14,6 +14,7 @@
 		var groupRegMatch;
 
 		this.element = element;
+		this.type = this.element.getAttribute( "type" );
 
 		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
 		groupRegMatch = this._buildRegexArr( this.groupLength );
@@ -62,15 +63,21 @@
 		return val;
 	};
 
+	Politespace.prototype.val = function() {
+		return this.format( this.element.value );
+	};
+
 	Politespace.prototype.update = function() {
 		var maxlength = this.element.getAttribute( "maxlength" ),
-			val = this.format( this.element.value );
+			val = this.val();
 
 		if( maxlength ) {
 			val = val.substr( 0, maxlength );
 		}
 
-		this.element.value = val;
+		if( !this.useProxy() ) {
+			this.element.value = val;
+		}
 	};
 
 	Politespace.prototype.unformat = function( value ) {
@@ -79,6 +86,42 @@
 
 	Politespace.prototype.reset = function() {
 		this.element.value = this.unformat( this.element.value );
+	};
+
+	Politespace.prototype.useProxy = function() {
+		return this.type === "number";
+	};
+
+	Politespace.prototype.updateProxy = function() {
+		if( this.useProxy() ) {
+			this.element.parentNode.firstChild.innerHTML = this.val();
+		}
+	};
+
+	Politespace.prototype.createProxy = function() {
+		if( !this.useProxy() ) {
+			return;
+		}
+
+		function getStyle( el, prop ) {
+			return window.getComputedStyle( el, null ).getPropertyValue( prop );
+		}
+		function getStyleFloat( el, prop ) {
+			return parseFloat( getStyle( el, prop ) );
+		}
+
+		var parent = this.element.parentNode;
+		var el = document.createElement( "div" );
+		var proxy = document.createElement( "div" );
+		proxy.innerHTML = this.val();
+		proxy.style.fontFamily = getStyle( this.element, "font-family" );
+		proxy.style.left = ( getStyleFloat( this.element, "padding-left" ) + getStyleFloat( this.element, "border-left-width" ) ) + "px";
+		proxy.style.top = ( getStyleFloat( this.element, "padding-top" ) + getStyleFloat( this.element, "border-top-width" ) ) + "px";
+
+		el.appendChild( proxy );
+		el.className = "politespace-proxy active";
+		var formEl = parent.replaceChild( el, this.element );
+		el.appendChild( formEl );
 	};
 
 	w.Politespace = Politespace;
