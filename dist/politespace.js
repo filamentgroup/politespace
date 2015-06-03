@@ -1,7 +1,7 @@
-/*! politespace - v0.1.1 - 2014-04-24
+/*! politespace - v0.1.2 - 2015-06-03
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
- * Copyright (c) 2014 Filament Group (@filamentgroup)
+ * Copyright (c) 2015 Filament Group (@filamentgroup)
  * MIT License */
 
 (function( w ){
@@ -20,6 +20,8 @@ Politely add spaces to input values to increase readability (credit card numbers
 		var groupRegMatch;
 
 		this.element = element;
+		this.type = this.element.getAttribute( "type" );
+		this.delimiter = this.element.getAttribute( "data-delimiter" ) || " ";
 
 		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
 		groupRegMatch = this._buildRegexArr( this.groupLength );
@@ -56,11 +58,11 @@ Politely add spaces to input values to increase readability (credit card numbers
 				}
 			}
 
-			val = ( match || [ val ] ).join( ' ' );
+			val = ( match || [ val ] ).join( this.delimiter );
 		} else {
 			val = val.replace( this.groupReg, "$1 " );
 
-			if( val.substr( val.length - 1 ) === " " ) {
+			if( val.substr( val.length - 1 ) === this.delimiter ) {
 				val = val.substr( 0, val.length - 1 );
 			}
 		}
@@ -68,15 +70,21 @@ Politely add spaces to input values to increase readability (credit card numbers
 		return val;
 	};
 
+	Politespace.prototype.val = function() {
+		return this.format( this.element.value );
+	};
+
 	Politespace.prototype.update = function() {
 		var maxlength = this.element.getAttribute( "maxlength" ),
-			val = this.format( this.element.value );
+			val = this.val();
 
 		if( maxlength ) {
 			val = val.substr( 0, maxlength );
 		}
 
-		this.element.value = val;
+		if( !this.useProxy() ) {
+			this.element.value = val;
+		}
 	};
 
 	Politespace.prototype.unformat = function( value ) {
@@ -85,6 +93,42 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 	Politespace.prototype.reset = function() {
 		this.element.value = this.unformat( this.element.value );
+	};
+
+	Politespace.prototype.useProxy = function() {
+		return this.type === "number";
+	};
+
+	Politespace.prototype.updateProxy = function() {
+		if( this.useProxy() ) {
+			this.element.parentNode.firstChild.innerHTML = this.val();
+		}
+	};
+
+	Politespace.prototype.createProxy = function() {
+		if( !this.useProxy() ) {
+			return;
+		}
+
+		function getStyle( el, prop ) {
+			return window.getComputedStyle( el, null ).getPropertyValue( prop );
+		}
+		function getStyleFloat( el, prop ) {
+			return parseFloat( getStyle( el, prop ) );
+		}
+
+		var parent = this.element.parentNode;
+		var el = document.createElement( "div" );
+		var proxy = document.createElement( "div" );
+		proxy.innerHTML = this.val();
+		proxy.style.fontFamily = getStyle( this.element, "font-family" );
+		proxy.style.left = ( getStyleFloat( this.element, "padding-left" ) + getStyleFloat( this.element, "border-left-width" ) ) + "px";
+		proxy.style.top = ( getStyleFloat( this.element, "padding-top" ) + getStyleFloat( this.element, "border-top-width" ) ) + "px";
+
+		el.appendChild( proxy );
+		el.className = "politespace-proxy active";
+		var formEl = parent.replaceChild( el, this.element );
+		el.appendChild( formEl );
 	};
 
 	w.Politespace = Politespace;
@@ -103,11 +147,20 @@ Politely add spaces to input values to increase readability (credit card numbers
 	$.fn[ componentName ] = function(){
 		return this.each( function(){
 			var polite = new Politespace( this );
+			if( polite.type === "number" ) {
+				polite.createProxy();
+			}
 
-			$( this ).bind( "blur", function() {
+			$( this )
+				.bind( "input keydown", function() {
+					polite.updateProxy();
+				})
+				.bind( "blur", function() {
+					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 					polite.update();
 				})
 				.bind( "focus", function() {
+					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
 					polite.reset();
 				})
 				.data( componentName, polite );
