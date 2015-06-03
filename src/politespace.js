@@ -11,11 +11,25 @@
 			return;
 		}
 
-		var groupRegMatch;
+		var groupRegMatch, allowMatch;
 
 		this.element = element;
 		this.type = this.element.getAttribute( "type" );
 		this.delimiter = this.element.getAttribute( "data-delimiter" ) || " ";
+
+		allowMatch = this.element.getAttribute("data-allowmatch");
+		if ( allowMatch && allowMatch !== "" ) {
+			try {
+				allowMatch = new RegExp(allowMatch, "g");
+			}
+			catch (e) {
+				allowMatch = false;
+			}
+		}
+		else {
+			allowMatch = false;
+		}
+		this.allowMatch = allowMatch || /\D/g;
 
 		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
 		groupRegMatch = this._buildRegexArr( this.groupLength );
@@ -36,8 +50,9 @@
 	};
 
 	Politespace.prototype.format = function( value ) {
-		var val = value.replace( /\D/g, '' ),
-			match;
+		var val, match;
+
+		val = value.replace( this.allowMatch, '' );
 
 		if( this.groupRegNonUniform ) {
 			match = val.match( this.groupReg );
