@@ -15,6 +15,7 @@
 
 		this.element = element;
 		this.type = this.element.getAttribute( "type" );
+		this.delimiter = this.element.getAttribute( "data-delimiter" ) || " ";
 
 		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
 		groupRegMatch = this._buildRegexArr( this.groupLength );
@@ -51,11 +52,11 @@
 				}
 			}
 
-			val = ( match || [ val ] ).join( ' ' );
+			val = ( match || [ val ] ).join( this.delimiter );
 		} else {
 			val = val.replace( this.groupReg, "$1 " );
 
-			if( val.substr( val.length - 1 ) === " " ) {
+			if( val.substr( val.length - 1 ) === this.delimiter ) {
 				val = val.substr( 0, val.length - 1 );
 			}
 		}

@@ -105,8 +105,8 @@
 		<p><code>input[type=number]</code> is now supported in spite of the bugs when setting a value containing whitespace characters in Chrome, Safari, Mobile Safari (last tested in 34, 6, and iOS 7 respectively).</p>
 		<p><code>input[type=number]</code> is important because it triggers the numeric keyboard on the Android browser and mobile Firefox.</p>
 		<label>
-			<code>input[type=number]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
-			<input type="number" pattern="[0-9]*" data-politespace data-grouplength="5," value="011111234">
+			<code>input[type=number]</code> (US Zip Code) with <code>data-grouplength="5," data-delimiter="-"</code>
+			<input type="number" pattern="[0-9]*" data-politespace data-grouplength="5," data-delimiter="-" value="011111234">
 		</label>
 		<label>
 			Control element, not using politespace:

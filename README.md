@@ -10,6 +10,8 @@
 
 Add `data-politespace` to your form’s `input[type=text]` (et al) or `textarea` and we’ll add spaces to the value when the user blurs off of it. We’ll also remove those spaces on focus.
 
+### data-grouplength
+
 To customize the number of spaces, use the `data-grouplength` attribute (it defaults to 3). It can be:
 
  * single number (to uniformly repeat, like a credit card)
@@ -20,6 +22,10 @@ Use `pattern="[0-9]*"` for numeric keyboards on iOS.
 This script now works reliably cross-browser with `<input type="number">`. It should be noted that independent of `politespace`, WebKit removes the value on blur when a user types or a script adds a non-numeric character in the field, for example: `myElement.value = "1,000"`. We’re now creating a proxy element on top of the form element to workaround this issue and display the formatted value.
 
 Make sure your `maxlength` value is large enough to allow for the addition of the whitespace.
+
+### data-delimiter
+
+The default delimiter is a space, but you can add `data-delimiter` to customize to a different character.
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
