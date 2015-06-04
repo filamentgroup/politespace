@@ -104,17 +104,21 @@
 		function getStyle( el, prop ) {
 			return window.getComputedStyle( el, null ).getPropertyValue( prop );
 		}
-		function getStyleFloat( el, prop ) {
-			return parseFloat( getStyle( el, prop ) );
+		function sumStyles( el, props ) {
+			var total = 0;
+			for( var j=0, k=props.length; j<k; j++ ) {
+				total += parseFloat( getStyle( el, props[ j ] ) );
+			}
+			return total;
 		}
 
 		var parent = this.element.parentNode;
 		var el = document.createElement( "div" );
 		var proxy = document.createElement( "div" );
 		proxy.innerHTML = this.val();
-		proxy.style.fontFamily = getStyle( this.element, "font-family" );
-		proxy.style.left = ( getStyleFloat( this.element, "padding-left" ) + getStyleFloat( this.element, "border-left-width" ) ) + "px";
-		proxy.style.top = ( getStyleFloat( this.element, "padding-top" ) + getStyleFloat( this.element, "border-top-width" ) ) + "px";
+		proxy.style.font = getStyle( this.element, "font" );
+		proxy.style.left = sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px";
+		proxy.style.top = sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px";
 
 		el.appendChild( proxy );
 		el.className = "politespace-proxy active";
