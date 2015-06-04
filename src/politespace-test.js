@@ -171,4 +171,21 @@
 		equal( this.pspace.format( "444444444444" ), "44444-444-4444" );
 	});
 
+	module( "Edit twice", {
+		setup: function() {
+			insertHtml( '<input type="text" data-politespace data-grouplength="3,3," data-delimiter="-">' );
+			this.pspace = $( "[data-politespace]" ).data( "politespace" );
+		},
+		teardown: function() {
+			this.pspace = null;
+		}
+	});
+
+	test( "Blur", function() {
+		$( this.pspace.element ).val( "1112223333" ).trigger( "blur" );
+		equal( $( this.pspace.element ).val(), "111-222-3333" );
+		$( this.pspace.element ).trigger( "focus" ).trigger( "blur" );
+		equal( $( this.pspace.element ).val(), "111-222-3333" );
+	});
+
 }( this, jQuery ));

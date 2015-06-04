@@ -56,7 +56,7 @@
 	};
 
 	Politespace.prototype.format = function( value ) {
-		var val = value.replace( /[^\S]/g, '' );
+		var val = this.unformat( value );
 
 		return this._divideIntoArray( val ).join( this.delimiter );
 	};
@@ -79,7 +79,7 @@
 	};
 
 	Politespace.prototype.unformat = function( value ) {
-		return value.replace( /\s/g, '' );
+		return value.replace( new RegExp(  this.delimiter, 'g' ), '' );
 	};
 
 	Politespace.prototype.reset = function() {
