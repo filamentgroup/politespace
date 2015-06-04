@@ -1,4 +1,4 @@
-/*! politespace - v0.1.2 - 2015-06-03
+/*! politespace - v0.1.3 - 2015-06-04
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2015 Filament Group (@filamentgroup)
@@ -17,57 +17,54 @@ Politely add spaces to input values to increase readability (credit card numbers
 			return;
 		}
 
-		var groupRegMatch;
-
 		this.element = element;
 		this.type = this.element.getAttribute( "type" );
 		this.delimiter = this.element.getAttribute( "data-delimiter" ) || " ";
-
+		this.reverse = this.element.getAttribute( "data-reverse" ) !== null;
 		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
-		groupRegMatch = this._buildRegexArr( this.groupLength );
-
-		this.groupRegNonUniform = groupRegMatch.length > 1;
-		this.groupReg = new RegExp( groupRegMatch.join( '' ), !this.groupRegNonUniform ? 'g' : '' );
 	};
 
-	Politespace.prototype._buildRegexArr = function( groupLengths ) {
-		var split = ( '' + groupLengths ).split( ',' ),
-			str = [];
+	Politespace.prototype._divideIntoArray = function( value ) {
+		var split = ( '' + this.groupLength ).split( ',' ),
+			isUniformSplit = split.length === 1,
+			dividedValue = [],
+			loopIndex = 0,
+			groupLength,
+			substrStart,
+			useCharCount;
 
-		for( var j = 0, k = split.length; j<k; j++ ) {
-			str.push( '([\\S]{' + ( split[ j ] === '' ? '1,' : split[j] ) + '})' + ( j > 0 ? "?" : "" ) );
+		while( split.length && loopIndex < value.length ) {
+			if( isUniformSplit ) {
+				groupLength = split[ 0 ];
+			} else {
+				// use the next split or the rest of the string if open ended, ala "3,3,"
+				groupLength = split.shift() || value.length - loopIndex;
+			}
+
+			// Use min if we’re at the end of a reversed string
+			// (substrStart below grows larger than the string length)
+			useCharCount = Math.min( parseInt( groupLength, 10 ), value.length - loopIndex );
+
+			if( this.reverse ) {
+				substrStart = -1 * (useCharCount + loopIndex);
+			} else {
+				substrStart = loopIndex;
+			}
+			dividedValue.push( value.substr( substrStart, useCharCount ) );
+			loopIndex += useCharCount;
 		}
 
-		return str;
+		if( this.reverse ) {
+			dividedValue.reverse();
+		}
+
+		return dividedValue;
 	};
 
 	Politespace.prototype.format = function( value ) {
-		var val = value.replace( /\D/g, '' ),
-			match;
+		var val = this.unformat( value );
 
-		if( this.groupRegNonUniform ) {
-			match = val.match( this.groupReg );
-			if( match ) {
-				match.shift();
-
-				for( var j = 0; j < match.length; j++ ) {
-					if( !match[ j ] ) {
-						match.splice( j, 1 );
-						j--;
-					}
-				}
-			}
-
-			val = ( match || [ val ] ).join( this.delimiter );
-		} else {
-			val = val.replace( this.groupReg, "$1 " );
-
-			if( val.substr( val.length - 1 ) === this.delimiter ) {
-				val = val.substr( 0, val.length - 1 );
-			}
-		}
-
-		return val;
+		return this._divideIntoArray( val ).join( this.delimiter );
 	};
 
 	Politespace.prototype.val = function() {
@@ -88,7 +85,7 @@ Politely add spaces to input values to increase readability (credit card numbers
 	};
 
 	Politespace.prototype.unformat = function( value ) {
-		return value.replace( /\s/g, '' );
+		return value.replace( new RegExp(  this.delimiter, 'g' ), '' );
 	};
 
 	Politespace.prototype.reset = function() {
@@ -113,17 +110,21 @@ Politely add spaces to input values to increase readability (credit card numbers
 		function getStyle( el, prop ) {
 			return window.getComputedStyle( el, null ).getPropertyValue( prop );
 		}
-		function getStyleFloat( el, prop ) {
-			return parseFloat( getStyle( el, prop ) );
+		function sumStyles( el, props ) {
+			var total = 0;
+			for( var j=0, k=props.length; j<k; j++ ) {
+				total += parseFloat( getStyle( el, props[ j ] ) );
+			}
+			return total;
 		}
 
 		var parent = this.element.parentNode;
 		var el = document.createElement( "div" );
 		var proxy = document.createElement( "div" );
 		proxy.innerHTML = this.val();
-		proxy.style.fontFamily = getStyle( this.element, "font-family" );
-		proxy.style.left = ( getStyleFloat( this.element, "padding-left" ) + getStyleFloat( this.element, "border-left-width" ) ) + "px";
-		proxy.style.top = ( getStyleFloat( this.element, "padding-top" ) + getStyleFloat( this.element, "border-top-width" ) ) + "px";
+		proxy.style.font = getStyle( this.element, "font" );
+		proxy.style.left = sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px";
+		proxy.style.top = sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px";
 
 		el.appendChild( proxy );
 		el.className = "politespace-proxy active";
