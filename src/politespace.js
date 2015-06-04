@@ -11,57 +11,54 @@
 			return;
 		}
 
-		var groupRegMatch;
-
 		this.element = element;
 		this.type = this.element.getAttribute( "type" );
 		this.delimiter = this.element.getAttribute( "data-delimiter" ) || " ";
-
+		this.reverse = this.element.getAttribute( "data-reverse" ) !== null;
 		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
-		groupRegMatch = this._buildRegexArr( this.groupLength );
-
-		this.groupRegNonUniform = groupRegMatch.length > 1;
-		this.groupReg = new RegExp( groupRegMatch.join( '' ), !this.groupRegNonUniform ? 'g' : '' );
 	};
 
-	Politespace.prototype._buildRegexArr = function( groupLengths ) {
-		var split = ( '' + groupLengths ).split( ',' ),
-			str = [];
+	Politespace.prototype._divideIntoArray = function( value ) {
+		var split = ( '' + this.groupLength ).split( ',' ),
+			isUniformSplit = split.length === 1,
+			dividedValue = [],
+			loopIndex = 0,
+			groupLength,
+			substrStart,
+			useCharCount;
 
-		for( var j = 0, k = split.length; j<k; j++ ) {
-			str.push( '([\\S]{' + ( split[ j ] === '' ? '1,' : split[j] ) + '})' + ( j > 0 ? "?" : "" ) );
+		while( split.length && loopIndex < value.length ) {
+			if( isUniformSplit ) {
+				groupLength = split[ 0 ];
+			} else {
+				// use the next split or the rest of the string if open ended, ala "3,3,"
+				groupLength = split.shift() || value.length - loopIndex;
+			}
+
+			// Use min if we’re at the end of a reversed string
+			// (substrStart below grows larger than the string length)
+			useCharCount = Math.min( parseInt( groupLength, 10 ), value.length - loopIndex );
+
+			if( this.reverse ) {
+				substrStart = -1 * (useCharCount + loopIndex);
+			} else {
+				substrStart = loopIndex;
+			}
+			dividedValue.push( value.substr( substrStart, useCharCount ) );
+			loopIndex += useCharCount;
 		}
 
-		return str;
+		if( this.reverse ) {
+			dividedValue.reverse();
+		}
+
+		return dividedValue;
 	};
 
 	Politespace.prototype.format = function( value ) {
-		var val = value.replace( /\D/g, '' ),
-			match;
+		var val = value.replace( /[^\S]/g, '' );
 
-		if( this.groupRegNonUniform ) {
-			match = val.match( this.groupReg );
-			if( match ) {
-				match.shift();
-
-				for( var j = 0; j < match.length; j++ ) {
-					if( !match[ j ] ) {
-						match.splice( j, 1 );
-						j--;
-					}
-				}
-			}
-
-			val = ( match || [ val ] ).join( this.delimiter );
-		} else {
-			val = val.replace( this.groupReg, "$1" + this.delimiter );
-
-			if( val.substr( val.length - 1 ) === this.delimiter ) {
-				val = val.substr( 0, val.length - 1 );
-			}
-		}
-
-		return val;
+		return this._divideIntoArray( val ).join( this.delimiter );
 	};
 
 	Politespace.prototype.val = function() {

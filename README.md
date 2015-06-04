@@ -27,6 +27,10 @@ Make sure your `maxlength` value is large enough to allow for the addition of th
 
 The default delimiter is a space, but you can add `data-delimiter` to customize to a different character.
 
+### data-reverse
+
+When delimiting money, for example, you want the grouplengths to be calculated from the lowest digit to the greatest (from right to left). Use `data-reverse` to opt into this behavior. A USD Price example: `data-grouplength="3" data-delimiter="," data-reverse`
+
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
 ### Download [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js) and [politespace.css](http://filamentgroup.github.io/politespace/dist/politespace.css)
