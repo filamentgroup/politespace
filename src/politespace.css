@@ -1,5 +1,6 @@
 .politespace-proxy {
 	position: relative;
+	overflow: hidden; /* clearfix for floating siblings */
 }
 .politespace-proxy :first-child {
 	display: none;
