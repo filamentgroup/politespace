@@ -75,6 +75,10 @@
 			<input type="text" data-politespace maxlength="7" value="123456">
 		</label>
 		<label>
+			Default <code>input[type=number]</code> with <code>maxlength="7"</code>.
+			<input type="number" data-politespace maxlength="7" value="123456">
+		</label>
+		<label>
 			Default textarea
 			<textarea data-politespace></textarea>
 		</label>
@@ -127,6 +131,18 @@
 		<label>
 			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="4,3,3" data-reverse</code>
 			<input type="tel" data-politespace data-grouplength="4,3,3" data-reverse value="1234567890">
+		</label>
+		<label>
+			<code>input[type=number]</code> with a long value <code>data-grouplength="4"</code>
+			<div>
+				<input type="number" pattern="[0-9]*" data-politespace data-grouplength="4" value="123456789012345678901234567890">
+			</div>
+		</label>
+		<label>
+			<code>input[type=number]</code> with a long value <code>data-grouplength="4"</code>
+			<div>
+				<input type="number" pattern="[0-9]*" data-politespace data-grouplength="4" value="12345678901234567890" style="width: 40%">
+			</div>
 		</label>
 	</form>
 </body>
