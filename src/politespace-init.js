@@ -22,6 +22,7 @@
 				.bind( "blur", function() {
 					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 					polite.update();
+					polite.updateProxy();
 				})
 				.bind( "focus", function() {
 					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );

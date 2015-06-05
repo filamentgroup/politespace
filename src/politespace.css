@@ -1,6 +1,7 @@
 .politespace-proxy {
 	position: relative;
 	overflow: hidden; /* clearfix for floating siblings */
+	display: inline-block;
 }
 .politespace-proxy :first-child {
 	display: none;
@@ -11,7 +12,20 @@
 	left: 0;
 	top: 0;
 	pointer-events: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .politespace-proxy.active input {
 	color: transparent;
+}
+.politespace-proxy.active input[type=number] {
+	-moz-appearance: textfield;
+}
+.politespace-proxy.active input[type=number]::-webkit-inner-spin-button,
+.politespace-proxy.active input[type=number]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
 }
