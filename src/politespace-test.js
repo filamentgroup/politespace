@@ -129,7 +129,7 @@
 
 	module( "Apply right to left, uniform grouplength", {
 		setup: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="3" data-reverse data-delimiter=",">' );
+			insertHtml( '<input type="text" data-politespace data-grouplength="3" data-reverse data-delimiter="," data-decimal-mark=".">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		teardown: function() {
@@ -147,6 +147,25 @@
 		equal( this.pspace.format( "123" ), "123" );
 		equal( this.pspace.format( "1234" ), "1,234" );
 		equal( this.pspace.format( "4444444444" ), "4,444,444,444" );
+		equal( this.pspace.format( "4444444444.44" ), "4,444,444,444.44" );
+	});
+
+	module( "Apply right to left, uniform grouplength, i18n Four Thousand = 4 000,00", {
+		setup: function() {
+			insertHtml( '<input type="text" data-politespace data-grouplength="3" data-reverse data-delimiter=" " data-decimal-mark=",">' );
+			this.pspace = $( "[data-politespace]" ).data( "politespace" );
+		},
+		teardown: function() {
+			this.pspace = null;
+		}
+	});
+
+	test( "Formats", function() {
+		equal( this.pspace.format( "12" ), "12" );
+		equal( this.pspace.format( "123" ), "123" );
+		equal( this.pspace.format( "1234" ), "1 234" );
+		equal( this.pspace.format( "4444444444" ), "4 444 444 444" );
+		equal( this.pspace.format( "4444444444,44" ), "4 444 444 444,44" );
 	});
 
 	module( "Apply right to left, nonuniform grouplength", {

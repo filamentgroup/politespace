@@ -14,6 +14,8 @@
 		this.element = element;
 		this.type = this.element.getAttribute( "type" );
 		this.delimiter = this.element.getAttribute( "data-delimiter" ) || " ";
+		// https://en.wikipedia.org/wiki/Decimal_mark
+		this.decimalMark = this.element.getAttribute( "data-decimal-mark" ) || "";
 		this.reverse = this.element.getAttribute( "data-reverse" ) !== null;
 		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
 	};
@@ -56,9 +58,17 @@
 	};
 
 	Politespace.prototype.format = function( value ) {
+		var split;
 		var val = this.unformat( value );
+		var suffix = '';
 
-		return this._divideIntoArray( val ).join( this.delimiter );
+		if( this.decimalMark ) {
+			split = val.split( this.decimalMark );
+			suffix = split.length > 1 ? this.decimalMark + split[ 1 ] : '';
+			val = split[ 0 ];
+		}
+
+		return this._divideIntoArray( val ).join( this.delimiter ) + suffix;
 	};
 
 	Politespace.prototype.trimMaxlength = function( value ) {

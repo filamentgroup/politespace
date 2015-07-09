@@ -31,6 +31,10 @@ The default delimiter is a space, but you can add `data-delimiter` to customize 
 
 When delimiting money, for example, you want the grouplengths to be calculated from the lowest digit to the greatest (from right to left). Use `data-reverse` to opt into this behavior. A USD Price example: `data-grouplength="3" data-delimiter="," data-reverse`
 
+### data-decimal-mark
+
+When delimiting money as a floating point, you’ll want to exclude the fractional portion of the number when inserting delimiters. For example, $4,000.34 will need `data-delimiter="," data-decimal-mark="."` (or for proper internationalization, $4 000,34 will need `data-delimiter=" " data-decimal-mark=","`).
+
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
 ### Download [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js) and [politespace.css](http://filamentgroup.github.io/politespace/dist/politespace.css)
