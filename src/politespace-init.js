@@ -5,21 +5,16 @@
 	// jQuery Plugin
 
 	var componentName = "politespace",
-		enhancedAttr = "data-enhanced",
-		initSelector = "[data-" + componentName + "]:not([" + enhancedAttr + "])";
-
-	var DOMLib = {
-		getAttribute: function( el, key ) {
-			return $( el ).attr( key );
-		},
-		getStyle: function( el, key ) {
-			return $( el ).css( key );
-		}
-	};
+		initSelector = "[data-" + componentName + "]";
 
 	$.fn[ componentName ] = function(){
 		return this.each( function(){
-			var polite = new Politespace( this, DOMLib );
+			var $t = $( this );
+			if( $t.data( componentName ) ) {
+				return;
+			}
+
+			var polite = new Politespace( this );
 			if( polite.type === "number" ) {
 				polite.createProxy();
 			}
@@ -46,7 +41,7 @@
 	// auto-init on enhance (which is called on domready)
 	$( document ).bind( "enhance", function( e ) {
 		var $sel = $( e.target ).is( initSelector ) ? $( e.target ) : $( initSelector, e.target );
-		$sel[ componentName ]().attr( enhancedAttr, "true" );
+		$sel[ componentName ]();
 	});
 
 }( jQuery ));

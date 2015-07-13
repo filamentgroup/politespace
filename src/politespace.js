@@ -1,7 +1,7 @@
-(function( w ){
+(function( w, $ ){
 	"use strict";
 
-	var Politespace = function( element, DOMLib ) {
+	var Politespace = function( element ) {
 		if( !element ) {
 			throw new Error( "Politespace requires an element argument." );
 		}
@@ -12,13 +12,21 @@
 		}
 
 		this.element = element;
-		this.$ = DOMLib;
-		this.type = this.$.getAttribute( this.element, "type" );
-		this.delimiter = this.$.getAttribute( this.element, "data-delimiter" ) || " ";
+		this.$element = $( element );
+		this.type = this.$element.attr( "type" );
+		this.delimiter = this.$element.attr( "data-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
-		this.decimalMark = this.$.getAttribute( this.element, "data-decimal-mark" ) || "";
-		this.reverse = this.$.getAttribute( this.element, "data-reverse" ) !== undefined;
-		this.groupLength = this.$.getAttribute( this.element, "data-grouplength" ) || 3;
+		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
+		this.reverse = this.$element.is( "[data-reverse]" );
+		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+
+		var proxyAnchorSelector = this.$element.attr( "data-proxy-anchor" );
+		this.$proxyAnchor = this.$element;
+		this.$proxy = null;
+
+		if( proxyAnchorSelector ) {
+			this.$proxyAnchor = this.$element.closest( proxyAnchorSelector );
+		}
 	};
 
 	Politespace.prototype._divideIntoArray = function( value ) {
@@ -102,11 +110,9 @@
 	};
 
 	Politespace.prototype.updateProxy = function() {
-		var proxy;
-		if( this.useProxy() ) {
-			proxy = this.element.parentNode.firstChild;
-			proxy.innerHTML = this.format( this.getValue() );
-			proxy.style.width = this.element.offsetWidth + "px";
+		if( this.useProxy() && this.$proxy.length ) {
+			this.$proxy.html( this.format( this.getValue() ) );
+			this.$proxy.css( "width", this.element.offsetWidth + "px" );
 		}
 	};
 
@@ -119,27 +125,27 @@
 		function sumStyles( el, props ) {
 			var total = 0;
 			for( var j=0, k=props.length; j<k; j++ ) {
-				total += parseFloat( self.$.getStyle( el, props[ j ] ) );
+				total += parseFloat( self.$element.css( props[ j ] ) );
 			}
 			return total;
 		}
 
-		var parent = this.element.parentNode;
-		var el = document.createElement( "div" );
-		var proxy = document.createElement( "div" );
-		proxy.style.font = this.$.getStyle( el, "font" );
-		proxy.style.paddingLeft = sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px";
-		proxy.style.paddingRight = sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px";
-		proxy.style.top = sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px";
+		var $el = $( "<div>" ).addClass( "politespace-proxy active" );
+		var $parent = this.$proxyAnchor.parent();
 
-		el.appendChild( proxy );
-		el.className = "politespace-proxy active";
-		var formEl = parent.replaceChild( el, this.element );
-		el.appendChild( formEl );
+		this.$proxy = $( "<div>" ).css({
+			font: this.$element.css( "font" ),
+			"padding-left": sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px",
+			"padding-right": sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px",
+			top: sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px"
+		});
+		$el.append( this.$proxy );
+		$el.append( this.$proxyAnchor );
+		$parent.append( $el );
 
 		this.updateProxy();
 	};
 
 	w.Politespace = Politespace;
 
-}( this ));
+}( this, jQuery ));
