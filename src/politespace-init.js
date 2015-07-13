@@ -8,9 +8,18 @@
 		enhancedAttr = "data-enhanced",
 		initSelector = "[data-" + componentName + "]:not([" + enhancedAttr + "])";
 
+	var DOMLib = {
+		getAttribute: function( el, key ) {
+			return $( el ).attr( key );
+		},
+		getStyle: function( el, key ) {
+			return $( el ).css( key );
+		}
+	};
+
 	$.fn[ componentName ] = function(){
 		return this.each( function(){
-			var polite = new Politespace( this );
+			var polite = new Politespace( this, DOMLib );
 			if( polite.type === "number" ) {
 				polite.createProxy();
 			}

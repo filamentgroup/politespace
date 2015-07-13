@@ -17,6 +17,10 @@
 		}
 	});
 
+	test( "Not Reversed", function() {
+		strictEqual( this.pspace.reverse, false );
+	});
+
 	test( "Blur", function() {
 		$( this.pspace.element ).val( "12345678" ).trigger( "blur" );
 		equal( $( this.pspace.element ).val(), "123 456 78" );

@@ -1,7 +1,7 @@
 (function( w ){
 	"use strict";
 
-	var Politespace = function( element ) {
+	var Politespace = function( element, DOMLib ) {
 		if( !element ) {
 			throw new Error( "Politespace requires an element argument." );
 		}
@@ -12,12 +12,13 @@
 		}
 
 		this.element = element;
-		this.type = this.element.getAttribute( "type" );
-		this.delimiter = this.element.getAttribute( "data-delimiter" ) || " ";
+		this.$ = DOMLib;
+		this.type = this.$.getAttribute( this.element, "type" );
+		this.delimiter = this.$.getAttribute( this.element, "data-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
-		this.decimalMark = this.element.getAttribute( "data-decimal-mark" ) || "";
-		this.reverse = this.element.getAttribute( "data-reverse" ) !== null;
-		this.groupLength = this.element.getAttribute( "data-grouplength" ) || 3;
+		this.decimalMark = this.$.getAttribute( this.element, "data-decimal-mark" ) || "";
+		this.reverse = this.$.getAttribute( this.element, "data-reverse" ) !== undefined;
+		this.groupLength = this.$.getAttribute( this.element, "data-grouplength" ) || 3;
 	};
 
 	Politespace.prototype._divideIntoArray = function( value ) {
@@ -114,13 +115,11 @@
 			return;
 		}
 
-		function getStyle( el, prop ) {
-			return window.getComputedStyle( el, null ).getPropertyValue( prop );
-		}
+		var self = this;
 		function sumStyles( el, props ) {
 			var total = 0;
 			for( var j=0, k=props.length; j<k; j++ ) {
-				total += parseFloat( getStyle( el, props[ j ] ) );
+				total += parseFloat( self.$.getStyle( el, props[ j ] ) );
 			}
 			return total;
 		}
@@ -128,7 +127,7 @@
 		var parent = this.element.parentNode;
 		var el = document.createElement( "div" );
 		var proxy = document.createElement( "div" );
-		proxy.style.font = getStyle( this.element, "font" );
+		proxy.style.font = this.$.getStyle( el, "font" );
 		proxy.style.paddingLeft = sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px";
 		proxy.style.paddingRight = sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px";
 		proxy.style.top = sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px";
