@@ -43,11 +43,13 @@
 
 				if( type === "password" ){
 					$element.attr( "type", $element.attr( "data-toggle-type" ) || "text" );
-					$element.data( "politespace" ).unmask();
+					$element.data( "politespace" ).updateProxy();
 				} else {
 					$element.attr( "data-toggle-type", $element.attr( "type" ));
 					$element.attr( "type", "password" );
-					$element.data( "politespace" ).mask();
+					$element
+						.data( "politespace" )
+						.updateProxy( $element.attr("data-mask") || "●" );
 				}
 			});
 		});

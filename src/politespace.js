@@ -111,14 +111,14 @@
 		return this.type === "number";
 	};
 
-	Politespace.prototype.updateProxy = function() {
+	Politespace.prototype.updateProxy = function( maskChar ) {
 		var val;
 
 		if( this.useProxy() && this.$proxy.length ) {
 			val = this.getValue();
 
-			if( this.maskChar ){
-				val = val.replace(/./g, this.maskChar);
+			if( maskChar ){
+				val = val.replace(/./g, maskChar);
 			}
 
 			this.$proxy.html( this.format( val ) );
@@ -154,16 +154,6 @@
 		$el.append( this.$proxyAnchor );
 		$parent.append( $el );
 
-		this.updateProxy();
-	};
-
-	Politespace.prototype.mask = function() {
-		this.maskChar = this.$element.attr( "data-mask" );
-		this.updateProxy();
-	};
-
-	Politespace.prototype.unmask = function() {
-		this.maskChar = "";
 		this.updateProxy();
 	};
 
