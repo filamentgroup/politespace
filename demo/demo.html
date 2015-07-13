@@ -66,11 +66,89 @@
 	</div>
 	<form>
 		<p>This is a demo of the <a href="https://github.com/filamentgroup/politespace">Politespace</a> plugin, an accessible alternative to input mask plugins that adds whitespace formatting when you blur away from an input and removes the spaces on focus so as to not interfere with editing. <a href="https://github.com/filamentgroup/politespace">Learn more about politespace on GitHub.</a></p>
-		<label class="new-anchor-test">
-			<span class="field" style="position: relative; float: left">
-				<input type="number" data-politespace style="height: 40px;display:block" data-proxy-anchor=".field">
-				<span class="field-unit" style="position: absolute;top: 0;height: 40px;line-height:40px">Miles</span>
-			</span>
+		<label>
+			Default <code>input[type=text]</code> with <code>pattern="[0-9]*"</code> for numeric keyboard on mobile.
+			<input type="text" data-politespace pattern="[0-9]*">
+		</label>
+		<label>
+			Default <code>input[type=text]</code> with <code>maxlength="7"</code>. <em>You must account for whitespace in the maxlength.</em>
+			<input type="text" data-politespace maxlength="7" value="123456">
+		</label>
+		<label>
+			Default <code>input[type=number]</code> with <code>maxlength="7"</code>.
+			<input type="number" data-politespace maxlength="7" value="123456">
+		</label>
+		<label>
+			Default textarea
+			<textarea data-politespace></textarea>
+		</label>
+		<label>
+			<code>input[type=text]</code> with <code>data-grouplength="2"</code>
+			<input type="text" data-politespace data-grouplength="2" value="1234567890">
+		</label>
+		<label>
+			<code>input[type=text]</code> with <code>data-grouplength="1,2,3,"</code>
+			<input type="text" data-politespace data-grouplength="1,2,3," value="1234567890">
+		</label>
+		<label>
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3," data-delimiter="-"</code>
+			<input type="tel" data-politespace data-grouplength="3,3," data-delimiter="-" value="1234567890">
+		</label>
+		<label>
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3,4" data-delimiter="-"</code>
+			<input type="tel" data-politespace data-grouplength="3,3,4" data-delimiter="-" value="1234567890">
+		</label>
+		<label>
+			<code>input[type=text]</code> (Credit Card) with <code>data-grouplength="4"</code> and <code>pattern="[0-9]*"</code>
+			<input type="text" pattern="[0-9]*" data-politespace data-grouplength="4" value="4444444444444444">
+		</label>
+		<label>
+			<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
+			<input type="text" data-politespace data-grouplength="5," value="100011234">
+		</label>
+		<label>
+			<code>input[type=text]</code> (Canadian Postal Code) <code>data-grouplength="3,"</code>
+			<input type="text" data-politespace data-grouplength="3," value="A1A 1A1" pattern="[0-9A-Z]*">
+		</label>
+		<p><code>input[type=number]</code> is now supported in spite of the bugs when setting a value containing whitespace characters in Chrome, Safari, Mobile Safari (last tested in 34, 6, and iOS 7 respectively).</p>
+		<p><code>input[type=number]</code> is important because it triggers the numeric keyboard on the Android browser and mobile Firefox.</p>
+		<label>
+			<code>input[type=number]</code> (US Zip Code) with <code>data-grouplength="5," data-delimiter="-"</code>
+			<input type="number" pattern="[0-9]*" data-politespace data-grouplength="5," data-delimiter="-" value="011111234">
+		</label>
+		<label>
+			Control element, not using politespace:
+			<input type="number" pattern="[0-9]*">
+		</label>
+		<label>
+			<code>input[type=number]</code> (Price) with <code>data-grouplength="3" data-delimiter="," data-reverse</code>
+			<input type="number" pattern="[0-9]*" data-politespace data-grouplength="3" data-delimiter="," data-reverse value="1234">
+		</label>
+		<label>
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="4,3," data-reverse</code>
+			<input type="tel" data-politespace data-grouplength="4,3," data-reverse value="1234567890">
+		</label>
+		<label>
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="4,3,3" data-reverse</code>
+			<input type="tel" data-politespace data-grouplength="4,3,3" data-reverse value="1234567890">
+		</label>
+		<label>
+			<code>input[type=number]</code> with a long value <code>data-grouplength="4"</code>
+			<div>
+				<input type="number" pattern="[0-9]*" data-politespace data-grouplength="4" value="123456789012345678901234567890">
+			</div>
+		</label>
+		<label>
+			<code>input[type=number]</code> with a long value <code>data-grouplength="4"</code>
+			<div>
+				<input type="number" pattern="[0-9]*" data-politespace data-grouplength="4" value="12345678901234567890" style="width: 40%">
+			</div>
+		</label>
+		<label>
+			<code>input[type=number]</code> with a <code>data-proxy-anchor</code>
+			<div class="field">
+				<input type="number" pattern="[0-9]*" data-politespace data-proxy-anchor=".field">
+			</div>
 		</label>
 	</form>
 </body>
