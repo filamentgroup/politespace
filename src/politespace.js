@@ -27,6 +27,8 @@
 		if( proxyAnchorSelector ) {
 			this.$proxyAnchor = this.$element.closest( proxyAnchorSelector );
 		}
+
+		this.$element.data( "politespace", this );
 	};
 
 	Politespace.prototype._divideIntoArray = function( value ) {
@@ -110,8 +112,16 @@
 	};
 
 	Politespace.prototype.updateProxy = function() {
+		var val;
+
 		if( this.useProxy() && this.$proxy.length ) {
-			this.$proxy.html( this.format( this.getValue() ) );
+			val = this.getValue();
+
+			if( this.maskChar ){
+				val = val.replace(/./g, this.maskChar);
+			}
+
+			this.$proxy.html( this.format( val ) );
 			this.$proxy.css( "width", this.element.offsetWidth + "px" );
 		}
 	};
@@ -139,10 +149,21 @@
 			"padding-right": sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px",
 			top: sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px"
 		});
+
 		$el.append( this.$proxy );
 		$el.append( this.$proxyAnchor );
 		$parent.append( $el );
 
+		this.updateProxy();
+	};
+
+	Politespace.prototype.mask = function() {
+		this.maskChar = this.$element.attr( "data-mask" );
+		this.updateProxy();
+	};
+
+	Politespace.prototype.unmask = function() {
+		this.maskChar = "";
 		this.updateProxy();
 	};
 

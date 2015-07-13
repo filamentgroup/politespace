@@ -15,7 +15,7 @@
 			}
 
 			var polite = new Politespace( this );
-			if( polite.type === "number" ) {
+			if( polite.useProxy() ) {
 				polite.createProxy();
 			}
 
@@ -35,6 +35,21 @@
 				.data( componentName, polite );
 
 			polite.update();
+
+			$( "[data-toggle-mask]" ).on( "click", function(){
+				var selector = $(this).attr( "data-toggle-mask" );
+				var $element = $( selector );
+				var type = $element.attr( "type" );
+
+				if( type === "password" ){
+					$element.attr( "type", $element.attr( "data-toggle-type" ) || "text" );
+					$element.data( "politespace" ).unmask();
+				} else {
+					$element.attr( "data-toggle-type", $element.attr( "type" ));
+					$element.attr( "type", "password" );
+					$element.data( "politespace" ).mask();
+				}
+			});
 		});
 	};
 
