@@ -15,11 +15,15 @@
 			}
 
 			var polite = new Politespace( this );
-			if( polite.type === "number" ) {
+			if( polite.useProxy() ) {
 				polite.createProxy();
 			}
 
 			$( this )
+				.bind( "politespace-update", function() {
+					polite.update();
+					polite.updateProxy();
+				})
 				.bind( "input keydown", function() {
 					polite.updateProxy();
 				})

@@ -13,7 +13,6 @@
 
 		this.element = element;
 		this.$element = $( element );
-		this.type = this.$element.attr( "type" );
 		this.delimiter = this.$element.attr( "data-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
 		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
@@ -94,7 +93,9 @@
 	};
 
 	Politespace.prototype.update = function() {
-		this.element.value = this.useProxy() ? this.getValue() : this.format( this.getValue() );
+		this.element.value = this.useProxy() || this.$element.attr( "type" ) === "password" ?
+			this.getValue() :
+			this.format( this.getValue() );
 	};
 
 	Politespace.prototype.unformat = function( value ) {
@@ -106,7 +107,8 @@
 	};
 
 	Politespace.prototype.useProxy = function() {
-		return this.type === "number";
+		// this needs to be an attr check and not a prop for `type` toggling (like password)
+		return this.$element.attr( "type" ) === "number";
 	};
 
 	Politespace.prototype.updateProxy = function() {
