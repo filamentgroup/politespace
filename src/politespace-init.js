@@ -15,18 +15,33 @@
 			}
 
 			var polite = new Politespace( this );
-			if( polite.type === "number" ) {
+			if( polite.useProxy() ) {
 				polite.createProxy();
 			}
 
+
 			$( this )
+				.bind( "politespace-hide-proxy", function() {
+					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
+				})
+				.bind( "politespace-show-proxy", function() {
+					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
+
+					if( polite.useProxy() ) {
+						polite.update();
+						polite.updateProxy();
+					}
+				})
 				.bind( "input keydown", function() {
 					polite.updateProxy();
 				})
 				.bind( "blur", function() {
-					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 					polite.update();
-					polite.updateProxy();
+
+					if( polite.useProxy() ){
+						$( this ).closest( ".politespace-proxy" ).addClass( "active" );
+						polite.updateProxy();
+					}
 				})
 				.bind( "focus", function() {
 					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );

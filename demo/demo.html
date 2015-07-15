@@ -150,6 +150,18 @@
 				<input type="number" pattern="[0-9]*" data-politespace data-proxy-anchor=".field">
 			</div>
 		</label>
+		<label>
+			<code>input[type=password] toggles to text</code>
+			<input type="password" data-politespace id="toggletext">
+		</label>
+		<label style="display: inline-block"><input type="radio" name="toggler-text" onchange="document.getElementById('toggletext').type = 'text';jQuery('#toggletext').trigger('politespace-update')"> Text</label>
+		<label style="display: inline-block"><input type="radio" name="toggler-text" onchange="document.getElementById('toggletext').type = 'password';jQuery('#toggletext').trigger('politespace-update')" checked> Password</label>
+		<label>
+			<code>input[type=password] toggles to number</code>
+			<input type="password" data-politespace id="togglenumber">
+		</label>
+		<label style="display: inline-block"><input type="radio" name="toggler-number" onchange="document.getElementById('togglenumber').type = 'number';jQuery('#togglenumber').trigger('politespace-update')"> Number</label>
+		<label style="display: inline-block"><input type="radio" name="toggler-number" onchange="document.getElementById('togglenumber').type = 'password';jQuery('#togglenumber').trigger('politespace-update')" checked> Password</label>
 	</form>
 </body>
 </html>
