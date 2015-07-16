@@ -47,6 +47,10 @@
 		padding: .6em;
 		font-size: 100%;
 	}
+	input[type=checkbox] {
+		display: inline-block;
+		width: auto;
+	}
 	</style>
 	<link rel="stylesheet" href="../dist/politespace.css">
 	<!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
@@ -54,6 +58,7 @@
 	<script>jQuery.noConflict()</script>
 	<!-- Load local lib and tests. -->
 	<script src="../dist/politespace.js"></script>
+	<script src="masked-input.js"></script>
 	<script>
 	jQuery( function(){
 		jQuery( document ).trigger( "enhance" );
@@ -150,18 +155,17 @@
 				<input type="number" pattern="[0-9]*" data-politespace data-proxy-anchor=".field">
 			</div>
 		</label>
+		<h3>Works with Masked Input plugin</h3>
 		<label>
-			<code>input[type=password] toggles to text</code>
-			<input type="password" data-politespace id="toggletext">
+			Masked Number
+			<input type="number" id="toggle-mask-target-number" pattern="[0-9]*" data-politespace>
 		</label>
-		<label style="display: inline-block"><input type="radio" name="toggler-text" onchange="document.getElementById('toggletext').type = 'text';jQuery('#toggletext').trigger('politespace-update')"> Text</label>
-		<label style="display: inline-block"><input type="radio" name="toggler-text" onchange="document.getElementById('toggletext').type = 'password';jQuery('#toggletext').trigger('politespace-update')" checked> Password</label>
+		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-number">Show value</label>
 		<label>
-			<code>input[type=password] toggles to number</code>
-			<input type="password" data-politespace id="togglenumber">
+			Masked Text
+			<input type="text" id="toggle-mask-target-text" data-politespace>
 		</label>
-		<label style="display: inline-block"><input type="radio" name="toggler-number" onchange="document.getElementById('togglenumber').type = 'number';jQuery('#togglenumber').trigger('politespace-update')"> Number</label>
-		<label style="display: inline-block"><input type="radio" name="toggler-number" onchange="document.getElementById('togglenumber').type = 'password';jQuery('#togglenumber').trigger('politespace-update')" checked> Password</label>
+		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-text">Show value</label>
 	</form>
 </body>
 </html>
