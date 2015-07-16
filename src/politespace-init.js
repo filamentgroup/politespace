@@ -23,12 +23,13 @@
 			$( this )
 				.bind( "politespace-hide-proxy", function() {
 					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
+					polite.update();
 				})
 				.bind( "politespace-show-proxy", function() {
 					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 
+					polite.update();
 					if( polite.useProxy() ) {
-						polite.update();
 						polite.updateProxy();
 					}
 				})
@@ -39,12 +40,11 @@
 					polite.update();
 
 					if( polite.useProxy() ){
-						$( this ).closest( ".politespace-proxy" ).addClass( "active" );
-						polite.updateProxy();
+						$( this ).trigger( "politespace-show-proxy" );
 					}
 				})
 				.bind( "focus", function() {
-					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
+					$( this ).trigger( "politespace-hide-proxy" );
 					polite.reset();
 				})
 				.data( componentName, polite );
