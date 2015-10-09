@@ -1,6 +1,10 @@
 (function( w, $ ){
 	"use strict";
 
+	var escapeRegExp = function(text) {
+		return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+	};
+
 	var Politespace = function( element ) {
 		if( !element ) {
 			throw new Error( "Politespace requires an element argument." );
@@ -13,6 +17,8 @@
 
 		this.element = element;
 		this.$element = $( element );
+		this.prefix = this.$element.attr( "data-prefix" ) || "";
+		this.suffix = this.$element.attr( "data-suffix" ) || "";
 		this.delimiter = this.$element.attr( "data-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
 		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
@@ -68,15 +74,15 @@
 	Politespace.prototype.format = function( value ) {
 		var split;
 		var val = this.unformat( value );
-		var suffix = '';
+		var valSuffix = "";
 
 		if( this.decimalMark ) {
 			split = val.split( this.decimalMark );
-			suffix = split.length > 1 ? this.decimalMark + split[ 1 ] : '';
+			valSuffix = split.length > 1 ? this.decimalMark + split[ 1 ] : "";
 			val = split[ 0 ];
 		}
 
-		return this._divideIntoArray( val ).join( this.delimiter ) + suffix;
+		return this.prefix + this._divideIntoArray( val ).join( this.delimiter ) + valSuffix + this.suffix;
 	};
 
 	Politespace.prototype.trimMaxlength = function( value ) {
@@ -99,7 +105,10 @@
 	};
 
 	Politespace.prototype.unformat = function( value ) {
-		return value.replace( new RegExp(  this.delimiter, 'g' ), '' );
+		var val = value.replace( new RegExp(  this.delimiter, 'g' ), "" );
+		val = val.replace(new RegExp("^" + escapeRegExp(this.prefix), 'g'), "");
+		val = val.replace(new RegExp(escapeRegExp(this.suffix) + "$", 'g'), "");
+		return val;
 	};
 
 	Politespace.prototype.reset = function() {
