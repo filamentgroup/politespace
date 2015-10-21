@@ -119,7 +119,14 @@
 	};
 
 	Politespace.prototype.reset = function() {
-		this.element.value = this.unformat( this.element.value );
+		var val = this.unformat( this.element.value );
+		this.element.value = val;
+		if (this.isNumber && !this.useProxy()) {
+			var _this = this;
+			window.setTimeout(function () {
+				_this.element.setSelectionRange(val.length, val.length);
+			}, 50);
+		}
 	};
 
 	Politespace.prototype.useProxy = function() {
