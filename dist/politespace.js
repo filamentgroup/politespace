@@ -1,4 +1,4 @@
-/*! politespace - v0.1.6b - 2015-10-09
+/*! politespace - v0.1.6b - 2015-10-21
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2015 Filament Group (@filamentgroup)
@@ -29,6 +29,7 @@ Politely add spaces to input values to increase readability (credit card numbers
 		// https://en.wikipedia.org/wiki/Decimal_mark
 		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
 		this.reverse = this.$element.is( "[data-reverse]" );
+		this.isNumber = this.$element.is( "[data-number]" );
 		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
 
 		var proxyAnchorSelector = this.$element.attr( "data-proxy-anchor" );
@@ -41,7 +42,7 @@ Politely add spaces to input values to increase readability (credit card numbers
 	};
 
 	Politespace.prototype._divideIntoArray = function( value ) {
-		var split = ( '' + this.groupLength ).split( ',' ),
+		var split = ( "" + this.groupLength ).split( "," ),
 			isUniformSplit = split.length === 1,
 			dividedValue = [],
 			loopIndex = 0,
@@ -79,7 +80,10 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 	Politespace.prototype.format = function( value ) {
 		var split;
-		var val = this.unformat( value );
+		var val = this.unformat(value);
+		if (this.isNumber && !val) {
+			val = "0";
+		}
 		var valSuffix = "";
 
 		if( this.decimalMark ) {
@@ -111,9 +115,12 @@ Politely add spaces to input values to increase readability (credit card numbers
 	};
 
 	Politespace.prototype.unformat = function( value ) {
-		var val = value.replace( new RegExp(  this.delimiter, 'g' ), "" );
-		val = val.replace(new RegExp("^" + escapeRegExp(this.prefix), 'g'), "");
-		val = val.replace(new RegExp(escapeRegExp(this.suffix) + "$", 'g'), "");
+		var val = value.replace(new RegExp("^" + escapeRegExp(this.prefix), "g"), "");
+		val = val.replace(new RegExp(escapeRegExp(this.suffix) + "$", "g"), "");
+		val = val.replace( new RegExp(this.delimiter, "g"), "");
+		if (this.isNumber) {
+			val = val.replace(new RegExp("^0+", "g"), "");
+		}
 		return val;
 	};
 
