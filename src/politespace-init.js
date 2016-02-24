@@ -34,6 +34,8 @@
 					}
 				})
 				.bind( "input keydown", function() {
+					$( this ).trigger( "politespace-input" );
+
 					polite.updateProxy();
 				})
 				.bind( "blur", function() {

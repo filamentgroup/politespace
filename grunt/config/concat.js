@@ -2,6 +2,7 @@ module.exports = {
 	js: {
 		src: [
 			"src/politespace.js",
+			"src/politespace-creditcard.js",
 			"src/politespace-init.js"
 		]
 	},

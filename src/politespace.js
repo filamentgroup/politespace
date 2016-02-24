@@ -148,6 +148,11 @@
 		this.updateProxy();
 	};
 
+	Politespace.prototype.setGroupLength = function( length ) {
+		this.groupLength = length;
+		this.$element.attr( "data-grouplength", length );
+	};
+
 	w.Politespace = Politespace;
 
 }( this, jQuery ));
