@@ -11,15 +11,11 @@
 		var pspace = $t.data( "politespace" );
 		var firstDigit = parseInt( $t.val().substr( 0, 1 ), 10 );
 
-		switch( firstDigit ) {
-			case 3: // AMEX or Diners Club
-				pspace.setGroupLength( "4,6," );
-				break;
-			case 4:
-			case 5:
-			case 6:
-				pspace.setGroupLength( "4" );
-				break;
+		// AMEX or Diners Club
+		if( firstDigit === 3 ) {
+			pspace.setGroupLength( "4,6," );
+		} else {
+			pspace.setGroupLength( "4" );
 		}
 	});
 
