@@ -39,7 +39,6 @@ When delimiting money as a floating point, you’ll want to exclude the fraction
 
 ### Download [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js) and [politespace.css](http://filamentgroup.github.io/politespace/dist/politespace.css)
 
-or use [Bower](http://bower.io/): `bower install politespace`
 or use [NPM](https://www.npmjs.com/): `npm install politespace`
 
 ### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
@@ -63,7 +62,6 @@ This plugin was created as a less intrusive alternative to the common input mask
 Run these commands:
 
  * `npm install`
- * `bower install`
  * `grunt` as normal
 
 ### Configuring Grunt
