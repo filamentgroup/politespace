@@ -108,8 +108,8 @@
 			<input type="text" pattern="[0-9]*" data-politespace data-grouplength="4" value="4444444444444444">
 		</label>
 		<label>
-			<code>input[type=text]</code> (Credit Card) with <code>data-politespace-creditcard</code> and <code>pattern="[0-9]*"</code> (Automatically customizes the grouplength attribute based on the first digit: Most are "4" but AMEX and Diners Club are "4,6")
-			<input type="text" pattern="[0-9]*" data-politespace data-politespace-creditcard>
+			<code>input[type=text]</code> (Credit Card) with <code>data-politespace-creditcard</code> and <code>pattern="[0-9]*"</code> (Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well)
+			<input type="text" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength>
 		</label>
 		<label>
 			<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
