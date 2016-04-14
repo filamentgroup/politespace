@@ -17,6 +17,10 @@
 		}
 	});
 
+	test( "Not Reversed", function() {
+		strictEqual( this.pspace.reverse, false );
+	});
+
 	test( "Blur", function() {
 		$( this.pspace.element ).val( "12345678" ).trigger( "blur" );
 		equal( $( this.pspace.element ).val(), "123 456 78" );
@@ -205,6 +209,21 @@
 		equal( $( this.pspace.element ).val(), "111-222-3333" );
 		$( this.pspace.element ).trigger( "focus" ).trigger( "blur" );
 		equal( $( this.pspace.element ).val(), "111-222-3333" );
+	});
+
+	module( "Proxy Anchor", {
+		setup: function() {
+			insertHtml( '<div class="field"><input type="number" data-politespace data-proxy-anchor=".field"></div>' );
+			this.pspace = $( "[data-politespace]" ).data( "politespace" );
+		},
+		teardown: function() {
+			this.pspace = null;
+		}
+	});
+
+	test( "Test ancestor class names", function() {
+		equal( this.pspace.$element.parent().is( ".field" ), true, "First ancestor is the proxy anchor (.field)." );
+		equal( this.pspace.$element.parent().parent().is( ".politespace-proxy" ), true, "Second ancestor is the politespace proxy" );
 	});
 
 }( this, jQuery ));

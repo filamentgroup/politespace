@@ -47,13 +47,18 @@
 		padding: .6em;
 		font-size: 100%;
 	}
+	input[type=checkbox] {
+		display: inline-block;
+		width: auto;
+	}
 	</style>
 	<link rel="stylesheet" href="../dist/politespace.css">
 	<!-- Load local jQuery, removing access to $ (use jQuery, not $). -->
-	<script src="../bower_components/jquery/dist/jquery.js"></script>
+	<script src="../node_modules/jquery/dist/jquery.js"></script>
 	<script>jQuery.noConflict()</script>
 	<!-- Load local lib and tests. -->
 	<script src="../dist/politespace.js"></script>
+	<script src="masked-input.js"></script>
 	<script>
 	jQuery( function(){
 		jQuery( document ).trigger( "enhance" );
@@ -103,6 +108,10 @@
 			<input type="text" pattern="[0-9]*" data-politespace data-grouplength="4" value="4444444444444444">
 		</label>
 		<label>
+			<code>input[type=text]</code> (Credit Card) with <code>data-politespace-creditcard</code> and <code>pattern="[0-9]*"</code> (Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well)
+			<input type="text" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength>
+		</label>
+		<label>
 			<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
 			<input type="text" data-politespace data-grouplength="5," value="100011234">
 		</label>
@@ -144,6 +153,23 @@
 				<input type="number" pattern="[0-9]*" data-politespace data-grouplength="4" value="12345678901234567890" style="width: 40%">
 			</div>
 		</label>
+		<label>
+			<code>input[type=number]</code> with a <code>data-proxy-anchor</code>
+			<div class="field">
+				<input type="number" pattern="[0-9]*" data-politespace data-proxy-anchor=".field">
+			</div>
+		</label>
+		<h3>Works with Masked Input plugin</h3>
+		<label>
+			Masked Number
+			<input type="number" id="toggle-mask-target-number" pattern="[0-9]*" data-politespace>
+		</label>
+		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-number">Show value</label>
+		<label>
+			Masked Text
+			<input type="text" id="toggle-mask-target-text" data-politespace>
+		</label>
+		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-text">Show value</label>
 	</form>
 </body>
 </html>
