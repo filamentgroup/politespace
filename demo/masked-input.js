@@ -1,7 +1,7 @@
 /*global jQuery:true*/
 /*global NumericInput:true*/
 /*
- * Create maked input toggle that works with polite space
+ * Create masked input toggle that works with polite space
  *
  * Copyright (c) 2015 Filament Group, Inc.
  * Licensed under MIT
