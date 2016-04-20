@@ -41,6 +41,8 @@ When using politespace with credit card fields, the formatting logic changes bas
 
 `<input type="text" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength>`
 
+Uses the [`creditable`](https://github.com/filamentgroup/creditable) dependency.
+
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
 ### Download [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js) and [politespace.css](http://filamentgroup.github.io/politespace/dist/politespace.css)
