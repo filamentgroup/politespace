@@ -23,7 +23,6 @@
 			$( this )
 				.bind( "politespace-hide-proxy", function() {
 					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
-					polite.update();
 				})
 				.bind( "politespace-show-proxy", function() {
 					$( this ).closest( ".politespace-proxy" ).addClass( "active" );

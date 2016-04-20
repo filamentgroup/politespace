@@ -77,7 +77,7 @@
 			<input type="text" data-politespace pattern="[0-9]*">
 		</label>
 		<label>
-			Default <code>input[type=text]</code> with <code>maxlength="7"</code>. <em>You must account for whitespace in the maxlength.</em>
+			Default <code>input[type=text]</code> with <code>maxlength="7"</code>.
 			<input type="text" data-politespace maxlength="7" value="123456">
 		</label>
 		<label>
@@ -103,10 +103,6 @@
 		<label>
 			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3,4" data-delimiter="-"</code>
 			<input type="tel" data-politespace data-grouplength="3,3,4" data-delimiter="-" value="1234567890">
-		</label>
-		<label>
-			<code>input[type=text]</code> (Credit Card) with <code>data-grouplength="4"</code> and <code>pattern="[0-9]*"</code>
-			<input type="text" pattern="[0-9]*" data-politespace data-grouplength="4" value="4444444444444444">
 		</label>
 		<label>
 			<code>input[type=text]</code> (Credit Card) with <code>data-politespace-creditcard</code> and <code>pattern="[0-9]*"</code> (Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well)
