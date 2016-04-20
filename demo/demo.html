@@ -102,7 +102,7 @@
 		</label>
 		<label>
 			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3,4" data-delimiter="-"</code>
-			<input type="tel" data-politespace data-grouplength="3,3,4" data-delimiter="-" value="1234567890">
+			<input type="tel" data-politespace data-grouplength="3,3,4" data-delimiter="-" value="1234567890" maxlength="10">
 		</label>
 		<label>
 			<code>input[type=text]</code> (Credit Card) with <code>data-politespace-creditcard</code> and <code>pattern="[0-9]*"</code> (Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well)
@@ -136,7 +136,7 @@
 		</label>
 		<label>
 			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="4,3,3" data-reverse</code>
-			<input type="tel" data-politespace data-grouplength="4,3,3" data-reverse value="1234567890">
+			<input type="tel" data-politespace data-grouplength="4,3,3" data-reverse value="1234567890" maxlength="10">
 		</label>
 		<label>
 			<code>input[type=number]</code> with a long value <code>data-grouplength="4"</code>
