@@ -49,7 +49,8 @@
 					$( this ).trigger( "politespace-hide-proxy" );
 					polite.reset();
 				})
-				.data( componentName, polite );
+				.data( componentName, polite )
+				.trigger( "politespace-init" );
 
 			polite.update();
 		});

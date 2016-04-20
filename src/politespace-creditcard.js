@@ -1,23 +1,30 @@
-(function( $ ) {
+// jQuery Plugin
+(function( w, $ ) {
 	"use strict";
 
-	// jQuery Plugin
-
-	$( document ).bind( "politespace-input", function( event ) {
+	$( document ).bind( "politespace-init politespace-input", function( event ) {
 		var $t = $( event.target );
 		if( !$t.is( "[data-politespace-creditcard]" ) ) {
 			return;
 		}
 		var pspace = $t.data( "politespace" );
-		var firstDigit = parseInt( $t.val().substr( 0, 1 ), 10 );
+		var val = $t.val();
 		var adjustMaxlength = $t.is( "[data-politespace-creditcard-maxlength]" );
+		var type = w.CreditableCardType( val );
 
-		// AMEX
-		if( firstDigit === 3 ) {
+		if( type === "AMEX" ) {
 			pspace.setGroupLength( adjustMaxlength ? "4,6,5" : "4,6," );
-		} else { // Visa, Mastercard, Discover
+
+			if( adjustMaxlength ) {
+				$t.attr( "maxlength", 15 );
+			}
+		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" ) {
 			pspace.setGroupLength( adjustMaxlength ? "4,4,4,4" : "4" );
+
+			if( adjustMaxlength ) {
+				$t.attr( "maxlength", 16 );
+			}
 		}
 	});
 
-}( jQuery ));
+}( typeof global !== "undefined" ? global : this, jQuery ));
