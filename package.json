@@ -43,7 +43,7 @@
 		"load-grunt-tasks": "~3.4.0",
 		"matchdep": "~1.0.0",
 		"qunitjs": "^1.22.0",
-		"creditable": "^1.0.0"
+		"creditable": "^1.0.2"
 	},
 	"peerDependencies": {},
 	"engines": {
