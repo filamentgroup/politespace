@@ -133,9 +133,10 @@
 		}
 
 		var $el = $( "<div>" ).addClass( "politespace-proxy active" );
+		var $nextSibling = this.$proxyAnchor.next();
 		var $parent = this.$proxyAnchor.parent();
 
-		this.$proxy = $( "<div>" ).css({
+		this.$proxy = $( "<div>" ).addClass( "politespace-proxy-val" ).css({
 			font: this.$element.css( "font" ),
 			"padding-left": sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px",
 			"padding-right": sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px",
@@ -143,7 +144,12 @@
 		});
 		$el.append( this.$proxy );
 		$el.append( this.$proxyAnchor );
-		$parent.append( $el );
+
+		if( $nextSibling.length ) {
+			$el.insertBefore( $nextSibling );
+		} else {
+			$parent.append( $el );
+		}
 
 		this.updateProxy();
 	};

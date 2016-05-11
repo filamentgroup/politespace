@@ -97,6 +97,8 @@
 	test( "Input and blur updates proxy", function() {
 		$( this.pspace.element ).val( "12345678" ).trigger( "input" );
 		equal( $( this.pspace.element ).val(), "12345678" );
+		ok( $( this.pspace.element ).prev().is( ".politespace-proxy-val" ), "Proxy value exists." );
+		ok( $( this.pspace.element ).parent().is( ".politespace-proxy" ), "Proxy exists." );
 		equal( $( this.pspace.element ).prev().html(), "123 456 78" );
 	});
 
