@@ -28,9 +28,7 @@
 					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 
 					polite.update();
-					if( polite.useProxy() ) {
-						polite.updateProxy();
-					}
+					polite.updateProxy();
 				})
 				.bind( "input keydown", function() {
 					$( this ).trigger( "politespace-input" );
@@ -52,6 +50,7 @@
 				.trigger( "politespace-init" );
 
 			polite.update();
+			polite.updateProxy();
 		});
 	};
 

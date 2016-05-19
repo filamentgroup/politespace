@@ -107,8 +107,16 @@
 	};
 
 	Politespace.prototype.useProxy = function() {
+		var pattern = this.$element.attr( "pattern" );
+		var type = this.$element.attr( "type" );
+
 		// this needs to be an attr check and not a prop for `type` toggling (like password)
-		return this.$element.attr( "type" ) === "number";
+		return type === "number" ||
+			// When Chrome validates form fields using native form validation, it uses `pattern`
+			// which causes validation errors when we inject delimiters. So use the proxy to avoid
+			// delimiters in the form field value.
+			// Chrome also has some sort of
+			( pattern ? !( new RegExp( "^" + pattern + "$" ) ).test( this.delimiter ) : false );
 	};
 
 	Politespace.prototype.updateProxy = function() {
