@@ -21,6 +21,7 @@
 	z-index: 1;
 }
 .politespace-proxy.active input {
+	-webkit-text-fill-color: transparent;
 	color: transparent;
 }
 .politespace-proxy.active input[type=number] {
