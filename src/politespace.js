@@ -167,6 +167,18 @@
 		this.$element.attr( "data-grouplength", length );
 	};
 
+	// TODO likely needs more conform checks for other input types and configs
+	// they can be added as needed here
+	Politespace.prototype.conform = function( text ) {
+		var fixed = text;
+
+		if( this.$element.attr("type") === "number" ){
+			fixed = fixed.replace(/[^0-9]/g, "");
+		}
+
+		return fixed;
+	};
+
 	w.Politespace = Politespace;
 
 }( this, jQuery ));
