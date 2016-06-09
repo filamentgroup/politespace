@@ -22,7 +22,7 @@
 		"test": "grunt test"
 	},
 	"dependencies": {
-		"jquery": "^2.2.1"
+		"jquery": "^3.0.0"
 	},
 	"devDependencies": {
 		"blanket": "~1.2.2",
