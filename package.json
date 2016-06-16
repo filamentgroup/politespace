@@ -42,7 +42,7 @@
 		"grunt-replace": "~0.11.0",
 		"load-grunt-tasks": "~3.4.0",
 		"matchdep": "~1.0.0",
-		"qunitjs": "^1.22.0",
+		"qunitjs": "^2.0.0",
 		"creditable": "^1.0.2"
 	},
 	"peerDependencies": {},
