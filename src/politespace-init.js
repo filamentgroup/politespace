@@ -5,7 +5,10 @@
 	// jQuery Plugin
 
 	var componentName = "politespace",
-		initSelector = "[data-" + componentName + "]";
+		initSelector = "[data-" + componentName + "]",
+		// See notes below about this UA sniff.
+		ua = navigator.userAgent,
+		isSafari6 = !!ua.match( /safari/i ) && !!ua.match( /version\/6\./i ) && !window.chrome;
 
 	$.fn[ componentName ] = function(){
 		return this.each( function(){
@@ -19,9 +22,16 @@
 				polite.createProxy();
 			}
 
+			// Safari 6 removes leading zeros with type="number"
+			// This is a bad user agent sniff but is limited to an outdated version
+			// of Safari (this bug is fixed in 7+). This behavior cannot be feature
+			// tested due to the bug not exhibiting when setting the .value property.
+			// TODO: Remove this
+			if( isSafari6 ) {
+				$t.attr( "type", "text" );
+			}
 
-			$( this )
-				.bind( "politespace-hide-proxy", function() {
+			$t.bind( "politespace-hide-proxy", function() {
 					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
 				})
 				.bind( "politespace-show-proxy", function() {
