@@ -2,4 +2,4 @@
 <%= pkg.description %>
 <%= pkg.homepage ? " * " + pkg.homepage : "" %>
  * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> (@<%= pkg.author.twitter %>)
- * <%= _.pluck( pkg.licenses, "type" ).join(", ") %> License */
+ * <%= pkg.license %> License */
