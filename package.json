@@ -1,6 +1,6 @@
 {
 	"name": "politespace",
-	"version": "0.1.13",
+	"version": "0.1.14",
 	"description": "Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).",
 	"keywords": [
 		"grunt"
