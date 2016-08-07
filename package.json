@@ -37,7 +37,7 @@
 		"grunt-contrib-jshint": "~1.0.0",
 		"grunt-contrib-qunit": "~1.2.0",
 		"grunt-contrib-watch": "~1.0.0",
-		"grunt-gh-pages": "~1.1.0",
+		"grunt-gh-pages": "~1.2.0",
 		"grunt-lintspaces": "~0.8.0",
 		"grunt-replace": "~1.0.1",
 		"load-grunt-tasks": "~3.5.0",
