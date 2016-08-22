@@ -21,10 +21,11 @@
 	z-index: 1;
 }
 /* Safari 9 has a weird top/bottom margin on form elements inside of politespace proxies */
+/* This caused issues with proxy positioning.
 .politespace-proxy > input {
 	margin-top: 0;
 	margin-bottom: 0;
-}
+}*/
 .politespace-proxy.active input {
 	-webkit-text-fill-color: transparent;
 	color: transparent;

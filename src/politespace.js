@@ -131,11 +131,11 @@
 			return;
 		}
 
-		var self = this;
 		function sumStyles( el, props ) {
 			var total = 0;
+			var $el = $( el );
 			for( var j=0, k=props.length; j<k; j++ ) {
-				total += parseFloat( self.$element.css( props[ j ] ) );
+				total += parseFloat( $el.css( props[ j ] ) );
 			}
 			return total;
 		}
