@@ -6,7 +6,7 @@
 			throw new Error( "Politespace requires an element argument." );
 		}
 
-		if( !element.getAttribute ) {
+		if( !element.getAttribute || window.operamini ) {
 			// Cut the mustard
 			return;
 		}
