@@ -47,9 +47,16 @@
 		padding: .6em;
 		font-size: 100%;
 	}
-	input[type=checkbox] {
+	input[type=checkbox],
+	input[type=checkbox] + label[for] {
 		display: inline-block;
 		width: auto;
+	}
+	#show-hidden-politespace ~ label input {
+		display: none;
+	}
+	#show-hidden-politespace:checked ~ label input {
+		display: block;
 	}
 	</style>
 	<link rel="stylesheet" href="../dist/politespace.css">
@@ -175,10 +182,17 @@
 			<input type="tel" data-politespace data-grouplength="4,3,3" data-reverse value="1234567890" maxlength="10">
 		</label>
 
-
-
-
-		<h2>Third Party Integrations</h2>
+		<h2>Developer Tests</h2>
+		<h3>Form Submit Values</h3>
+		<button type="submit">Submit Form</button>
+		<h3>Hidden on Init</h3>
+		<div>
+			<input type="checkbox" id="show-hidden-politespace"><label for="show-hidden-politespace">Check this to show politespace field</label>
+			<label>
+				<code>input[type=number]</code></code>.
+				<input type="number" data-politespace value="12345678901234567890">
+			</label>
+		</div>
 		<h3>Works with Masked Input plugin</h3>
 		<label>
 			Masked Number
@@ -190,9 +204,6 @@
 			<input type="text" id="toggle-mask-target-text" data-politespace>
 		</label>
 		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-text">Show value</label>
-
-		<h2>Form Submit Test</h2>
-		<button type="submit">Submit Form</button>
 	</form>
 </body>
 </html>
