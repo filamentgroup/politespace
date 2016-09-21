@@ -1,4 +1,4 @@
-/*! politespace - v0.1.17 - 2016-08-22
+/*! politespace - v0.1.18 - 2016-09-21
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2016 Filament Group (@filamentgroup)
@@ -127,8 +127,17 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 	Politespace.prototype.updateProxy = function() {
 		if( this.useProxy() && this.$proxy.length ) {
-			this.$proxy.html( this.format( this.getValue() ) );
-			this.$proxy.css( "width", this.element.offsetWidth + "px" );
+			var html = this.format( this.getValue() );
+			var width = this.element.offsetWidth;
+
+			this.$proxy.html( html );
+
+			if( width ) {
+				this.$proxy.css( "width", width + "px" );
+			}
+
+			// Hide if empty, to show placeholder
+			this.$proxy.closest( ".politespace-proxy" )[ html ? 'addClass' : 'removeClass' ]( "notempty" );
 		}
 	};
 
