@@ -1,5 +1,6 @@
 # Politespace
 
+[![npm version](https://badge.fury.io/js/politespace.svg)](https://badge.fury.io/js/politespace)
 [![Build Status](https://img.shields.io/travis/filamentgroup/politespace/master.svg)](https://travis-ci.org/filamentgroup/politespace)
 [![Dependency Status](https://david-dm.org/filamentgroup/politespace.svg?theme=shields.io)](https://david-dm.org/filamentgroup/politespace)
 [![devDependency Status](https://david-dm.org/filamentgroup/politespace/dev-status.svg?theme=shields.io)](https://david-dm.org/filamentgroup/politespace#info=devDependencies)
