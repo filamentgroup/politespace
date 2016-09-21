@@ -122,8 +122,13 @@
 	Politespace.prototype.updateProxy = function() {
 		if( this.useProxy() && this.$proxy.length ) {
 			var html = this.format( this.getValue() );
+			var width = this.element.offsetWidth;
+
 			this.$proxy.html( html );
-			this.$proxy.css( "width", this.element.offsetWidth + "px" );
+
+			if( width ) {
+				this.$proxy.css( "width", width + "px" );
+			}
 
 			// Hide if empty, to show placeholder
 			this.$proxy.closest( ".politespace-proxy" )[ html ? 'addClass' : 'removeClass' ]( "notempty" );
