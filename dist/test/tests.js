@@ -7,223 +7,225 @@
 			$fixture.trigger( "enhance" );
 	}
 
-	module( "Defaults", {
-		setup: function() {
+	QUnit.module( "Defaults", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace>' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Not Reversed", function() {
-		strictEqual( this.pspace.reverse, false );
+	QUnit.test( "Not Reversed", function( assert ) {
+		assert.strictEqual( this.pspace.reverse, false );
 	});
 
-	test( "Blur", function() {
+	QUnit.test( "Blur", function( assert ) {
 		$( this.pspace.element ).val( "12345678" ).trigger( "blur" );
-		equal( $( this.pspace.element ).val(), "123 456 78" );
+		assert.equal( $( this.pspace.element ).val(), "123 456 78" );
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "12" ), "12" );
-		equal( this.pspace.format( "123" ), "123" );
-		equal( this.pspace.format( "1234" ), "123 4" );
-		equal( this.pspace.format( "4444444444" ), "444 444 444 4" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "12" ), "12" );
+		assert.equal( this.pspace.format( "123" ), "123" );
+		assert.equal( this.pspace.format( "1234" ), "123 4" );
+		assert.equal( this.pspace.format( "4444444444" ), "444 444 444 4" );
 	});
 
-	module( "Grouplength 2", {
-		setup: function() {
+	QUnit.module( "Grouplength 2", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-grouplength="2">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "12" ), "12" );
-		equal( this.pspace.format( "123" ), "12 3" );
-		equal( this.pspace.format( "1234" ), "12 34" );
-		equal( this.pspace.format( "4444444444" ), "44 44 44 44 44" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "12" ), "12" );
+		assert.equal( this.pspace.format( "123" ), "12 3" );
+		assert.equal( this.pspace.format( "1234" ), "12 34" );
+		assert.equal( this.pspace.format( "4444444444" ), "44 44 44 44 44" );
 	});
 
-	module( "Grouplength 1,2,", {
-		setup: function() {
+	QUnit.module( "Grouplength 1,2,", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-grouplength="1,2,">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "12" ), "1 2" );
-		equal( this.pspace.format( "123" ), "1 23" );
-		equal( this.pspace.format( "1234" ), "1 23 4" );
-		equal( this.pspace.format( "1234567890" ), "1 23 4567890" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "12" ), "1 2" );
+		assert.equal( this.pspace.format( "123" ), "1 23" );
+		assert.equal( this.pspace.format( "1234" ), "1 23 4" );
+		assert.equal( this.pspace.format( "1234567890" ), "1 23 4567890" );
 	});
 
-	module( "Grouplength 1,2,3", {
-		setup: function() {
+	QUnit.module( "Grouplength 1,2,3", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-grouplength="1,2,3">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "12" ), "1 2" );
-		equal( this.pspace.format( "123" ), "1 23" );
-		equal( this.pspace.format( "1234" ), "1 23 4" );
-		equal( this.pspace.format( "1234567890" ), "1 23 456" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "12" ), "1 2" );
+		assert.equal( this.pspace.format( "123" ), "1 23" );
+		assert.equal( this.pspace.format( "1234" ), "1 23 4" );
+		assert.equal( this.pspace.format( "1234567890" ), "1 23 456" );
 	});
 
-	module( "Number type", {
-		setup: function() {
+	QUnit.module( "Number type", {
+		beforeEach: function() {
 			insertHtml( '<input type="number" data-politespace>' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Input and blur updates proxy", function() {
+	QUnit.test( "Input and blur updates proxy", function( assert ) {
 		$( this.pspace.element ).val( "12345678" ).trigger( "input" );
-		equal( $( this.pspace.element ).val(), "12345678" );
-		equal( $( this.pspace.element ).prev().html(), "123 456 78" );
+		assert.equal( $( this.pspace.element ).val(), "12345678" );
+		assert.ok( $( this.pspace.element ).prev().is( ".politespace-proxy-val" ), "Proxy value exists." );
+		assert.ok( $( this.pspace.element ).parent().is( ".politespace-proxy" ), "Proxy exists." );
+		assert.equal( $( this.pspace.element ).prev().html(), "123 456 78" );
 	});
 
-	test( "Focus keeps value", function() {
+	QUnit.test( "Focus keeps value", function( assert ) {
 		$( this.pspace.element ).val( "12345678" ).trigger( "input" );
-		equal( $( this.pspace.element ).val(), "12345678" );
+		assert.equal( $( this.pspace.element ).val(), "12345678" );
 		// We don’t test proxy html here because it isn’t shown and is irrelevant.
 	});
 
 	// Known issue in Firefox:
 	// Does not display leading zeros for input type="number" but .value returns
 	// leading zeros.
-	test( "Input with leading zero", function() {
+	QUnit.test( "Input with leading zero", function( assert ) {
 		$( this.pspace.element ).val( "01234" ).trigger( "input" );
-		equal( $( this.pspace.element ).val(), "01234" );
-		equal( $( this.pspace.element ).prev().html(), "012 34" );
+		assert.equal( $( this.pspace.element ).val(), "01234" );
+		assert.equal( $( this.pspace.element ).prev().html(), "012 34" );
 	});
 
-	module( "Custom delimiter", {
-		setup: function() {
+	QUnit.module( "Custom delimiter", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-delimiter="-">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "123" ), "123" );
-		equal( this.pspace.format( "1234" ), "123-4" );
-		equal( this.pspace.format( "1234567890" ), "123-456-789-0" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "123" ), "123" );
+		assert.equal( this.pspace.format( "1234" ), "123-4" );
+		assert.equal( this.pspace.format( "1234567890" ), "123-456-789-0" );
 	});
 
-	module( "Apply right to left, uniform grouplength", {
-		setup: function() {
+	QUnit.module( "Apply right to left, uniform grouplength", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-grouplength="3" data-reverse data-delimiter="," data-decimal-mark=".">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Blur", function() {
+	QUnit.test( "Blur", function( assert ) {
 		$( this.pspace.element ).val( "12345678" ).trigger( "blur" );
-		equal( $( this.pspace.element ).val(), "12,345,678" );
+		assert.equal( $( this.pspace.element ).val(), "12,345,678" );
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "12" ), "12" );
-		equal( this.pspace.format( "123" ), "123" );
-		equal( this.pspace.format( "1234" ), "1,234" );
-		equal( this.pspace.format( "4444444444" ), "4,444,444,444" );
-		equal( this.pspace.format( "4444444444.44" ), "4,444,444,444.44" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "12" ), "12" );
+		assert.equal( this.pspace.format( "123" ), "123" );
+		assert.equal( this.pspace.format( "1234" ), "1,234" );
+		assert.equal( this.pspace.format( "4444444444" ), "4,444,444,444" );
+		assert.equal( this.pspace.format( "4444444444.44" ), "4,444,444,444.44" );
 	});
 
-	module( "Apply right to left, uniform grouplength, i18n Four Thousand = 4 000,00", {
-		setup: function() {
+	QUnit.module( "Apply right to left, uniform grouplength, i18n Four Thousand = 4 000,00", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-grouplength="3" data-reverse data-delimiter=" " data-decimal-mark=",">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "12" ), "12" );
-		equal( this.pspace.format( "123" ), "123" );
-		equal( this.pspace.format( "1234" ), "1 234" );
-		equal( this.pspace.format( "4444444444" ), "4 444 444 444" );
-		equal( this.pspace.format( "4444444444,44" ), "4 444 444 444,44" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "12" ), "12" );
+		assert.equal( this.pspace.format( "123" ), "123" );
+		assert.equal( this.pspace.format( "1234" ), "1 234" );
+		assert.equal( this.pspace.format( "4444444444" ), "4 444 444 444" );
+		assert.equal( this.pspace.format( "4444444444,44" ), "4 444 444 444,44" );
 	});
 
-	module( "Apply right to left, nonuniform grouplength", {
-		setup: function() {
+	QUnit.module( "Apply right to left, nonuniform grouplength", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-grouplength="4,3," data-reverse data-delimiter="-">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Blur", function() {
+	QUnit.test( "Blur", function( assert ) {
 		$( this.pspace.element ).val( "1112345678" ).trigger( "blur" );
-		equal( $( this.pspace.element ).val(), "111-234-5678" );
+		assert.equal( $( this.pspace.element ).val(), "111-234-5678" );
 	});
 
-	test( "Formats", function() {
-		equal( this.pspace.format( "12" ), "12" );
-		equal( this.pspace.format( "123" ), "123" );
-		equal( this.pspace.format( "12345" ), "1-2345" );
-		equal( this.pspace.format( "444444444444" ), "44444-444-4444" );
+	QUnit.test( "Formats", function( assert ) {
+		assert.equal( this.pspace.format( "12" ), "12" );
+		assert.equal( this.pspace.format( "123" ), "123" );
+		assert.equal( this.pspace.format( "12345" ), "1-2345" );
+		assert.equal( this.pspace.format( "444444444444" ), "44444-444-4444" );
 	});
 
-	module( "Edit twice", {
-		setup: function() {
+	QUnit.module( "Edit twice", {
+		beforeEach: function() {
 			insertHtml( '<input type="text" data-politespace data-grouplength="3,3," data-delimiter="-">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Blur", function() {
+	QUnit.test( "Blur", function( assert ) {
 		$( this.pspace.element ).val( "1112223333" ).trigger( "blur" );
-		equal( $( this.pspace.element ).val(), "111-222-3333" );
+		assert.equal( $( this.pspace.element ).val(), "111-222-3333" );
 		$( this.pspace.element ).trigger( "focus" ).trigger( "blur" );
-		equal( $( this.pspace.element ).val(), "111-222-3333" );
+		assert.equal( $( this.pspace.element ).val(), "111-222-3333" );
 	});
 
-	module( "Proxy Anchor", {
-		setup: function() {
+	QUnit.module( "Proxy Anchor", {
+		beforeEach: function() {
 			insertHtml( '<div class="field"><input type="number" data-politespace data-proxy-anchor=".field"></div>' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
-		teardown: function() {
+		afterEach: function() {
 			this.pspace = null;
 		}
 	});
 
-	test( "Test ancestor class names", function() {
-		equal( this.pspace.$element.parent().is( ".field" ), true, "First ancestor is the proxy anchor (.field)." );
-		equal( this.pspace.$element.parent().parent().is( ".politespace-proxy" ), true, "Second ancestor is the politespace proxy" );
+	QUnit.test( "Test ancestor class names", function( assert ) {
+		assert.equal( this.pspace.$element.parent().is( ".field" ), true, "First ancestor is the proxy anchor (.field)." );
+		assert.equal( this.pspace.$element.parent().parent().is( ".politespace-proxy" ), true, "Second ancestor is the politespace proxy" );
 	});
 
 }( this, jQuery ));

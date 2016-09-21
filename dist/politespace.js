@@ -1,8 +1,8 @@
-/*! politespace - v0.1.8 - 2016-04-11
+/*! politespace - v0.1.18 - 2016-09-21
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2016 Filament Group (@filamentgroup)
- *  License */
+ * MIT License */
 
 (function( w, $ ){
 	"use strict";
@@ -12,7 +12,7 @@ Politely add spaces to input values to increase readability (credit card numbers
 			throw new Error( "Politespace requires an element argument." );
 		}
 
-		if( !element.getAttribute ) {
+		if( !element.getAttribute || window.operamini ) {
 			// Cut the mustard
 			return;
 		}
@@ -113,14 +113,31 @@ Politely add spaces to input values to increase readability (credit card numbers
 	};
 
 	Politespace.prototype.useProxy = function() {
+		var pattern = this.$element.attr( "pattern" );
+		var type = this.$element.attr( "type" );
+
 		// this needs to be an attr check and not a prop for `type` toggling (like password)
-		return this.$element.attr( "type" ) === "number";
+		return type === "number" ||
+			// When Chrome validates form fields using native form validation, it uses `pattern`
+			// which causes validation errors when we inject delimiters. So use the proxy to avoid
+			// delimiters in the form field value.
+			// Chrome also has some sort of
+			( pattern ? !( new RegExp( "^" + pattern + "$" ) ).test( this.delimiter ) : false );
 	};
 
 	Politespace.prototype.updateProxy = function() {
 		if( this.useProxy() && this.$proxy.length ) {
-			this.$proxy.html( this.format( this.getValue() ) );
-			this.$proxy.css( "width", this.element.offsetWidth + "px" );
+			var html = this.format( this.getValue() );
+			var width = this.element.offsetWidth;
+
+			this.$proxy.html( html );
+
+			if( width ) {
+				this.$proxy.css( "width", width + "px" );
+			}
+
+			// Hide if empty, to show placeholder
+			this.$proxy.closest( ".politespace-proxy" )[ html ? 'addClass' : 'removeClass' ]( "notempty" );
 		}
 	};
 
@@ -129,19 +146,20 @@ Politely add spaces to input values to increase readability (credit card numbers
 			return;
 		}
 
-		var self = this;
 		function sumStyles( el, props ) {
 			var total = 0;
+			var $el = $( el );
 			for( var j=0, k=props.length; j<k; j++ ) {
-				total += parseFloat( self.$element.css( props[ j ] ) );
+				total += parseFloat( $el.css( props[ j ] ) );
 			}
 			return total;
 		}
 
 		var $el = $( "<div>" ).addClass( "politespace-proxy active" );
+		var $nextSibling = this.$proxyAnchor.next();
 		var $parent = this.$proxyAnchor.parent();
 
-		this.$proxy = $( "<div>" ).css({
+		this.$proxy = $( "<div>" ).addClass( "politespace-proxy-val" ).css({
 			font: this.$element.css( "font" ),
 			"padding-left": sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px",
 			"padding-right": sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px",
@@ -149,7 +167,12 @@ Politely add spaces to input values to increase readability (credit card numbers
 		});
 		$el.append( this.$proxy );
 		$el.append( this.$proxyAnchor );
-		$parent.append( $el );
+
+		if( $nextSibling.length ) {
+			$el.insertBefore( $nextSibling );
+		} else {
+			$parent.append( $el );
+		}
 
 		this.updateProxy();
 	};
@@ -163,29 +186,62 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 }( this, jQuery ));
 
-(function( $ ) {
+// Input a credit card number string, returns a key signifying the type of credit card it is
+(function( w ) {
 	"use strict";
 
-	// jQuery Plugin
+	var types = {
+		MASTERCARD: /^(2[2-7]|5[1-5])/, // 22-27 and 51-55
+		VISA: /^4/,
+		DISCOVER: /^6(011|5)/, // 6011 or 65
+		AMEX: /^3[47]/ // 34 or 37
+	};
 
-	$( document ).bind( "politespace-input", function( event ) {
+	function CreditableCardType( val ) {
+		for( var j in types ) {
+			if( !!val.match( types[ j ] ) ) {
+				return j;
+			}
+		}
+
+		return -1;
+	}
+
+	CreditableCardType.TYPES = types;
+	w.CreditableCardType = CreditableCardType;
+
+}( typeof global !== "undefined" ? global : this ));
+
+// jQuery Plugin
+(function( w, $ ) {
+	"use strict";
+
+	$( document ).bind( "politespace-init politespace-input", function( event ) {
 		var $t = $( event.target );
 		if( !$t.is( "[data-politespace-creditcard]" ) ) {
 			return;
 		}
 		var pspace = $t.data( "politespace" );
-		var firstDigit = parseInt( $t.val().substr( 0, 1 ), 10 );
+		var val = $t.val();
 		var adjustMaxlength = $t.is( "[data-politespace-creditcard-maxlength]" );
+		var type = w.CreditableCardType( val );
 
-		// AMEX
-		if( firstDigit === 3 ) {
+		if( type === "AMEX" ) {
 			pspace.setGroupLength( adjustMaxlength ? "4,6,5" : "4,6," );
-		} else { // Visa, Mastercard, Discover
+
+			if( adjustMaxlength ) {
+				$t.attr( "maxlength", 15 );
+			}
+		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" ) {
 			pspace.setGroupLength( adjustMaxlength ? "4,4,4,4" : "4" );
+
+			if( adjustMaxlength ) {
+				$t.attr( "maxlength", 16 );
+			}
 		}
 	});
 
-}( jQuery ));
+}( typeof global !== "undefined" ? global : this, jQuery ));
 
 (function( $ ) {
 	"use strict";
@@ -207,19 +263,14 @@ Politely add spaces to input values to increase readability (credit card numbers
 				polite.createProxy();
 			}
 
-
-			$( this )
-				.bind( "politespace-hide-proxy", function() {
+			$t.bind( "politespace-hide-proxy", function() {
 					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
-					polite.update();
 				})
 				.bind( "politespace-show-proxy", function() {
 					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 
 					polite.update();
-					if( polite.useProxy() ) {
-						polite.updateProxy();
-					}
+					polite.updateProxy();
 				})
 				.bind( "input keydown", function() {
 					$( this ).trigger( "politespace-input" );
@@ -237,9 +288,11 @@ Politely add spaces to input values to increase readability (credit card numbers
 					$( this ).trigger( "politespace-hide-proxy" );
 					polite.reset();
 				})
-				.data( componentName, polite );
+				.data( componentName, polite )
+				.trigger( "politespace-init" );
 
 			polite.update();
+			polite.updateProxy();
 		});
 	};
 

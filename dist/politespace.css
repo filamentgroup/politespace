@@ -1,18 +1,18 @@
-/*! politespace - v0.1.8 - 2016-04-11
+/*! politespace - v0.1.18 - 2016-09-21
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2016 Filament Group (@filamentgroup)
- *  License */
+ * MIT License */
 
 .politespace-proxy {
 	position: relative;
 	overflow: hidden; /* clearfix for floating siblings */
 	display: inline-block;
 }
-.politespace-proxy > :first-child {
+.politespace-proxy-val {
 	display: none;
 }
-.politespace-proxy.active > :first-child {
+.politespace-proxy.active.notempty > .politespace-proxy-val {
 	display: block;
 	position: absolute;
 	left: 0;
@@ -26,14 +26,21 @@ Politely add spaces to input values to increase readability (credit card numbers
 	box-sizing: border-box;
 	z-index: 1;
 }
-.politespace-proxy.active input {
+/* Safari 9 has a weird top/bottom margin on form elements inside of politespace proxies */
+/* This caused issues with proxy positioning.
+.politespace-proxy > input {
+	margin-top: 0;
+	margin-bottom: 0;
+}*/
+.politespace-proxy.active.notempty input {
+	-webkit-text-fill-color: transparent;
 	color: transparent;
 }
-.politespace-proxy.active input[type=number] {
+.politespace-proxy.active.notempty input[type=number] {
 	-moz-appearance: textfield;
 }
-.politespace-proxy.active input[type=number]::-webkit-inner-spin-button,
-.politespace-proxy.active input[type=number]::-webkit-outer-spin-button {
+.politespace-proxy.active.notempty input[type=number]::-webkit-inner-spin-button,
+.politespace-proxy.active.notempty input[type=number]::-webkit-outer-spin-button {
 	-webkit-appearance: none;
 	margin: 0;
 }
