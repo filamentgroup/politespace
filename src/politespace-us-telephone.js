@@ -4,7 +4,7 @@
 
 	function cleanup( el ) {
 		var $t = $( el );
-		$t.val( $t.val().replace( /[^\d]*/g, "" ).replace( /^1/, "" ) );
+		$t.val( $t.val().replace( /^1/, "" ) );
 	}
 
 	$( document ).bind( "politespace-init politespace-input", function( event ) {

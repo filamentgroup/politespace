@@ -17,6 +17,7 @@
 		// https://en.wikipedia.org/wiki/Decimal_mark
 		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
 		this.reverse = this.$element.is( "[data-reverse]" );
+		this.strip = this.$element.attr( "data-politespace-strip" );
 		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
 
 		var proxyAnchorSelector = this.$element.attr( "data-proxy-anchor" );
@@ -68,6 +69,9 @@
 	Politespace.prototype.format = function( value ) {
 		var split;
 		var val = this.unformat( value );
+		if( this.strip ) {
+			val = val.replace( new RegExp(  this.strip, 'g' ), "" );
+		}
 		var suffix = '';
 
 		if( this.decimalMark ) {

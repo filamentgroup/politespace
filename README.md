@@ -36,6 +36,10 @@ When delimiting money, for example, you want the grouplengths to be calculated f
 
 When delimiting money as a floating point, you’ll want to exclude the fractional portion of the number when inserting delimiters. For example, $4,000.34 will need `data-delimiter="," data-decimal-mark="."` (or for proper internationalization, $4 000,34 will need `data-delimiter=" " data-decimal-mark=","`).
 
+### data-politespace-strip
+
+Specify a regular expression of characters to remove before formatting the field. To strip out all non-numeric characters (for example, for a telephone number), use `data-politespace-strip="[^\d]*"`. This is an alternative to [the `numeric-input` plugin of `formcore`](https://github.com/filamentgroup/formcore#numeric-input).
+
 ### data-politespace-creditcard
 
 When using politespace with credit card fields, the formatting logic changes based on the first digit. For example, American Express (AMEX) card formats are 4,6,5 (15 characters total, the first digit is a 3) and Visa/Mastercard/Discover are 4,4,4,4 (16 characters). If you use the `data-politespace-creditcard` attribute (in lieu of a `data-grouplength`) politespace will automatically adjust the politespace group length for you. If you add the `data-politespace-creditcard-maxlength` attribute, politespace will also manage the field’s maxlength for you as well.
