@@ -48,6 +48,10 @@ When using politespace with credit card fields, the formatting logic changes bas
 
 Uses the [`creditable`](https://github.com/filamentgroup/creditable) dependency.
 
+### data-politespace-us-telephone
+
+When using politespace with US specific telephone number fields, `data-politespace-us-telephone` option will automatically adjust the maxlength of the field to account for a US country code. If the user types a 1, the maxlength will be adjusted to add one additional character until the user blurs, when the country code will be stripped and the original maxlength restored.
+
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
 ### Download [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js) and [politespace.css](http://filamentgroup.github.io/politespace/dist/politespace.css)
