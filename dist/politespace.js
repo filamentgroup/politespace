@@ -1,4 +1,4 @@
-/*! politespace - v0.1.19 - 2016-09-23
+/*! politespace - v0.1.20 - 2016-09-26
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2016 Filament Group (@filamentgroup)
@@ -251,36 +251,46 @@ Politely add spaces to input values to increase readability (credit card numbers
 (function( w, $ ) {
 	"use strict";
 
+	var maxlengthCacheKey = "politespace-us-telephone-maxlength";
+	var eventName = "politespace-beforeblur.politespace-us-telephone";
+
 	function cleanup( el ) {
 		var $t = $( el );
-		$t.val( $t.val().replace( /^1/, "" ) );
+		var val = $t.val();
+
+		$t.val( val.replace( /^1/, "" ) );
 	}
 
-	$( document ).bind( "politespace-init politespace-input", function( event ) {
+	// On init
+	$( document ).bind( "politespace-init", function( event ) {
 		var $t = $( event.target );
 		if( !$t.is( "[data-politespace-us-telephone]" ) ) {
 			return;
 		}
-		var val = $t.val();
 
 		// Adjust maxlength
 		var maxlength= $t.attr( "maxlength" );
-		var maxlengthCacheKey = "politespace-us-telephone-maxlength";
-		var maxlengthCache = $t.data( maxlengthCacheKey );
 
-		if( maxlength && !maxlengthCache ) {
-			maxlengthCache = maxlength;
-			$t.data( maxlengthCacheKey, maxlength );
+		if( maxlength ) {
+			$t.data( maxlengthCacheKey, parseInt( maxlength, 10 ) );
 
 			cleanup( $t[ 0 ] );
-			$t.one( "blur", function() {
-				$( this ).attr( "maxlength", maxlength );
+			$t.off( eventName ).on( eventName, function() {
+				$( this ).attr( "maxlength", $t.data( maxlengthCacheKey ) );
 				cleanup( this );
 			});
 		}
+	});
 
-		if( val.indexOf( '1' ) === 0 ) {
-			$t.attr( "maxlength", parseInt( maxlengthCache, 10 ) + 1 );
+	// On input
+	$( document ).bind( "politespace-input", function( event ) {
+		var $t = $( event.target );
+		if( !$t.is( "[data-politespace-us-telephone]" ) ) {
+			return;
+		}
+
+		if( $t.val().indexOf( '1' ) === 0 ) {
+			$t.attr( "maxlength", $t.data( maxlengthCacheKey ) + 1 );
 		}
 	});
 
@@ -321,6 +331,8 @@ Politely add spaces to input values to increase readability (credit card numbers
 					polite.updateProxy();
 				})
 				.bind( "blur", function() {
+					$( this ).trigger( "politespace-beforeblur" );
+
 					polite.update();
 
 					if( polite.useProxy() ){
