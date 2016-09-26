@@ -34,6 +34,8 @@
 					polite.updateProxy();
 				})
 				.bind( "blur", function() {
+					$( this ).trigger( "politespace-beforeblur" );
+
 					polite.update();
 
 					if( polite.useProxy() ){
