@@ -1,4 +1,4 @@
-(function( w, $ ){
+(function( w ){
 	"use strict";
 
 	var Politespace = function( element ) {
@@ -12,20 +12,19 @@
 		}
 
 		this.element = element;
-		this.$element = $( element );
-		this.delimiter = this.$element.attr( "data-delimiter" ) || " ";
+		this.delimiter = element.getAttribute( "data-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
-		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
-		this.reverse = this.$element.is( "[data-reverse]" );
-		this.strip = this.$element.attr( "data-politespace-strip" );
-		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+		this.decimalMark = element.getAttribute( "data-decimal-mark" ) || "";
+		this.reverse = element.matches( "[data-reverse]" );
+		this.strip = element.getAttribute( "data-politespace-strip" );
+		this.groupLength = element.getAttribute( "data-grouplength" ) || 3;
 
-		var proxyAnchorSelector = this.$element.attr( "data-proxy-anchor" );
-		this.$proxyAnchor = this.$element;
-		this.$proxy = null;
+		var proxyAnchorSelector = element.getAttribute( "data-proxy-anchor" );
+		this.proxyAnchor = this.element;
+		this.proxy = null;
 
 		if( proxyAnchorSelector ) {
-			this.$proxyAnchor = this.$element.closest( proxyAnchorSelector );
+			this.proxyAnchor = element.closest( proxyAnchorSelector );
 		}
 	};
 
@@ -97,7 +96,7 @@
 	};
 
 	Politespace.prototype.update = function() {
-		this.element.value = this.useProxy() || this.$element.attr( "type" ) === "password" ?
+		this.element.value = this.useProxy() || this.element.getAttribute( "type" ) === "password" ?
 			this.getValue() :
 			this.format( this.getValue() );
 	};
@@ -111,8 +110,8 @@
 	};
 
 	Politespace.prototype.useProxy = function() {
-		var pattern = this.$element.attr( "pattern" );
-		var type = this.$element.attr( "type" );
+		var pattern = this.element.getAttribute( "pattern" );
+		var type = this.element.getAttribute( "type" );
 
 		// this needs to be an attr check and not a prop for `type` toggling (like password)
 		return type === "number" ||
@@ -124,18 +123,19 @@
 	};
 
 	Politespace.prototype.updateProxy = function() {
-		if( this.useProxy() && this.$proxy.length ) {
+		if( this.useProxy() && this.proxy ) {
 			var html = this.format( this.getValue() );
 			var width = this.element.offsetWidth;
 
-			this.$proxy.html( html );
+			this.proxy.innerHTML = html;
 
 			if( width ) {
-				this.$proxy.css( "width", width + "px" );
+				this.proxy.style.setProperty( "width", width + "px" );
 			}
 
 			// Hide if empty, to show placeholder
-			this.$proxy.closest( ".politespace-proxy" )[ html ? 'addClass' : 'removeClass' ]( "notempty" );
+			this.proxy.closest( ".politespace-proxy" )
+				.classList[ html ? 'add' : 'remove' ]( "notempty" );
 		}
 	};
 
@@ -144,32 +144,33 @@
 			return;
 		}
 
-		function sumStyles( el, props ) {
+		function sumStyles( style, props ) {
 			var total = 0;
-			var $el = $( el );
-			for( var j=0, k=props.length; j<k; j++ ) {
-				total += parseFloat( $el.css( props[ j ] ) );
+			for( var j = 0, k = props.length; j < k; j++ ) {
+				total += parseFloat( style.getPropertyValue( props[ j ] ) );
 			}
 			return total;
 		}
 
-		var $el = $( "<div>" ).addClass( "politespace-proxy active" );
-		var $nextSibling = this.$proxyAnchor.next();
-		var $parent = this.$proxyAnchor.parent();
+		var computed = window.getComputedStyle( this.element );
+		var el = document.createElement( "div" );
+		el.className = "politespace-proxy active";
+		var nextSibling = this.proxyAnchor.nextSibling;
+		var parent = this.proxyAnchor.parentNode;
 
-		this.$proxy = $( "<div>" ).addClass( "politespace-proxy-val" ).css({
-			font: this.$element.css( "font" ),
-			"padding-left": sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px",
-			"padding-right": sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px",
-			top: sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px"
-		});
-		$el.append( this.$proxy );
-		$el.append( this.$proxyAnchor );
+		var proxy = document.createElement( "div" );
+		proxy.className = "politespace-proxy-val";
+		proxy.style.setProperty( "font", computed.getPropertyValue( "font" ) );
+		proxy.style.setProperty( "padding-left", sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px");
+		proxy.style.setProperty( "padding-right", sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px");
+		proxy.style.setProperty( "top",  sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px");
+		this.proxy = el.appendChild( proxy );
+		el.appendChild( this.proxyAnchor );
 
-		if( $nextSibling.length ) {
-			$el.insertBefore( $nextSibling );
+		if( nextSibling ) {
+			el.insertBefore( nextSibling );
 		} else {
-			$parent.append( $el );
+			parent.appendChild( el );
 		}
 
 		this.updateProxy();
@@ -177,9 +178,9 @@
 
 	Politespace.prototype.setGroupLength = function( length ) {
 		this.groupLength = length;
-		this.$element.attr( "data-grouplength", length );
+		this.element.setAttribute( "data-grouplength", length );
 	};
 
 	w.Politespace = Politespace;
 
-}( this, jQuery ));
+})( this );
