@@ -15,7 +15,7 @@
 		this.delimiter = element.getAttribute( "data-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
 		this.decimalMark = element.getAttribute( "data-decimal-mark" ) || "";
-		this.reverse = element.matches( "[data-reverse]" );
+		this.reverse = element.hasAttribute( "data-reverse" );
 		this.strip = element.getAttribute( "data-politespace-strip" );
 		this.groupLength = element.getAttribute( "data-grouplength" ) || 3;
 
@@ -153,17 +153,19 @@
 		}
 
 		var computed = window.getComputedStyle( this.element );
+
 		var el = document.createElement( "div" );
 		el.className = "politespace-proxy active";
+
 		var nextSibling = this.proxyAnchor.nextSibling;
 		var parent = this.proxyAnchor.parentNode;
 
 		var proxy = document.createElement( "div" );
 		proxy.className = "politespace-proxy-val";
 		proxy.style.setProperty( "font", computed.getPropertyValue( "font" ) );
-		proxy.style.setProperty( "padding-left", sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px");
-		proxy.style.setProperty( "padding-right", sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px");
-		proxy.style.setProperty( "top",  sumStyles( this.element, [ "padding-top", "border-top-width", "margin-top" ] ) + "px");
+		proxy.style.setProperty( "padding-left", sumStyles( computed, [ "padding-left", "border-left-width" ] ) + "px");
+		proxy.style.setProperty( "padding-right", sumStyles( computed, [ "padding-right", "border-right-width" ] ) + "px");
+		proxy.style.setProperty( "top",  sumStyles( computed, [ "padding-top", "border-top-width", "margin-top" ] ) + "px");
 		this.proxy = el.appendChild( proxy );
 		el.appendChild( this.proxyAnchor );
 
