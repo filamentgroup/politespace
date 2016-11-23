@@ -34,7 +34,7 @@
 		"grunt-contrib-clean": "~1.0.0",
 		"grunt-contrib-concat": "~1.0.1",
 		"grunt-contrib-csslint": "~1.0.0",
-		"grunt-contrib-jshint": "~1.0.0",
+		"grunt-contrib-jshint": "~1.1.0",
 		"grunt-contrib-qunit": "~1.2.0",
 		"grunt-contrib-watch": "~1.0.0",
 		"grunt-gh-pages": "~1.1.0",
