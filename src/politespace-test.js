@@ -3,8 +3,8 @@
 
 	function insertHtml( html ) {
 		var $fixture = $( "#qunit-fixture" );
-			$fixture.html( html );
-			$fixture.trigger( "enhance" );
+		$fixture.html( html );
+		$fixture.trigger( "enhance" );
 	}
 
 	QUnit.module( "Defaults", {
@@ -224,8 +224,9 @@
 	});
 
 	QUnit.test( "Test ancestor class names", function( assert ) {
-		assert.equal( this.pspace.$element.parent().is( ".field" ), true, "First ancestor is the proxy anchor (.field)." );
-		assert.equal( this.pspace.$element.parent().parent().is( ".politespace-proxy" ), true, "Second ancestor is the politespace proxy" );
+		var parent = this.pspace.element.parentNode;
+		assert.equal( parent.classList.contains( "field" ), true, "First ancestor is the proxy anchor (.field)." );
+		assert.equal( parent.parentNode.classList.contains( "politespace-proxy" ), true, "Second ancestor is the politespace proxy" );
 	});
 
 }( this, jQuery ));
