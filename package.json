@@ -18,6 +18,7 @@
 		"type": "git",
 		"url": "git://github.com/filamentgroup/politespace.git"
 	},
+  "main": "./src/politespace.js",
 	"scripts": {
 		"test": "grunt test"
 	},
