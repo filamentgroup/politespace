@@ -1,12 +1,9 @@
-(function( w, $ ){
-	"use strict";
-
 	var Politespace = function( element ) {
 		if( !element ) {
 			throw new Error( "Politespace requires an element argument." );
 		}
 
-		if( !element.getAttribute || window.operamini ) {
+		if( !element.getAttribute || w.operamini ) {
 			// Cut the mustard
 			return;
 		}
@@ -179,7 +176,3 @@
 		this.groupLength = length;
 		this.$element.attr( "data-grouplength", length );
 	};
-
-	w.Politespace = Politespace;
-
-}( this, jQuery ));

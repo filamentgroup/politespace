@@ -1,7 +1,3 @@
-// jQuery Plugin
-(function( w, $ ) {
-	"use strict";
-
 	$( document ).bind( "politespace-init politespace-input", function( event ) {
 		var $t = $( event.target );
 		if( !$t.is( "[data-politespace-creditcard]" ) ) {
@@ -26,5 +22,3 @@
 			}
 		}
 	});
-
-}( typeof global !== "undefined" ? global : this, jQuery ));

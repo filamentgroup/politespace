@@ -1,0 +1,2 @@
+	w.Politespace = Politespace;
+}));
