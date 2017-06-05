@@ -10,14 +10,14 @@
 
 		this.element = element;
 		this.$element = $( element );
-		this.delimiter = this.$element.attr( "data-delimiter" ) || " ";
+		this.delimiter = this.$element.attr( "data-politespace-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
-		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
-		this.reverse = this.$element.is( "[data-reverse]" );
+		this.decimalMark = this.$element.attr( "data-politespace-decimal-mark" ) || "";
+		this.reverse = this.$element.is( "[data-politespace-reverse]" );
 		this.strip = this.$element.attr( "data-politespace-strip" );
-		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+		this.groupLength = this.$element.attr( "data-politespace-grouplength" ) || 3;
 
-		var proxyAnchorSelector = this.$element.attr( "data-proxy-anchor" );
+		var proxyAnchorSelector = this.$element.attr( "data-politespace-proxy-anchor" );
 		this.$proxyAnchor = this.$element;
 		this.$proxy = null;
 
@@ -174,5 +174,5 @@
 
 	Politespace.prototype.setGroupLength = function( length ) {
 		this.groupLength = length;
-		this.$element.attr( "data-grouplength", length );
+		this.$element.attr( "data-politespace-grouplength", length );
 	};

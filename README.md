@@ -11,9 +11,9 @@
 
 Add `data-politespace` to your form’s `input[type=text]` (et al) or `textarea` and we’ll add spaces to the value when the user blurs off of it. We’ll also remove those spaces on focus.
 
-### data-grouplength
+### data-politespace-grouplength
 
-To customize the number of spaces, use the `data-grouplength` attribute (it defaults to 3). It can be:
+To customize the number of spaces, use the `data-politespace-grouplength` attribute (it defaults to 3). It can be:
 
  * single number (to uniformly repeat, like a credit card)
  * a comma delimited list (for non-uniform strings, like "2,4" for MM YYYY). This also works with open ended commas, like "2," for MM YYYY or "3,3," for a US phone number.
@@ -24,17 +24,17 @@ This script now works reliably cross-browser with `<input type="number">`. It sh
 
 Make sure your `maxlength` value is large enough to allow for the addition of the whitespace.
 
-### data-delimiter
+### data-politespace-delimiter
 
-The default delimiter is a space, but you can add `data-delimiter` to customize to a different character.
+The default delimiter is a space, but you can add `data-politespace-delimiter` to customize to a different character.
 
-### data-reverse
+### data-politespace-reverse
 
-When delimiting money, for example, you want the grouplengths to be calculated from the lowest digit to the greatest (from right to left). Use `data-reverse` to opt into this behavior. A USD Price example: `data-grouplength="3" data-delimiter="," data-reverse`
+When delimiting money, for example, you want the grouplengths to be calculated from the lowest digit to the greatest (from right to left). Use `data-politespace-reverse` to opt into this behavior. A USD Price example: `data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse`
 
-### data-decimal-mark
+### data-politespace-decimal-mark
 
-When delimiting money as a floating point, you’ll want to exclude the fractional portion of the number when inserting delimiters. For example, $4,000.34 will need `data-delimiter="," data-decimal-mark="."` (or for proper internationalization, $4 000,34 will need `data-delimiter=" " data-decimal-mark=","`).
+When delimiting money as a floating point, you’ll want to exclude the fractional portion of the number when inserting delimiters. For example, $4,000.34 will need `data-politespace-delimiter="," data-politespace-decimal-mark="."` (or for proper internationalization, $4 000,34 will need `data-politespace-delimiter=" " data-politespace-decimal-mark=","`).
 
 ### data-politespace-strip
 
@@ -42,7 +42,7 @@ Specify a regular expression of characters to remove before formatting the field
 
 ### data-politespace-creditcard
 
-When using politespace with credit card fields, the formatting logic changes based on the first digit. For example, American Express (AMEX) card formats are 4,6,5 (15 characters total, the first digit is a 3) and Visa/Mastercard/Discover are 4,4,4,4 (16 characters). If you use the `data-politespace-creditcard` attribute (in lieu of a `data-grouplength`) politespace will automatically adjust the politespace group length for you. If you add the `data-politespace-creditcard-maxlength` attribute, politespace will also manage the field’s maxlength for you as well.
+When using politespace with credit card fields, the formatting logic changes based on the first digit. For example, American Express (AMEX) card formats are 4,6,5 (15 characters total, the first digit is a 3) and Visa/Mastercard/Discover are 4,4,4,4 (16 characters). If you use the `data-politespace-creditcard` attribute (in lieu of a `data-politespace-grouplength`) politespace will automatically adjust the politespace group length for you. If you add the `data-politespace-creditcard-maxlength` attribute, politespace will also manage the field’s maxlength for you as well.
 
 `<input type="text" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength>`
 
@@ -54,9 +54,15 @@ When using politespace with US specific telephone number fields, `data-politespa
 
 ### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
 
-### Download [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js) and [politespace.css](http://filamentgroup.github.io/politespace/dist/politespace.css)
+### Download
 
-or use [NPM](https://www.npmjs.com/): `npm install politespace`
+* [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js)
+* _Optional:_ [politespace-init.js](http://filamentgroup.github.io/politespace/dist/politespace-init.js), performs auto initialization, calls `$( ".elements" ).politespace()` for you.
+* [politespace.css](http://filamentgroup.github.io/politespace/dist/politespace.css)
+
+### NPM
+
+`npm install politespace`
 
 ### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
 
