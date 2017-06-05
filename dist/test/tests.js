@@ -35,7 +35,7 @@
 
 	QUnit.module( "Grouplength 2", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="2">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-grouplength="2">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -52,7 +52,7 @@
 
 	QUnit.module( "Grouplength 1,2,", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="1,2,">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-grouplength="1,2,">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -69,7 +69,7 @@
 
 	QUnit.module( "Grouplength 1,2,3", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="1,2,3">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-grouplength="1,2,3">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -119,7 +119,7 @@
 
 	QUnit.module( "Custom delimiter", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-delimiter="-">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-delimiter="-">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -135,7 +135,7 @@
 
 	QUnit.module( "Apply right to left, uniform grouplength", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="3" data-reverse data-delimiter="," data-decimal-mark=".">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-grouplength="3" data-politespace-reverse data-politespace-delimiter="," data-politespace-decimal-mark=".">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -158,7 +158,7 @@
 
 	QUnit.module( "Apply right to left, uniform grouplength, i18n Four Thousand = 4 000,00", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="3" data-reverse data-delimiter=" " data-decimal-mark=",">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-grouplength="3" data-politespace-reverse data-politespace-delimiter=" " data-politespace-decimal-mark=",">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -176,7 +176,7 @@
 
 	QUnit.module( "Apply right to left, nonuniform grouplength", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="4,3," data-reverse data-delimiter="-">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-grouplength="4,3," data-politespace-reverse data-politespace-delimiter="-">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -198,7 +198,7 @@
 
 	QUnit.module( "Edit twice", {
 		beforeEach: function() {
-			insertHtml( '<input type="text" data-politespace data-grouplength="3,3," data-delimiter="-">' );
+			insertHtml( '<input type="text" data-politespace data-politespace-grouplength="3,3," data-politespace-delimiter="-">' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {
@@ -215,7 +215,7 @@
 
 	QUnit.module( "Proxy Anchor", {
 		beforeEach: function() {
-			insertHtml( '<div class="field"><input type="number" data-politespace data-proxy-anchor=".field"></div>' );
+			insertHtml( '<div class="field"><input type="number" data-politespace data-politespace-proxy-anchor=".field"></div>' );
 			this.pspace = $( "[data-politespace]" ).data( "politespace" );
 		},
 		afterEach: function() {

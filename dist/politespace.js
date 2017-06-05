@@ -1,32 +1,98 @@
-/*! politespace - v0.1.19 - 2016-09-23
+/*! politespace - v1.0.0 - 2017-06-05
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
- * Copyright (c) 2016 Filament Group (@filamentgroup)
+ * Copyright (c) 2017 Filament Group (@filamentgroup)
  * MIT License */
 
-(function( w, $ ){
+// Input a credit card number string, returns a key signifying the type of credit card it is
+(function( w ) {
 	"use strict";
+
+	var keys = {
+		MASTERCARD: "MASTERCARD",
+		VISA: "VISA",
+		DISCOVER: "DISCOVER",
+		AMEX: "AMEX"
+	};
+
+	var types = {};
+
+	// 2221-2720 and 51-55
+	types[ keys.MASTERCARD ] = /^(222[1-9]|22[3-9]|2[3-6]|27[01]|2720|5[1-5])/;
+
+	types[ keys.VISA ] = /^4/;
+
+	// 6011 or 65
+	types[ keys.DISCOVER ] = /^6(011|22(12[6-9]|1[3-9]|[2-8]|9[0-1]|92[0-5])|4[4-9]|5)/;
+
+	// 34 or 37
+	types[ keys.AMEX ] = /^3[47]/;
+
+	function CreditableCardType( val ) {
+		for( var j in types ) {
+			if( !!val.match( types[ j ] ) ) {
+				return j;
+			}
+		}
+
+		return -1;
+	}
+
+	CreditableCardType.KEYS = keys;
+	CreditableCardType.TYPES = types;
+	w.CreditableCardType = CreditableCardType;
+
+}( typeof global !== "undefined" ? global : this ));
+
+// UMD module definition
+// From: https://github.com/umdjs/umd/blob/master/templates/jqueryPlugin.js
+
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+			// AMD. Register as an anonymous module.
+			define(['jquery'], factory);
+	} else if (typeof module === 'object' && module.exports) {
+		// Node/CommonJS
+		module.exports = function( root, jQuery ) {
+			if ( jQuery === undefined ) {
+				if ( typeof window !== 'undefined' ) {
+					jQuery = require('jquery');
+				} else {
+					jQuery = require('jquery')(root);
+				}
+			}
+			factory(jQuery);
+			return jQuery;
+		};
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function ($) {
+	"use strict";
+
+	var w = typeof window !== "undefined" ? window : this;
 
 	var Politespace = function( element ) {
 		if( !element ) {
 			throw new Error( "Politespace requires an element argument." );
 		}
 
-		if( !element.getAttribute || window.operamini ) {
+		if( !element.getAttribute || w.operamini ) {
 			// Cut the mustard
 			return;
 		}
 
 		this.element = element;
 		this.$element = $( element );
-		this.delimiter = this.$element.attr( "data-delimiter" ) || " ";
+		this.delimiter = this.$element.attr( "data-politespace-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
-		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
-		this.reverse = this.$element.is( "[data-reverse]" );
+		this.decimalMark = this.$element.attr( "data-politespace-decimal-mark" ) || "";
+		this.reverse = this.$element.is( "[data-politespace-reverse]" );
 		this.strip = this.$element.attr( "data-politespace-strip" );
-		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+		this.groupLength = this.$element.attr( "data-politespace-grouplength" ) || 3;
 
-		var proxyAnchorSelector = this.$element.attr( "data-proxy-anchor" );
+		var proxyAnchorSelector = this.$element.attr( "data-politespace-proxy-anchor" );
 		this.$proxyAnchor = this.$element;
 		this.$proxy = null;
 
@@ -183,116 +249,10 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 	Politespace.prototype.setGroupLength = function( length ) {
 		this.groupLength = length;
-		this.$element.attr( "data-grouplength", length );
+		this.$element.attr( "data-politespace-grouplength", length );
 	};
 
-	w.Politespace = Politespace;
-
-}( this, jQuery ));
-
-// Input a credit card number string, returns a key signifying the type of credit card it is
-(function( w ) {
-	"use strict";
-
-	var types = {
-		MASTERCARD: /^(2[2-7]|5[1-5])/, // 22-27 and 51-55
-		VISA: /^4/,
-		DISCOVER: /^6(011|5)/, // 6011 or 65
-		AMEX: /^3[47]/ // 34 or 37
-	};
-
-	function CreditableCardType( val ) {
-		for( var j in types ) {
-			if( !!val.match( types[ j ] ) ) {
-				return j;
-			}
-		}
-
-		return -1;
-	}
-
-	CreditableCardType.TYPES = types;
-	w.CreditableCardType = CreditableCardType;
-
-}( typeof global !== "undefined" ? global : this ));
-
-// jQuery Plugin
-(function( w, $ ) {
-	"use strict";
-
-	$( document ).bind( "politespace-init politespace-input", function( event ) {
-		var $t = $( event.target );
-		if( !$t.is( "[data-politespace-creditcard]" ) ) {
-			return;
-		}
-		var pspace = $t.data( "politespace" );
-		var val = $t.val();
-		var adjustMaxlength = $t.is( "[data-politespace-creditcard-maxlength]" );
-		var type = w.CreditableCardType( val );
-
-		if( type === "AMEX" ) {
-			pspace.setGroupLength( adjustMaxlength ? "4,6,5" : "4,6," );
-
-			if( adjustMaxlength ) {
-				$t.attr( "maxlength", 15 );
-			}
-		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" ) {
-			pspace.setGroupLength( adjustMaxlength ? "4,4,4,4" : "4" );
-
-			if( adjustMaxlength ) {
-				$t.attr( "maxlength", 16 );
-			}
-		}
-	});
-
-}( typeof global !== "undefined" ? global : this, jQuery ));
-
-// jQuery Plugin
-(function( w, $ ) {
-	"use strict";
-
-	function cleanup( el ) {
-		var $t = $( el );
-		$t.val( $t.val().replace( /^1/, "" ) );
-	}
-
-	$( document ).bind( "politespace-init politespace-input", function( event ) {
-		var $t = $( event.target );
-		if( !$t.is( "[data-politespace-us-telephone]" ) ) {
-			return;
-		}
-		var val = $t.val();
-
-		// Adjust maxlength
-		var maxlength= $t.attr( "maxlength" );
-		var maxlengthCacheKey = "politespace-us-telephone-maxlength";
-		var maxlengthCache = $t.data( maxlengthCacheKey );
-
-		if( maxlength && !maxlengthCache ) {
-			maxlengthCache = maxlength;
-			$t.data( maxlengthCacheKey, maxlength );
-
-			cleanup( $t[ 0 ] );
-			$t.one( "blur", function() {
-				$( this ).attr( "maxlength", maxlength );
-				cleanup( this );
-			});
-		}
-
-		if( val.indexOf( '1' ) === 0 ) {
-			$t.attr( "maxlength", parseInt( maxlengthCache, 10 ) + 1 );
-		}
-	});
-
-}( typeof global !== "undefined" ? global : this, jQuery ));
-
-(function( $ ) {
-	"use strict";
-
-	// jQuery Plugin
-
-	var componentName = "politespace",
-		initSelector = "[data-" + componentName + "]";
+	var componentName = "politespace";
 
 	$.fn[ componentName ] = function(){
 		return this.each( function(){
@@ -321,6 +281,8 @@ Politely add spaces to input values to increase readability (credit card numbers
 					polite.updateProxy();
 				})
 				.bind( "blur", function() {
+					$( this ).trigger( "politespace-beforeblur" );
+
 					polite.update();
 
 					if( polite.useProxy() ){
@@ -339,10 +301,79 @@ Politely add spaces to input values to increase readability (credit card numbers
 		});
 	};
 
-	// auto-init on enhance (which is called on domready)
-	$( document ).bind( "enhance", function( e ) {
-		var $sel = $( e.target ).is( initSelector ) ? $( e.target ) : $( initSelector, e.target );
-		$sel[ componentName ]();
+	$( document ).bind( "politespace-init politespace-input", function( event ) {
+		var $t = $( event.target );
+		if( !$t.is( "[data-politespace-creditcard]" ) ) {
+			return;
+		}
+		var pspace = $t.data( "politespace" );
+		var val = $t.val();
+		var adjustMaxlength = $t.is( "[data-politespace-creditcard-maxlength]" );
+		var type = w.CreditableCardType( val );
+
+		if( type === "AMEX" ) {
+			pspace.setGroupLength( adjustMaxlength ? "4,6,5" : "4,6," );
+
+			if( adjustMaxlength ) {
+				$t.attr( "maxlength", 15 );
+			}
+		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" ) {
+			pspace.setGroupLength( adjustMaxlength ? "4,4,4,4" : "4" );
+
+			if( adjustMaxlength ) {
+				$t.attr( "maxlength", 16 );
+			}
+		}
 	});
 
-}( jQuery ));
+// jQuery Plugin
+(function( w, $ ) {
+	"use strict";
+
+	var maxlengthCacheKey = "politespace-us-telephone-maxlength";
+	var eventName = "politespace-beforeblur.politespace-us-telephone";
+
+	function cleanup( el ) {
+		var $t = $( el );
+		var val = $t.val();
+
+		$t.val( val.replace( /^1/, "" ) );
+	}
+
+	// On init
+	$( document ).bind( "politespace-init", function( event ) {
+		var $t = $( event.target );
+		if( !$t.is( "[data-politespace-us-telephone]" ) ) {
+			return;
+		}
+
+		// Adjust maxlength
+		var maxlength= $t.attr( "maxlength" );
+
+		if( maxlength ) {
+			$t.data( maxlengthCacheKey, parseInt( maxlength, 10 ) );
+
+			cleanup( $t[ 0 ] );
+			$t.off( eventName ).on( eventName, function() {
+				$( this ).attr( "maxlength", $t.data( maxlengthCacheKey ) );
+				cleanup( this );
+			});
+		}
+	});
+
+	// On input
+	$( document ).bind( "politespace-input", function( event ) {
+		var $t = $( event.target );
+		if( !$t.is( "[data-politespace-us-telephone]" ) ) {
+			return;
+		}
+
+		if( $t.val().indexOf( '1' ) === 0 ) {
+			$t.attr( "maxlength", $t.data( maxlengthCacheKey ) + 1 );
+		}
+	});
+
+}( typeof global !== "undefined" ? global : this, jQuery ));
+
+	w.Politespace = Politespace;
+}));

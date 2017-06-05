@@ -66,6 +66,7 @@
 	<script>jQuery.noConflict()</script>
 	<!-- Load local lib and tests. -->
 	<script src="../dist/politespace.js"></script>
+	<script src="../dist/politespace-init.js"></script>
 	<script src="masked-input.js"></script>
 	<script>
 	jQuery( function(){
@@ -91,20 +92,20 @@
 			<input type="text" data-politespace maxlength="7" value="123456">
 		</label>
 		<label>
-			<code>input[type=text]</code> with <code>data-grouplength="2"</code>
-			<input type="text" data-politespace data-grouplength="2" value="1234567890">
+			<code>input[type=text]</code> with <code>data-politespace-grouplength="2"</code>
+			<input type="text" data-politespace data-politespace-grouplength="2" value="1234567890">
 		</label>
 		<label>
-			<code>input[type=text]</code> with <code>data-grouplength="1,2,3,"</code>
-			<input type="text" data-politespace data-grouplength="1,2,3," value="1234567890">
+			<code>input[type=text]</code> with <code>data-politespace-grouplength="1,2,3,"</code>
+			<input type="text" data-politespace data-politespace-grouplength="1,2,3," value="1234567890">
 		</label>
 		<label>
-			<code>input[type=text]</code> (US Zip Code) with <code>data-grouplength="5,"</code>
-			<input type="text" data-politespace data-grouplength="5," value="100011234">
+			<code>input[type=text]</code> (US Zip Code) with <code>data-politespace-grouplength="5,"</code>
+			<input type="text" data-politespace data-politespace-grouplength="5," value="100011234">
 		</label>
 		<label>
-			<code>input[type=text]</code> (Canadian Postal Code) <code>data-grouplength="3,"</code>
-			<input type="text" data-politespace data-grouplength="3," value="A1A 1A1" pattern="[A-Z0-9 ]*">
+			<code>input[type=text]</code> (Canadian Postal Code) <code>data-politespace-grouplength="3,"</code>
+			<input type="text" data-politespace data-politespace-grouplength="3," value="A1A 1A1" pattern="[A-Z0-9 ]*">
 		</label>
 
 
@@ -130,29 +131,29 @@
 		<p><code>input[type=number]</code> is now supported in spite of the bugs when setting a value containing whitespace characters in Chrome, Safari, Mobile Safari (last tested in 34, 6, and iOS 7 respectively).</p>
 		<p><code>input[type=number]</code> is important because it triggers the numeric keyboard on the Android browser and mobile Firefox.</p>
 		<label>
-			<code>input[type=number]</code> (US Zip Code) with <code>data-grouplength="5," data-delimiter="-"</code>
-			<input type="number" pattern="[0-9]*" data-politespace data-grouplength="5," data-delimiter="-" value="011111234">
+			<code>input[type=number]</code> (US Zip Code) with <code>data-politespace-grouplength="5," data-politespace-delimiter="-"</code>
+			<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="5," data-politespace-delimiter="-" value="011111234">
 		</label>
 		<label>
-			<code>input[type=number]</code> (Price) with <code>data-grouplength="3" data-delimiter="," data-reverse</code>
-			<input type="number" pattern="[0-9]*" data-politespace data-grouplength="3" data-delimiter="," data-reverse value="1234">
+			<code>input[type=number]</code> (Price) with <code>data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse</code>
+			<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse value="1234">
 		</label>
 		<label>
-			<code>input[type=number]</code> with a long value <code>data-grouplength="4"</code>
+			<code>input[type=number]</code> with a long value <code>data-politespace-grouplength="4"</code>
 			<div>
-				<input type="number" pattern="[0-9]*" data-politespace data-grouplength="4" value="123456789012345678901234567890">
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="4" value="123456789012345678901234567890">
 			</div>
 		</label>
 		<label>
-			<code>input[type=number]</code> with a long value <code>data-grouplength="4"</code>
+			<code>input[type=number]</code> with a long value <code>data-politespace-grouplength="4"</code>
 			<div>
-				<input type="number" pattern="[0-9]*" data-politespace data-grouplength="4" value="12345678901234567890" style="width: 40%">
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="4" value="12345678901234567890" style="width: 40%">
 			</div>
 		</label>
 		<label>
-			<code>input[type=number]</code> with a <code>data-proxy-anchor</code>
+			<code>input[type=number]</code> with a <code>data-politespace-proxy-anchor</code>
 			<div class="field">
-				<input type="number" pattern="[0-9]*" data-politespace data-proxy-anchor=".field">
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-proxy-anchor=".field">
 			</div>
 		</label>
 
@@ -166,28 +167,28 @@
 
 		<h2>input type="tel"</h2>
 		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3," data-delimiter="-"</code>
-			<input type="tel" pattern="[0-9]*" data-politespace data-grouplength="3,3," data-delimiter="-" value="2223334444">
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="3,3," data-politespace-delimiter="-"</code>
+			<input type="tel" pattern="[0-9]*" data-politespace data-politespace-grouplength="3,3," data-politespace-delimiter="-" value="2223334444">
 		</label>
 		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="3,3,4" data-delimiter="-"</code>
-			<input type="tel" pattern="[0-9]*" data-politespace data-grouplength="3,3,4" data-delimiter="-" value="2223334444" maxlength="10">
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="3,3,4" data-politespace-delimiter="-"</code>
+			<input type="tel" pattern="[0-9]*" data-politespace data-politespace-grouplength="3,3,4" data-politespace-delimiter="-" value="2223334444" maxlength="10">
 		</label>
 		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="4,3," data-reverse</code>
-			<input type="tel" data-politespace data-grouplength="4,3," data-reverse value="2223334444">
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="4,3," data-politespace-reverse</code>
+			<input type="tel" data-politespace data-politespace-grouplength="4,3," data-politespace-reverse value="2223334444">
 		</label>
 		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-grouplength="4,3,3" data-reverse</code>
-			<input type="tel" data-politespace data-grouplength="4,3,3" data-reverse value="2223334444" maxlength="10">
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="4,3,3" data-politespace-reverse</code>
+			<input type="tel" data-politespace data-politespace-grouplength="4,3,3" data-politespace-reverse value="2223334444" maxlength="10">
 		</label>
 		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-strip="[^\d]*" data-grouplength="4,3,3" data-reverse</code>
-			<input type="tel" data-politespace data-politespace-strip="[^\d]*" data-grouplength="4,3,3" data-reverse value="2223334444">
+			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse</code>
+			<input type="tel" data-politespace data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse value="2223334444">
 		</label>
 		<label>
-			<code>input[type=tel]</code> (US Phone Number, strips country code transparently) with <code>data-politespace-us-telephone data-grouplength="4,3,3" data-reverse data-delimiter="-"</code>
-			<input type="tel" data-politespace data-politespace-us-telephone data-grouplength="4,3,3" data-reverse data-delimiter="-" value="12223334444" maxlength="10">
+			<code>input[type=tel]</code> (US Phone Number, strips country code transparently) with <code>data-politespace-us-telephone data-politespace-grouplength="3,3,4" data-politespace-delimiter="-"</code>
+			<input type="tel" data-politespace data-politespace-us-telephone data-politespace-grouplength="3,4,4" data-politespace-delimiter="-" value="12223334444" maxlength="10">
 		</label>
 
 		<h2>Developer Tests</h2>
