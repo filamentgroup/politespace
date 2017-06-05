@@ -4,29 +4,95 @@ Politely add spaces to input values to increase readability (credit card numbers
  * Copyright (c) 2017 Filament Group (@filamentgroup)
  * MIT License */
 
-(function( w, $ ){
+// Input a credit card number string, returns a key signifying the type of credit card it is
+(function( w ) {
 	"use strict";
+
+	var keys = {
+		MASTERCARD: "MASTERCARD",
+		VISA: "VISA",
+		DISCOVER: "DISCOVER",
+		AMEX: "AMEX"
+	};
+
+	var types = {};
+
+	// 2221-2720 and 51-55
+	types[ keys.MASTERCARD ] = /^(222[1-9]|22[3-9]|2[3-6]|27[01]|2720|5[1-5])/;
+
+	types[ keys.VISA ] = /^4/;
+
+	// 6011 or 65
+	types[ keys.DISCOVER ] = /^6(011|22(12[6-9]|1[3-9]|[2-8]|9[0-1]|92[0-5])|4[4-9]|5)/;
+
+	// 34 or 37
+	types[ keys.AMEX ] = /^3[47]/;
+
+	function CreditableCardType( val ) {
+		for( var j in types ) {
+			if( !!val.match( types[ j ] ) ) {
+				return j;
+			}
+		}
+
+		return -1;
+	}
+
+	CreditableCardType.KEYS = keys;
+	CreditableCardType.TYPES = types;
+	w.CreditableCardType = CreditableCardType;
+
+}( typeof global !== "undefined" ? global : this ));
+
+// UMD module definition
+// From: https://github.com/umdjs/umd/blob/master/templates/jqueryPlugin.js
+
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+			// AMD. Register as an anonymous module.
+			define(['jquery'], factory);
+	} else if (typeof module === 'object' && module.exports) {
+		// Node/CommonJS
+		module.exports = function( root, jQuery ) {
+			if ( jQuery === undefined ) {
+				if ( typeof window !== 'undefined' ) {
+					jQuery = require('jquery');
+				} else {
+					jQuery = require('jquery')(root);
+				}
+			}
+			factory(jQuery);
+			return jQuery;
+		};
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function ($) {
+	"use strict";
+
+	var w = typeof window !== "undefined" ? window : this;
 
 	var Politespace = function( element ) {
 		if( !element ) {
 			throw new Error( "Politespace requires an element argument." );
 		}
 
-		if( !element.getAttribute || window.operamini ) {
+		if( !element.getAttribute || w.operamini ) {
 			// Cut the mustard
 			return;
 		}
 
 		this.element = element;
 		this.$element = $( element );
-		this.delimiter = this.$element.attr( "data-delimiter" ) || " ";
+		this.delimiter = this.$element.attr( "data-politespace-delimiter" ) || " ";
 		// https://en.wikipedia.org/wiki/Decimal_mark
-		this.decimalMark = this.$element.attr( "data-decimal-mark" ) || "";
-		this.reverse = this.$element.is( "[data-reverse]" );
+		this.decimalMark = this.$element.attr( "data-politespace-decimal-mark" ) || "";
+		this.reverse = this.$element.is( "[data-politespace-reverse]" );
 		this.strip = this.$element.attr( "data-politespace-strip" );
-		this.groupLength = this.$element.attr( "data-grouplength" ) || 3;
+		this.groupLength = this.$element.attr( "data-politespace-grouplength" ) || 3;
 
-		var proxyAnchorSelector = this.$element.attr( "data-proxy-anchor" );
+		var proxyAnchorSelector = this.$element.attr( "data-politespace-proxy-anchor" );
 		this.$proxyAnchor = this.$element;
 		this.$proxy = null;
 
@@ -183,56 +249,57 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 	Politespace.prototype.setGroupLength = function( length ) {
 		this.groupLength = length;
-		this.$element.attr( "data-grouplength", length );
+		this.$element.attr( "data-politespace-grouplength", length );
 	};
 
-	w.Politespace = Politespace;
+	var componentName = "politespace";
 
-}( this, jQuery ));
-
-// Input a credit card number string, returns a key signifying the type of credit card it is
-(function( w ) {
-	"use strict";
-
-	var keys = {
-		MASTERCARD: "MASTERCARD",
-		VISA: "VISA",
-		DISCOVER: "DISCOVER",
-		AMEX: "AMEX"
-	};
-
-	var types = {};
-
-	// 2221-2720 and 51-55
-	types[ keys.MASTERCARD ] = /^(222[1-9]|22[3-9]|2[3-6]|27[01]|2720|5[1-5])/;
-
-	types[ keys.VISA ] = /^4/;
-
-	// 6011 or 65
-	types[ keys.DISCOVER ] = /^6(011|22(12[6-9]|1[3-9]|[2-8]|9[0-1]|92[0-5])|4[4-9]|5)/;
-
-	// 34 or 37
-	types[ keys.AMEX ] = /^3[47]/;
-
-	function CreditableCardType( val ) {
-		for( var j in types ) {
-			if( !!val.match( types[ j ] ) ) {
-				return j;
+	$.fn[ componentName ] = function(){
+		return this.each( function(){
+			var $t = $( this );
+			if( $t.data( componentName ) ) {
+				return;
 			}
-		}
 
-		return -1;
-	}
+			var polite = new Politespace( this );
+			if( polite.useProxy() ) {
+				polite.createProxy();
+			}
 
-	CreditableCardType.KEYS = keys;
-	CreditableCardType.TYPES = types;
-	w.CreditableCardType = CreditableCardType;
+			$t.bind( "politespace-hide-proxy", function() {
+					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
+				})
+				.bind( "politespace-show-proxy", function() {
+					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
 
-}( typeof global !== "undefined" ? global : this ));
+					polite.update();
+					polite.updateProxy();
+				})
+				.bind( "input keydown", function() {
+					$( this ).trigger( "politespace-input" );
 
-// jQuery Plugin
-(function( w, $ ) {
-	"use strict";
+					polite.updateProxy();
+				})
+				.bind( "blur", function() {
+					$( this ).trigger( "politespace-beforeblur" );
+
+					polite.update();
+
+					if( polite.useProxy() ){
+						$( this ).trigger( "politespace-show-proxy" );
+					}
+				})
+				.bind( "focus", function() {
+					$( this ).trigger( "politespace-hide-proxy" );
+					polite.reset();
+				})
+				.data( componentName, polite )
+				.trigger( "politespace-init" );
+
+			polite.update();
+			polite.updateProxy();
+		});
+	};
 
 	$( document ).bind( "politespace-init politespace-input", function( event ) {
 		var $t = $( event.target );
@@ -258,8 +325,6 @@ Politely add spaces to input values to increase readability (credit card numbers
 			}
 		}
 	});
-
-}( typeof global !== "undefined" ? global : this, jQuery ));
 
 // jQuery Plugin
 (function( w, $ ) {
@@ -310,65 +375,5 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 }( typeof global !== "undefined" ? global : this, jQuery ));
 
-(function( $ ) {
-	"use strict";
-
-	// jQuery Plugin
-
-	var componentName = "politespace",
-		initSelector = "[data-" + componentName + "]";
-
-	$.fn[ componentName ] = function(){
-		return this.each( function(){
-			var $t = $( this );
-			if( $t.data( componentName ) ) {
-				return;
-			}
-
-			var polite = new Politespace( this );
-			if( polite.useProxy() ) {
-				polite.createProxy();
-			}
-
-			$t.bind( "politespace-hide-proxy", function() {
-					$( this ).closest( ".politespace-proxy" ).removeClass( "active" );
-				})
-				.bind( "politespace-show-proxy", function() {
-					$( this ).closest( ".politespace-proxy" ).addClass( "active" );
-
-					polite.update();
-					polite.updateProxy();
-				})
-				.bind( "input keydown", function() {
-					$( this ).trigger( "politespace-input" );
-
-					polite.updateProxy();
-				})
-				.bind( "blur", function() {
-					$( this ).trigger( "politespace-beforeblur" );
-
-					polite.update();
-
-					if( polite.useProxy() ){
-						$( this ).trigger( "politespace-show-proxy" );
-					}
-				})
-				.bind( "focus", function() {
-					$( this ).trigger( "politespace-hide-proxy" );
-					polite.reset();
-				})
-				.data( componentName, polite )
-				.trigger( "politespace-init" );
-
-			polite.update();
-			polite.updateProxy();
-		});
-	};
-
-	// auto-init on enhance (which is called on domready)
-	$( document ).bind( "enhance", function( e ) {
-		var $sel = $( e.target ).is( initSelector ) ? $( e.target ) : $( initSelector, e.target );
-		$sel[ componentName ]();
-	});
-
-}( jQuery ));
+	w.Politespace = Politespace;
+}));
