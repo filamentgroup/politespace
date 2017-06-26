@@ -12,7 +12,7 @@ Politely add spaces to input values to increase readability (credit card numbers
 		MASTERCARD: "MASTERCARD",
 		VISA: "VISA",
 		DISCOVER: "DISCOVER",
-		AMEX: "AMEX",
+		AMEX: "AMEX"
 	};
 
 	var types = {};
