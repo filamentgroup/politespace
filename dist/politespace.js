@@ -13,7 +13,6 @@ Politely add spaces to input values to increase readability (credit card numbers
 		VISA: "VISA",
 		DISCOVER: "DISCOVER",
 		AMEX: "AMEX",
-		JCB: "JCB"
 	};
 
 	var types = {};
@@ -28,9 +27,6 @@ Politely add spaces to input values to increase readability (credit card numbers
 
 	// 34 or 37
 	types[ keys.AMEX ] = /^3[47]/;
-
-	// 35
-	types[ keys.JCB ] = /^35/;
 
 	function CreditableCardType( val ) {
 		for( var j in types ) {
@@ -321,7 +317,7 @@ Politely add spaces to input values to increase readability (credit card numbers
 			if( adjustMaxlength ) {
 				$t.attr( "maxlength", 15 );
 			}
-		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" || type === "JCB") {
+		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" ) {
 			pspace.setGroupLength( adjustMaxlength ? "4,4,4,4" : "4" );
 
 			if( adjustMaxlength ) {
