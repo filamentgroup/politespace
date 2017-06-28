@@ -1,6 +1,6 @@
 {
 	"name": "politespace",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).",
 	"keywords": [
 		"grunt"
@@ -23,7 +23,8 @@
 		"test": "grunt test"
 	},
 	"dependencies": {
-		"jquery": "^3.0.0"
+		"jquery": "^3.0.0",
+		"creditable": "^1.0.10"
 	},
 	"devDependencies": {
 		"blanket": "~1.2.3",
@@ -43,8 +44,7 @@
 		"grunt-replace": "~1.0.1",
 		"load-grunt-tasks": "~3.5.0",
 		"matchdep": "~1.0.1",
-		"qunitjs": "^2.0.0",
-		"creditable": "^1.0.7"
+		"qunitjs": "^2.0.0"
 	},
 	"peerDependencies": {},
 	"engines": {
