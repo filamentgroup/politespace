@@ -14,7 +14,7 @@
 			if( adjustMaxlength ) {
 				$t.attr( "maxlength", 15 );
 			}
-		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" ) {
+		} else if( type === "DISCOVER" || type === "VISA" || type === "MASTERCARD" || type === "JCB") {
 			pspace.setGroupLength( adjustMaxlength ? "4,4,4,4" : "4" );
 
 			if( adjustMaxlength ) {
