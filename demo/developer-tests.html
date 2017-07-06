@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>politespace Test Suite</title>
+	<link rel="stylesheet" href="demo.css">
+	<style>
+	input[type=checkbox],
+	input[type=checkbox] + label[for] {
+		display: inline-block;
+		width: auto;
+	}
+	#show-hidden-politespace ~ label input {
+		display: none;
+	}
+	#show-hidden-politespace:checked ~ label input {
+		display: block;
+	}
+	</style>
+	<link rel="stylesheet" href="../dist/politespace.css">
+
+	<link rel="stylesheet" href="../dist/libs/libs.css">
+	<!-- switch to shoestring in `grunt/config/concat.js` -->
+	<script src="../dist/libs/libs.js"></script>
+
+	<script src="../dist/politespace.js"></script>
+	<script src="../dist/politespace-init.js"></script>
+	<script src="masked-input.js"></script>
+	<script>
+	jQuery( function(){
+		jQuery( document ).trigger( "enhance" );
+	});
+	</script>
+</head>
+<body>
+	<div class="header">
+		<a href="http://filamentgroup.com/"><h1 id="fg-logo">Filament Group</h1></a>
+	</div>
+	<form action="?" method="GET">
+		<p>This is a demo of the <a href="https://github.com/filamentgroup/politespace">Politespace</a> plugin, an accessible alternative to input mask plugins that adds whitespace formatting when you blur away from an input and removes the spaces on focus so as to not interfere with editing. <a href="https://github.com/filamentgroup/politespace">Learn more about politespace on GitHub.</a></p>
+
+		<h2><a href="demo.html">Back to Examples</a></h2>
+		<h3>Form Submit Values</h3>
+		<button type="submit">Submit Form</button>
+		<h3>Hidden on Init</h3>
+		<div>
+			<input type="checkbox" id="show-hidden-politespace"><label for="show-hidden-politespace">Check this to show politespace field</label>
+			<label>
+				<code>input[type=number]</code></code>.
+				<input type="number" data-politespace value="12345678901234567890">
+			</label>
+		</div>
+		<h3>Works with Masked Input plugin</h3>
+		<label>
+			Masked Number
+			<input type="number" id="toggle-mask-target-number" pattern="[0-9]*" data-politespace>
+		</label>
+		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-number">Show value</label>
+		<label>
+			Masked Text
+			<input type="text" id="toggle-mask-target-text" data-politespace>
+		</label>
+		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-text">Show value</label>
+	</form>
+</body>
+</html>
