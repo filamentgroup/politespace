@@ -1,4 +1,4 @@
-/*! politespace - v1.0.1 - 2017-06-28
+/*! politespace - v1.0.2 - 2017-07-06
 Politely add spaces to input values to increase readability (credit card numbers, phone numbers, etc).
  * https://github.com/filamentgroup/politespace
  * Copyright (c) 2017 Filament Group (@filamentgroup)
@@ -233,7 +233,7 @@ Politely add spaces to input values to increase readability (credit card numbers
 		var $nextSibling = this.$proxyAnchor.next();
 		var $parent = this.$proxyAnchor.parent();
 
-		this.$proxy = $( "<div>" ).addClass( "politespace-proxy-val" ).css({
+		this.$proxy = $( "<div>" ).attr( "aria-hidden", "true" ).addClass( "politespace-proxy-val" ).css({
 			font: this.$element.css( "font" ),
 			"padding-left": sumStyles( this.element, [ "padding-left", "border-left-width" ] ) + "px",
 			"padding-right": sumStyles( this.element, [ "padding-right", "border-right-width" ] ) + "px",
