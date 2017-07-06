@@ -44,7 +44,8 @@
 		"grunt-replace": "~1.0.1",
 		"load-grunt-tasks": "~3.5.0",
 		"matchdep": "~1.0.1",
-		"qunitjs": "^2.0.0"
+		"qunitjs": "^2.0.0",
+		"xrayhtml": "^2.1.5"
 	},
 	"peerDependencies": {},
 	"engines": {

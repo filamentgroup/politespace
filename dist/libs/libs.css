@@ -1,0 +1,138 @@
+/*! X-rayHTML - v2.1.5 - 2017-07-05
+* https://github.com/filamentgroup/x-rayhtml
+* Copyright (c) 2017 Filament Group; Licensed MIT */
+.xrayhtml {
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: .3em;
+	margin: 1.5em 0 2.5em 0;
+	padding: 1em 1em 2em;
+}
+.xrayhtml.xray-copy {
+	position: relative;
+}
+.xrayhtml .xraytitle {
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font: .75em sans-serif;
+	color: rgba(0,0,0,.5);
+	background-color: #fff;
+	border-radius: 3px;
+	display: inline-block;
+	position: relative;
+	top: -2.166666667em; /* 26px */
+	padding-left: .1em;
+	padding-right: .1em;
+	z-index: 3;
+	margin: 0;
+}
+.xrayhtml.method-flip:before {
+	background-color: rgba(255,255,255,.6);
+}
+.xrayhtml .source-panel {
+	background: #f7f7f7;
+	margin-top: 2em;
+	tab-size: 2;
+}
+.xrayhtml .source-panel pre {
+	margin: 0;
+	padding: 16px;
+	border-radius: 0 0 .3em .3em;
+}
+.xrayhtml .source-panel code {
+	white-space: pre-wrap;
+}
+.xrayhtml.method-flip .source-panel {
+	margin-top: 0;
+	border-radius: 0.3em;
+}
+.xrayhtml.method-inline .source-panel {
+	margin: 2em -1em -2em -1em !important; /* Prism override. */
+	border-top: 1px solid rgba(0,0,0,.1);
+	border-radius: 0 0 .3em .3em;
+}
+/* Prism override. */
+.xrayhtml .source-panel code.language-markup {
+	white-space: pre-wrap !important;
+}
+
+.xrayhtml.antipattern {
+	border-color: #C9282D;
+}
+.xrayhtml.antipattern .xraytitle {
+	color: #d75e72;
+	font-weight: 700;
+}
+
+/* Flip Animation */
+.xrayhtml.method-flip {
+	padding: 0;
+}
+.method-flip {
+	-webkit-perspective: 2500px;
+	-moz-perspective: 2500px;
+	perspective: 2500px;
+}
+.method-flip .source-panel {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow-x: auto;
+}
+.method-flip .snippet {
+	margin: 0;
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	min-height: 100%;
+	background-color: #fff;
+	padding: 1em;
+
+	-webkit-transform: rotateY(0deg);
+	-webkit-transform-style: preserve-3d;
+	-webkit-backface-visibility: hidden;
+
+	-moz-transform: rotateY(0deg);
+	-moz-transform-style: preserve-3d;
+	-moz-backface-visibility: hidden;
+
+	-webkit-transition: -webkit-transform .4s ease-in-out;
+	-moz-transition: -moz-transform .4s ease-in-out;
+}
+.method-flip.view-source .snippet {
+	z-index: 1;
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+}
+.method-flip .source-panel {
+	-webkit-transform: rotateY(-180deg);
+	-webkit-backface-visibility: hidden;
+
+	-moz-transform: rotateY(-180deg);
+	-moz-backface-visibility: hidden;
+
+	-moz-transition: all .4s ease-in-out;
+	-webkit-transition: all .4s ease-in-out;
+}
+.method-flip.view-source .source-panel {
+	z-index: 2;
+	-webkit-transform: rotateY(0deg);
+	-moz-transform: rotateY(0deg);
+}
+
+.method-flip.view-source .xraytitle {
+	background-color: transparent;
+	background-image: linear-gradient(
+		to bottom,
+		transparent,
+		transparent 40%,
+		#ffffff 40%,
+		transparent);
+}
+
+iframe.xray-iframe {
+	border: 0;
+	width: 100%
+}

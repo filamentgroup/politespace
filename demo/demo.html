@@ -4,74 +4,15 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>politespace Test Suite</title>
-	<style>
-	/* Logo */
-	.header {
-		background: #247201 url(http://filamentgroup.com/images/headerbg-new.jpg) no-repeat bottom left;
-	}
-	#fg-logo {
-		text-indent: -9999px;
-		margin: 0 auto;
-		width: 287px;
-		height: 52px;
-		background-image: url(http://filamentgroup.com/images/fg-logo-icon.png);
-	}
-	@media (-webkit-min-device-pixel-ratio: 1.5), (min-device-pixel-ratio: 1.5){
-		#fg-logo {
-			background-size: 287px 52px;
-			background-image: url(http://filamentgroup.com/images/fg-logo-icon-lrg.png);
-		}
-	}
-	/* Demo styles */
-	body {
-		font-family: sans-serif;
-		font-size: 100%;
-	}
-	form {
-		margin: 1em auto;
-		max-width: 25em;
-	}
-	label {
-		display: block;
-		margin: 1em 0;
-	}
-	input,
-	textarea {
-		display: block;
-		width: 100%;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
-
-		margin-top: .4em;
-		padding: .6em;
-		font-size: 100%;
-	}
-	input[type=checkbox],
-	input[type=checkbox] + label[for] {
-		display: inline-block;
-		width: auto;
-	}
-	#show-hidden-politespace ~ label input {
-		display: none;
-	}
-	#show-hidden-politespace:checked ~ label input {
-		display: block;
-	}
-	</style>
+	<link rel="stylesheet" href="demo.css">
 	<link rel="stylesheet" href="../dist/politespace.css">
-	<!-- Local jQuery -->
-	<!--<script src="../node_modules/jquery/dist/jquery.js"></script>-->
-	<!-- Cloud jQuery -->
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-	<script>jQuery.noConflict()</script>
-	<!-- Cloud Shoestring -->
-	<!-- <script src="https://rawgit.com/filamentgroup/shoestring/master/dist/shoestring.js"></script>
-	<script>var jQuery = window.shoestring;</script> -->
-	<!-- Load local lib and tests. -->
+
+	<link rel="stylesheet" href="../dist/libs/libs.css">
+	<!-- switch to shoestring in `grunt/config/concat.js` -->
+	<script src="../dist/libs/libs.js"></script>
+
 	<script src="../dist/politespace.js"></script>
 	<script src="../dist/politespace-init.js"></script>
-	<script src="masked-input.js"></script>
 	<script>
 	jQuery( function(){
 		jQuery( document ).trigger( "enhance" );
@@ -85,138 +26,206 @@
 	<form action="?" method="GET">
 		<p>This is a demo of the <a href="https://github.com/filamentgroup/politespace">Politespace</a> plugin, an accessible alternative to input mask plugins that adds whitespace formatting when you blur away from an input and removes the spaces on focus so as to not interfere with editing. <a href="https://github.com/filamentgroup/politespace">Learn more about politespace on GitHub.</a></p>
 
+		<ul>
+			<li><a href="#texts">Text Inputs</a></li>
+			<li><a href="#numbers">Number Inputs</a></li>
+			<li><a href="#textareas">Textareas</a></li>
+			<li><a href="#tels">Telephone Inputs</a></li>
+		</ul>
 
-		<h2>input type="text"</h2>
-		<label>
-			Default <code>input[type=text]</code> with <code>pattern="[0-9]*"</code> for numeric keyboard on mobile.
-			<input type="text" data-politespace pattern="[0-9]*">
-		</label>
-		<label>
-			Default <code>input[type=text]</code> with <code>maxlength="7"</code>.
-			<input type="text" data-politespace maxlength="7" value="123456">
-		</label>
-		<label>
-			<code>input[type=text]</code> with <code>data-politespace-grouplength="2"</code>
-			<input type="text" data-politespace data-politespace-grouplength="2" value="1234567890">
-		</label>
-		<label>
-			<code>input[type=text]</code> with <code>data-politespace-grouplength="1,2,3,"</code>
-			<input type="text" data-politespace data-politespace-grouplength="1,2,3," value="1234567890">
-		</label>
-		<label>
-			<code>input[type=text]</code> (US Zip Code) with <code>data-politespace-grouplength="5,"</code>
-			<input type="text" data-politespace data-politespace-grouplength="5," value="100011234">
-		</label>
-		<label>
-			<code>input[type=text]</code> (Canadian Postal Code) <code>data-politespace-grouplength="3,"</code>
-			<input type="text" data-politespace data-politespace-grouplength="3," value="A1A 1A1" pattern="[A-Z0-9 ]*">
-		</label>
-
-
-		<h2>input type="number"</h2>
-		<label>
-			Control element, not using politespace:
-			<input type="number" pattern="[0-9]*" placeholder="12345">
-		</label>
-		<label>
-			Default <code>input[type=number]</code> with <code>maxlength="7"</code>.
-			<input type="number" data-politespace maxlength="7" value="123456">
-		</label>
-		<label>
-			Default <code>input[type=number]</code> with <code>maxlength="7"</code> and a <code>placeholder</code>.
-			<p><em>This message should be before the form element</em></p>
-			<input type="number" data-politespace maxlength="7" placeholder="00000">
-			<p><em>This message should be after the form element</em></p>
-		</label>
-		<label>
-			<code>input[type=number]</code> (Credit Card) with <code>data-politespace-creditcard</code> and <code>pattern="[0-9]*"</code> (Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well)
-			<input type="number" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength value="4321432143214321">
-		</label>
-		<p><code>input[type=number]</code> is now supported in spite of the bugs when setting a value containing whitespace characters in Chrome, Safari, Mobile Safari (last tested in 34, 6, and iOS 7 respectively).</p>
-		<p><code>input[type=number]</code> is important because it triggers the numeric keyboard on the Android browser and mobile Firefox.</p>
-		<label>
-			<code>input[type=number]</code> (US Zip Code) with <code>data-politespace-grouplength="5," data-politespace-delimiter="-"</code>
-			<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="5," data-politespace-delimiter="-" value="011111234">
-		</label>
-		<label>
-			<code>input[type=number]</code> (Price) with <code>data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse</code>
-			<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse value="1234">
-		</label>
-		<label>
-			<code>input[type=number]</code> with a long value <code>data-politespace-grouplength="4"</code>
-			<div>
-				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="4" value="123456789012345678901234567890">
-			</div>
-		</label>
-		<label>
-			<code>input[type=number]</code> with a long value <code>data-politespace-grouplength="4"</code>
-			<div>
-				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="4" value="12345678901234567890" style="width: 40%">
-			</div>
-		</label>
-		<label>
-			<code>input[type=number]</code> with a <code>data-politespace-proxy-anchor</code>
-			<div class="field">
-				<input type="number" pattern="[0-9]*" data-politespace data-politespace-proxy-anchor=".field">
-			</div>
-		</label>
-
-
-		<h2>textarea</h2>
-		<label>
-			Default textarea
-			<textarea data-politespace></textarea>
-		</label>
-
-
-		<h2>input type="tel"</h2>
-		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="3,3," data-politespace-delimiter="-"</code>
-			<input type="tel" pattern="[0-9]*" data-politespace data-politespace-grouplength="3,3," data-politespace-delimiter="-" value="2223334444">
-		</label>
-		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="3,3,4" data-politespace-delimiter="-"</code>
-			<input type="tel" pattern="[0-9]*" data-politespace data-politespace-grouplength="3,3,4" data-politespace-delimiter="-" value="2223334444" maxlength="10">
-		</label>
-		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="4,3," data-politespace-reverse</code>
-			<input type="tel" data-politespace data-politespace-grouplength="4,3," data-politespace-reverse value="2223334444">
-		</label>
-		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-grouplength="4,3,3" data-politespace-reverse</code>
-			<input type="tel" data-politespace data-politespace-grouplength="4,3,3" data-politespace-reverse value="2223334444" maxlength="10">
-		</label>
-		<label>
-			<code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse</code>
-			<input type="tel" data-politespace data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse value="2223334444">
-		</label>
-		<label>
-			<code>input[type=tel]</code> (US Phone Number, strips country code transparently) with <code>data-politespace-us-telephone data-politespace-grouplength="3,3,4" data-politespace-delimiter="-"</code>
-			<input type="tel" data-politespace data-politespace-us-telephone data-politespace-grouplength="3,4,4" data-politespace-delimiter="-" value="12223334444" maxlength="10">
-		</label>
-
-		<h2>Developer Tests</h2>
-		<h3>Form Submit Values</h3>
-		<button type="submit">Submit Form</button>
-		<h3>Hidden on Init</h3>
-		<div>
-			<input type="checkbox" id="show-hidden-politespace"><label for="show-hidden-politespace">Check this to show politespace field</label>
+		<h2 id="texts">input type="text"</h2>
+		<h3>With placeholder</h3>
+		<div data-xrayhtml>
 			<label>
-				<code>input[type=number]</code></code>.
-				<input type="number" data-politespace value="12345678901234567890">
+				<span><code>text</code> Input:</span>
+				<input type="text" data-politespace placeholder="000000">
 			</label>
 		</div>
-		<h3>Works with Masked Input plugin</h3>
-		<label>
-			Masked Number
-			<input type="number" id="toggle-mask-target-number" pattern="[0-9]*" data-politespace>
-		</label>
-		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-number">Show value</label>
-		<label>
-			Masked Text
-			<input type="text" id="toggle-mask-target-text" data-politespace>
-		</label>
-		<label class="form-mask-toggle"><input type="checkbox" data-toggle-mask="#toggle-mask-target-text">Show value</label>
+
+		<h3>Add maxlength and pattern</h3>
+		<p>Pattern enables a numeric keyboard on some mobile platforms (iOS). Recommend using <code>type="number"</code> for broader numeric keyboard support.</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input:</span>
+				<input type="text" data-politespace maxlength="7" pattern="[0-9]*" value="123456">
+			</label>
+		</div>
+
+		<h3>Change the Group Length (set to 2)</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>Text</code> Input:</span>
+				<input type="text" data-politespace data-politespace-grouplength="2" value="1234567890">
+			</label>
+		</div>
+
+		<h3>Use a non-uniform Group Length (set to "1,2,3,")</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="1,2,3," value="12345678901234567890">
+			</label>
+		</div>
+
+		<h3>Use a non-uniform Group Length from Right to Left (set to "1,2,3,")</h3>
+		<p>Add the <code>data-politespace-reverse</code> attribute.</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="1,2,3," data-politespace-reverse value="1234567890">
+			</label>
+		</div>
+
+		<h3>Use a non-uniform Group Length, Truncating value (set to "1,2,3")</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="1,2,3" value="12345678901234567890">
+			</label>
+		</div>
+
+		<h3>US Zip Code (set to "5,")</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="5," value="100011234">
+			</label>
+		</div>
+
+		<h3>Canadian Postal Code (set to "3,")</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="3," value="A1A 1A1" pattern="[A-Z0-9 ]*">
+			</label>
+		</div>
+
+		<h3>Price (non-Integers, thousands Separator set to ",")</h3>
+		<p>For integer prices, use the <code>type="number"</code> example below. For non-Integers, don’t use <code>pattern="[0-9]*"</code> or <code>type="number"</code>, some mobile numeric keyboards do not include a ".".</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-decimal-mark="." data-politespace-reverse value="12345.00">
+			</label>
+		</div>
+
+
+
+		<h2 id="numbers">input type="number"</h2>
+
+		<p>Using <code>input[type=number]</code> is important because it triggers the numeric keyboard on the Android browser and mobile Firefox.</p>
+
+		<h3>Not using politespace (Control element)</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<input type="number" pattern="[0-9]*" placeholder="000000">
+			</label>
+		</div>
+
+		<h3>With placeholder</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<input type="number" data-politespace placeholder="000000">
+			</label>
+		</div>
+
+		<h3>Adds maxlength and pattern</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<p><em>This message should be before the form element</em></p>
+				<input type="number" data-politespace maxlength="7" pattern="[0-9]*" value="123456">
+				<p><em>This message should be after the form element</em></p>
+			</label>
+		</div>
+
+		<h3>Credit Card</h3>
+		<p><code>input[type=number]</code> (Credit Card) with <code>data-politespace-creditcard</code>. Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well.</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength value="4321432143214321">
+			</label>
+		</div>
+
+		<h3>US Zip Code, customized delimiter</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="5," data-politespace-delimiter="-" value="011111234">
+			</label>
+		</div>
+
+		<h3>Price (Integers only, thousands Separator set to ",")</h3>
+		<p>For non-integer prices, use the <code>type="text"</code> example above.</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse value="1234">
+			</label>
+		</div>
+
+		<h3>Overflowing, super long values</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<div>
+					<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="4" value="123456789012345678901234567890">
+				</div>
+			</label>
+		</div>
+
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<div>
+					<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="4" value="12345678901234567890" style="width: 40%">
+				</div>
+			</label>
+		</div>
+
+		<h3>Change where the proxy element anchors to</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<div class="field">
+					<input type="number" pattern="[0-9]*" data-politespace data-politespace-proxy-anchor=".field">
+				</div>
+			</label>
+		</div>
+
+
+		<h2 id="textareas">textarea</h2>
+		<div data-xrayhtml>
+			<label>
+				<span><code>textarea</code> Input</span>
+				<textarea data-politespace></textarea>
+			</label>
+		</div>
+
+
+		<h2 id="tels">input type="tel"</h2>
+
+		<p><code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse</code></p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>tel</code> Input</span>
+				<input type="tel" data-politespace data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse value="2223334444">
+			</label>
+		</div>
+
+		<h3>US Phone Number</h3>
+		<p>Strips country code (and any non-numeric characters) transparently.</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>tel</code> Input</span>
+				<input type="tel" data-politespace data-politespace-us-telephone data-politespace-strip="[^\d]*" data-politespace-grouplength="3,3,4" data-politespace-delimiter="-" value="12223334444" maxlength="10">
+			</label>
+		</div>
+
+		<h2><a href="developer-tests.html">More Developer Tests</a></h2>
 	</form>
 </body>
 </html>

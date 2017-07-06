@@ -25,5 +25,21 @@ module.exports = {
 		src: [
 			"src/politespace-test.js"
 		]
+	},
+	cssdemo: {
+		src: [
+			"node_modules/xrayhtml/dist/xrayhtml.css"
+		],
+		dest: "<%= pkg.config.dist %>/libs/libs.css"
+	},
+	jsdemo: {
+		src: [
+			// load jQuery
+			"node_modules/jquery/dist/jquery.js",
+			// load shoestring
+			// "node_modules/shoestring/dist/shoestring.js",
+			"node_modules/xrayhtml/dist/xrayhtml.js"
+		],
+		dest: "<%= pkg.config.dist %>/libs/libs.js"
 	}
 };
