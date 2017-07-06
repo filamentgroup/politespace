@@ -26,11 +26,15 @@
 	<form action="?" method="GET">
 		<p>This is a demo of the <a href="https://github.com/filamentgroup/politespace">Politespace</a> plugin, an accessible alternative to input mask plugins that adds whitespace formatting when you blur away from an input and removes the spaces on focus so as to not interfere with editing. <a href="https://github.com/filamentgroup/politespace">Learn more about politespace on GitHub.</a></p>
 
+		<h2>Table of Contents</h2>
 		<ul>
-			<li><a href="#texts">Text Inputs</a></li>
-			<li><a href="#numbers">Number Inputs</a></li>
-			<li><a href="#textareas">Textareas</a></li>
-			<li><a href="#tels">Telephone Inputs</a></li>
+			<li><a href="#texts">Text</a></li>
+			<li><a href="#numbers">Number</a></li>
+			<li><a href="#textareas">Textarea</a></li>
+			<li><a href="#zips">Zip/Postal Code</a></li>
+			<li><a href="#tels">Telephone Number</a></li>
+			<li><a href="#prices">Price</a></li>
+			<li><a href="#ccs">Credit Card</a></li>
 		</ul>
 
 		<h2 id="texts">input type="text"</h2>
@@ -84,31 +88,6 @@
 			</label>
 		</div>
 
-		<h3>US Zip Code (set to "5,")</h3>
-		<div data-xrayhtml>
-			<label>
-				<span><code>text</code> Input</span>
-				<input type="text" data-politespace data-politespace-grouplength="5," value="100011234">
-			</label>
-		</div>
-
-		<h3>Canadian Postal Code (set to "3,")</h3>
-		<div data-xrayhtml>
-			<label>
-				<span><code>text</code> Input</span>
-				<input type="text" data-politespace data-politespace-grouplength="3," value="A1A 1A1" pattern="[A-Z0-9 ]*">
-			</label>
-		</div>
-
-		<h3>Price (non-Integers, thousands Separator set to ",")</h3>
-		<p>For integer prices, use the <code>type="number"</code> example below. For non-Integers, don’t use <code>pattern="[0-9]*"</code> or <code>type="number"</code>, some mobile numeric keyboards do not include a ".".</p>
-		<div data-xrayhtml>
-			<label>
-				<span><code>text</code> Input</span>
-				<input type="text" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-decimal-mark="." data-politespace-reverse value="12345.00">
-			</label>
-		</div>
-
 
 
 		<h2 id="numbers">input type="number"</h2>
@@ -138,32 +117,6 @@
 				<p><em>This message should be before the form element</em></p>
 				<input type="number" data-politespace maxlength="7" pattern="[0-9]*" value="123456">
 				<p><em>This message should be after the form element</em></p>
-			</label>
-		</div>
-
-		<h3>Credit Card</h3>
-		<p><code>input[type=number]</code> (Credit Card) with <code>data-politespace-creditcard</code>. Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well.</p>
-		<div data-xrayhtml>
-			<label>
-				<span><code>number</code> Input</span>
-				<input type="number" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength value="4321432143214321">
-			</label>
-		</div>
-
-		<h3>US Zip Code, customized delimiter</h3>
-		<div data-xrayhtml>
-			<label>
-				<span><code>number</code> Input</span>
-				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="5," data-politespace-delimiter="-" value="011111234">
-			</label>
-		</div>
-
-		<h3>Price (Integers only, thousands Separator set to ",")</h3>
-		<p>For non-integer prices, use the <code>type="text"</code> example above.</p>
-		<div data-xrayhtml>
-			<label>
-				<span><code>number</code> Input</span>
-				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse value="1234">
 			</label>
 		</div>
 
@@ -205,16 +158,27 @@
 			</label>
 		</div>
 
+		<h2 id="zips">ZIP/Postal Codes</h2>
 
-		<h2 id="tels">input type="tel"</h2>
-
-		<p><code>input[type=tel]</code> (US Phone Number) with <code>data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse</code></p>
+		<h3>US Zip Code (set to "5,") with customized delimiter</h3>
 		<div data-xrayhtml>
 			<label>
-				<span><code>tel</code> Input</span>
-				<input type="tel" data-politespace data-politespace-strip="[^\d]*" data-politespace-grouplength="4,3,3" data-politespace-reverse value="2223334444">
+				<span><code>number</code> Input</span>
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="5," data-politespace-delimiter="-" value="011111234">
 			</label>
 		</div>
+
+		<h3>Canadian Postal Code (set to "3,")</h3>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="3," value="A1A 1A1" pattern="[A-Z0-9 ]*">
+			</label>
+		</div>
+
+		
+
+		<h2 id="tels">Telephone Numbers</h2>
 
 		<h3>US Phone Number</h3>
 		<p>Strips country code (and any non-numeric characters) transparently.</p>
@@ -222,6 +186,36 @@
 			<label>
 				<span><code>tel</code> Input</span>
 				<input type="tel" data-politespace data-politespace-us-telephone data-politespace-strip="[^\d]*" data-politespace-grouplength="3,3,4" data-politespace-delimiter="-" value="12223334444" maxlength="10">
+			</label>
+		</div>
+
+		<h2 id="prices">Prices</h2>
+
+		<h3>Price (non-Integers, thousands Separator set to ",")</h3>
+		<p>For integer prices, use the <code>type="number"</code> example below. For non-Integers, don’t use <code>pattern="[0-9]*"</code> or <code>type="number"</code>, some mobile numeric keyboards do not include a ".".</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>text</code> Input</span>
+				<input type="text" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-decimal-mark="." data-politespace-reverse value="12345.00">
+			</label>
+		</div>
+
+		<h3>Price (Integers only, thousands Separator set to ",")</h3>
+		<p>For non-integer prices, use the <code>type="text"</code> example above.</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-grouplength="3" data-politespace-delimiter="," data-politespace-reverse value="1234">
+			</label>
+		</div>
+
+		<h2 id="ccs">Credit Card</h2>
+
+		<p><code>input[type=number]</code> (Credit Card) with <code>data-politespace-creditcard</code>. Automatically customizes the grouplength attribute based on the first digit: Most are "4,4,4,4" but AMEX is "4,6,5". To automatically adjust the maxlength, add <code>data-politespace-creditcard-maxlength</code> as well.</p>
+		<div data-xrayhtml>
+			<label>
+				<span><code>number</code> Input</span>
+				<input type="number" pattern="[0-9]*" data-politespace data-politespace-creditcard data-politespace-creditcard-maxlength value="4321432143214321">
 			</label>
 		</div>
 
