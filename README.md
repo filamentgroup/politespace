@@ -7,6 +7,10 @@
 
 [![Filament Group](http://filamentgroup.com/images/fg-logo-positive-sm-crop.png) ](http://www.filamentgroup.com/)
 
+## [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
+
+![](assets/politespace.gif)
+
 ## Using Politespace
 
 Add `data-politespace` to your form’s `input[type=text]` (et al) or `textarea` and we’ll add spaces to the value when the user blurs off of it. We’ll also remove those spaces on focus.
@@ -52,8 +56,6 @@ Uses the [`creditable`](https://github.com/filamentgroup/creditable) dependency.
 
 When using politespace with US specific telephone number fields, `data-politespace-us-telephone` option will automatically adjust the maxlength of the field to account for a US country code. If the user types a 1, the maxlength will be adjusted to add one additional character until the user blurs, when the country code will be stripped and the original maxlength restored.
 
-### [Demo](http://filamentgroup.github.io/politespace/demo/demo.html)
-
 ### Download
 
 * [politespace.js](http://filamentgroup.github.io/politespace/dist/politespace.js)
@@ -64,9 +66,6 @@ When using politespace with US specific telephone number fields, `data-politespa
 
 `npm install politespace`
 
-### [Tests](http://filamentgroup.github.io/politespace/test/test.html)
-
-![](assets/politespace.gif)
 
 ### Beware input masks.
 
@@ -80,18 +79,14 @@ This plugin was created as a less intrusive alternative to the common input mask
 
 —[@scottjehl](https://twitter.com/scottjehl/statuses/317291417326206976)
 
+## [Tests](http://filamentgroup.github.io/politespace/test/test.html)
+
 ## Using the repo
 
 Run these commands:
 
  * `npm install`
  * `grunt` as normal
-
-### Configuring Grunt
-
-Rather than one giant `Gruntfile.js`, this project is using a modular Grunt setup. Each individual grunt configuration option key has its own file located in `grunt/config-lib/` (readonly upstream configs, do not modify these directly) or `grunt/config/` (project specific configs). You may use the same key in both directories, the objects are smartly combined using [Lo-Dash merge](http://lodash.com/docs#merge).
-
-For concatenation in the previous Gruntfile setup, you’d add another key to the giant object passed into `grunt.initConfig` like this: `grunt.initConfig({ concat: { /* YOUR CONFIG */ } });`. In the new configuration, you’ll create a `grunt/config/concat.js` with `module.exports = { /* YOUR CONFIG */ };`.
 
 ## License
 
